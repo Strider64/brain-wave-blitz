@@ -10,7 +10,7 @@ trait NavigationMenuTrait
     public function regular_navigation(): void
     {
         $navItems = [
-            'Home' => 'brainwaveblitz.php',
+            'Home' => 'index.php',
             'Brainwave Blitz' => 'brainwaveblitz.php',
             'Can You See?' => '#',
             'Contact' => '#',
