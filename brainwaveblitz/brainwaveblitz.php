@@ -1,7 +1,7 @@
 <?php
 // Include the configuration file and autoload file from the composer.
-require_once 'assets/config/config.php';
-require_once "vendor/autoload.php";
+require_once '../assets/config/config.php';
+require_once "../vendor/autoload.php";
 
 // Import the ErrorHandler and Database classes from the PhotoTech namespace.
 use brainwave\Database;
@@ -37,7 +37,7 @@ $pdo = $database->createPDO();
     <!-- Title of the web page -->
     <title>Brainwave Blitz</title>
     <!-- Link to the external CSS file -->
-    <link rel="stylesheet" media="all" href="assets/css/brainwaveblitz.css">
+    <link rel="stylesheet" media="all" href="../assets/css/brainwaveblitz.css">
 </head>
 <body>
 <header class="nav">
@@ -62,7 +62,7 @@ $pdo = $database->createPDO();
 </header>
 <main id="content" class="main">
     <div class="image-header">
-        <img src="assets/images/img-brainwave-header.jpg" alt="Brain Wave Blitz">
+        <img src="../assets/images/img-brainwave-header.jpg" alt="Brain Wave Blitz">
     </div>
     <div id="quiz" class="displayMessage">
         <!-- Main game section, initially hidden -->
@@ -106,6 +106,6 @@ $pdo = $database->createPDO();
     </div>
 </main>
 <!-- Link to the external JavaScript file -->
-<script src="assets/js/brainwaveblitz.js"></script>
+<script src="js/brainwaveblitz.js"></script>
 </body>
 </html>
