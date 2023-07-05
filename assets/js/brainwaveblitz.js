@@ -49,17 +49,7 @@ nextButton.addEventListener("click", () => {
 
 });
 
-// Function to handle the event when an answer is selected.
-const pickAnswer = (answerIndex) => {
-    return () => {
-        choice = answerIndex;
-        checkAnswer();
-        // Only show the next button if the next question exists
-        if (index < triviaData.length - 1) {
-            nextButton.style.display = "block"; // show the next button after an answer is chosen
-        }
-    };
-};
+
 
 
 const retrieveCorrectAnswer = (id) => {
@@ -101,6 +91,17 @@ const checkAnswerAgainstTable = (data) => {
     }
 };
 
+// Function to handle the event when an answer is selected.
+const pickAnswer = (answerIndex) => {
+    return () => {
+        choice = answerIndex;
+        checkAnswer();
+        // Only show the next button if the next question exists
+        if (index < triviaData.length - 1) {
+            nextButton.style.display = "block"; // show the next button after an answer is chosen
+        }
+    };
+};
 
 // The `startGame` function takes an object as an argument with properties: ans1, ans2, ans3, ans4, id, question.
 // These properties represent the answers to the current question, the question's id, and the question itself, respectively.
