@@ -102,25 +102,38 @@ const checkAnswerAgainstTable = (data) => {
 };
 
 
-// Function to start a question by updating the question and answers in the UI
+// The `startGame` function takes an object as an argument with properties: ans1, ans2, ans3, ans4, id, question.
+// These properties represent the answers to the current question, the question's id, and the question itself, respectively.
 const startGame = ({ ans1, ans2, ans3, ans4, id, question }) => {
+    // This line sets the id of the current question to the "data-record" attribute of the element with id "currentQuestion".
     document.querySelector("#currentQuestion").setAttribute("data-record", id);
-    document.querySelector("#currentQuestion").textContent = (
-        index + 1
-    ).toString();
+
+    // This line sets the display number of the current question (index + 1) to the text content of the element with id "currentQuestion".
+    document.querySelector("#currentQuestion").textContent = (index + 1).toString();
+
+    // This line sets the text content of the element with id "question" to the question itself.
     document.querySelector("#question").textContent = question;
 
+    // This loop iterates over each of the answer buttons.
     answerButtons.forEach((button, index) => {
+        // This line checks if there was a previous "pickAnswer" event listener attached to the button,
+        // and if so, removes it.
         const previousPickAnswer = button.__pickAnswer__;
         if (previousPickAnswer) {
             button.removeEventListener("click", previousPickAnswer);
         }
 
+        // This line creates a new "pickAnswer" event listener, and attaches it to the button.
         const newPickAnswer = pickAnswer(index + 1);
         button.addEventListener("click", newPickAnswer, false);
         button.__pickAnswer__ = newPickAnswer;
 
+        // This line sets the text content of the button to the corresponding answer (ans1, ans2, ans3, ans4)
+        // with a "📷" character at the beginning.
         button.textContent = `📷 ${[ans1, ans2, ans3, ans4][index]}` || "";
+
+        // If there's no corresponding answer, the button is disabled (its pointer events are set to "none").
+        // Otherwise, the button is enabled (its pointer events are set to "auto").
         if (![ans1, ans2, ans3, ans4][index]) {
             button.style.pointerEvents = "none";
         } else {

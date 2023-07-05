@@ -13,7 +13,7 @@ use brainwave\ErrorHandler;
  * Created by John Pepp
  * on June 30, 2023
  * Updated by John Pepp
- * on July 2, 2023
+ * on July 4, 2023
  */
 
 // Instantiate the ErrorHandler class
