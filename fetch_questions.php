@@ -1,6 +1,6 @@
 <?php
-require_once '../assets/config/config.php';
-require_once "../vendor/autoload.php";
+require_once 'assets/config/config.php';
+require_once "vendor/autoload.php";
 
 use brainwave\ErrorHandler;
 use brainwave\Database;
@@ -20,7 +20,7 @@ $category = htmlspecialchars($_GET['category']);
 $data = $trivia->fetchQuestions($category);
 
 // Save data to JSON file
-//file_put_contents('output.json', json_encode($data));
+file_put_contents('output.json', json_encode($data));
 
 output($data);
 

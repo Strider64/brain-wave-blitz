@@ -71,7 +71,28 @@ trait NavigationMenuTrait
 
     private function generateHref(string $path): string
     {
-        $base_url = 'https://' . $_SERVER['HTTP_HOST'];
-        return $base_url . '/' . $path;
+        $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+        $host = $_SERVER['HTTP_HOST'];
+
+        // Define your base path here
+        $base_path = ($host === 'localhost:8888') ? 'localhost:8888/brainwaveblitz' : $host;
+
+        $base_url = $protocol . $base_path;
+
+        // Build the URL first, then validate it
+        $url = $base_url . '/' . $path;
+        $sanitized_url = filter_var($url, FILTER_SANITIZE_URL);
+        $valid_url = filter_var($sanitized_url, FILTER_VALIDATE_URL);
+
+        if ($valid_url === false) {
+            die('Invalid URL');
+        }
+
+        return $valid_url;
     }
+
+
+
+
+
 }

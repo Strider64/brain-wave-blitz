@@ -106,6 +106,6 @@ $pdo = $database->createPDO();
     </div>
 </main>
 <!-- Link to the external JavaScript file -->
-<script src="brainwaveblitz/js/brainwaveblitz.js"></script>
+<script src="assets/js/brainwaveblitz.js"></script>
 </body>
 </html>
