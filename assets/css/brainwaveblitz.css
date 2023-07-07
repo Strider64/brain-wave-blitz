@@ -45,12 +45,15 @@ table {
 
 /* Navigational CSS 9/30/2022 */
 .nav {
+    display: flex;
     position: relative;
     width: 100%;
-    display: flex;
+    max-width: 1200px;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #4b81f8; }
+    border-bottom: 1px solid #4b81f8;
+    margin: 0 auto;
+}
 
 .nav-title {
     display: none;
@@ -340,6 +343,7 @@ table {
 }
 
 @media (min-width: 48em) {
+    /* Brain Wave Blitz CSS */
     .main {
         padding: 2em;
     }
@@ -367,4 +371,82 @@ table {
         padding: 0.75em 1.5em;
         transition-duration: 0.4s;
     }
+    
+
+    /* Vertical Navigation */
+    .admin-navigation {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        background-color: #f1f1f1;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 4px; }
+
+    .admin-navigation a {
+        text-decoration: none;
+        color: #000;
+        padding: 8px;
+        margin-bottom: 6px;
+        border-radius: 4px; }
+
+    .admin-navigation a:hover {
+        background-color: #ddd; }
+
+
+    /* Container for the form */
+    .login_style {
+        width: 400px;
+        margin: 100px auto;
+        padding: 30px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        font-family: Arial, sans-serif; }
+
+    /* Style labels */
+    .text_username,
+    .text_password {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #333; }
+
+    /* Style input fields */
+    .io_username,
+    .io_password {
+        width: 94%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        font-family: Arial, sans-serif; }
+
+    /* Style input fields on focus */
+    .io_username:focus,
+    .io_password:focus {
+        border-color: #0b79f7;
+        outline: none; }
+
+    /* Style submit button */
+    .submitBtn {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background-color: #0b79f7;
+        color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s; }
+
+    /* Footer Style */
+    .colophon p {
+        color: #4b81f8;
+        text-align: center;
+    }
+
 }

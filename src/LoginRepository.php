@@ -50,26 +50,6 @@ class LoginRepository implements LoginRepositoryInterface
     }
 
 
-// In LoginRepository.php
-
-// Add a method to check if the user needs to complete 2FA verification
-    public function requires2FA($userId)
-    {
-        $stmt = $this->pdo->prepare('SELECT requires_2fa FROM users WHERE id = :userId');
-        $stmt->execute(['userId' => $userId]);
-        $result = $stmt->fetch();
-
-        return $result['requires_2fa'] == 1;
-    }
-
-// Add a method to update the user's role and disable 2FA requirement after successful verification
-    public function complete2FA($userId)
-    {
-        $stmt = $this->pdo->prepare('UPDATE users SET role = "member", requires_2fa = 0 WHERE id = :userId');
-        $stmt->execute(['userId' => $userId]);
-    }
-
-
 
     // Logout Method
     #[NoReturn] public function logoff(): void
@@ -89,7 +69,7 @@ class LoginRepository implements LoginRepositoryInterface
         session_destroy();
 
         // Redirect the user to the home page
-        header('Location: ../index.php');
+        header('Location: index.php');
         exit;
     }
 

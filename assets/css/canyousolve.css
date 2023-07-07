@@ -1,0 +1,315 @@
+/* CSS Reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Navigational CSS 9/30/2022 */
+.nav {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #4b81f8;
+    margin: 0 auto;
+}
+
+.nav-title {
+    display: none;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 1.2em;
+    color: #efefef;
+    padding-left: 0.625em; }
+
+.name-website {
+    display: block;
+    /* show website name on larger screens */ }
+
+.name-website .webtitle {
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 1.8em;
+    color: #4b81f8; }
+
+.nav > .nav-btn {
+    display: none; }
+
+/* Updated Hamburger Menu CSS */
+.nav > .nav-btn > label {
+    display: inline-block;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    color: #4b81f8;
+    /* New color for the hamburger */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    /* New shadow for the hamburger */
+    transition: transform 0.5s ease-in-out;
+    /* Added for animation */ }
+
+.nav > .nav-btn:hover > label {
+    transform: scale(1.1);
+    /* New hover effect for the hamburger */ }
+
+.nav > .nav-btn > label > span {
+    display: block;
+    width: 35px;
+    height: 5px;
+    background-color: #4b81f8;
+    /* New color for the hamburger lines */
+    margin: 6px 0; }
+
+.nav > .nav-btn > label::after {
+    content: 'Menu';
+    /* New label for the hamburger */
+    font-size: 14px;
+    position: absolute;
+    top: 60px;
+    /* Position of the new label */
+    right: -10px;
+    /* Position of the new label */ }
+
+.nav > .nav-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px; }
+
+.nav > .nav-links > a {
+    line-height: 1.875em;
+    text-decoration: none;
+    text-transform: capitalize;
+    color: #4b81f8;
+    padding: 0.313em 0.625em; }
+
+.nav > .nav-links > a:hover {
+    color: #4d4d4d; }
+
+.nav > #nav-check {
+    display: none; }
+
+/* Navigation CSS Media Query */
+@media screen and (max-width: 600px) {
+    .nav {
+        padding-bottom: 0; }
+
+    .name-website {
+        display: none;
+        /* hide website name on smaller screens */ }
+
+    .nav > .nav-btn {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 10000; }
+
+    .nav > .nav-links {
+        position: absolute;
+        display: none;
+        width: 100%;
+        z-index: 30000;
+        background-color: #333;
+        top: 50px;
+        left: 0; }
+
+    .nav > .nav-links > a {
+        display: block;
+        width: 100%;
+        color: #fff; }
+
+    .nav .nav-btn:checked ~ .nav-links {
+        display: block; } }
+
+.hangman {
+    display: none;
+}
+
+/* Can You Solve Game CSS */
+.hangman {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 1.250em; }
+
+.hangman__question {
+    display: block;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.0em;
+    font-weight: normal;
+    padding: 0.625em;
+    margin-bottom: 0.625em; }
+
+.hangman__word {
+    font-size: 1.0em;
+    font-weight: normal;
+    margin-top: 0.300em;
+    margin-bottom: 0.300em; }
+
+.hangman__word span {
+    padding-left: 0.325em; }
+
+.hangman__guesses, .hangman__remaining {
+    font-size: 0.8em;
+    margin-bottom: 1.250em; }
+
+/* Display and Input for Larger Screens */
+#hangman-canvas {
+    display: none; }
+
+#hangman-form {
+    display: none; }
+
+.hangman__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 20em;
+    margin: 0 auto;
+    padding: 0; }
+
+.hangman__buttons button {
+    width: 2.5em;
+    height: 2.5em;
+    cursor: pointer;
+    border: 1px solid #fff;
+    background-color: #ccc;
+    font-size: 1.125em;
+    font-weight: bold;
+    color: #000;
+    justify-content: center;
+    margin: 0.5em;
+    padding: 0; }
+
+.hangman__buttons button:hover:not(.guessedButton) {
+    background-color: #ddd; }
+
+.hangman__buttons button.incorrectGuess {
+    background-color: red;
+    color: #fff;
+    cursor: default; }
+
+.hangman__buttons button.guessedButton {
+    background-color: blue;
+    color: #fff;
+    cursor: default; }
+
+.hangman__buttons button.guessedButton:hover {
+    background-color: blue; }
+
+.hangman__input {
+    margin-top: 1.250em; }
+
+.hangman__next {
+    float: right;
+    outline: none;
+    color: #fff;
+    border: none;
+    background-color: blue;
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
+    width: 11.25em;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.2em;
+    text-transform: capitalize;
+    text-decoration: none;
+    padding: 0.313em;
+    transition: background-color .5s; }
+
+.hangman__score {
+    padding: 0.625em; }
+
+.hangman__message {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.0em;
+    padding: 1.250em; }
+
+#canvasContainer {
+    display: flex;
+    justify-content: center;
+    margin: 1.250em;
+}
+
+.sidebar, #hangman-canvas {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+#btnContainer {
+    display: flex;
+    justify-content: center;
+}
+
+#myButton {
+    display: block;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    margin: 4px auto;
+}
+
+.hangman__question {
+    font-size: 0.8em;
+    margin: 0 1.250em;
+}
+
+.hangman__guesses {
+    display: none;
+}
+
+.colophon p {
+    color: #4b81f8;
+    text-align: center;
+}

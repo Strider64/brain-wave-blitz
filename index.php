@@ -57,7 +57,7 @@ $pdo = $database->createPDO();
 
     <!-- Website name -->
     <div class="name-website">
-        <h1 class="webtitle">The Photo Tech Guru</h1>
+        <h1 class="webtitle">Brain Wave Blitz</h1>
     </div>
 </header>
 <main id="content" class="main">

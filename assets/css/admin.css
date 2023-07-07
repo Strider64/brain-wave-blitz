@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,500&family=Work+Sans:ital,wght@0,400;0,500;0,700;1,500;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+
+:root {
+    --main-color: #4b81f8;
+    --light-color: #efefef;
+    --dark-color: #4d4d4d;
+    --hover-color: #333;
+    --white-color: #fff;
+    --gray-color: #333;
+    --main-font: 'Work Sans', sans-serif;
+    --alt-font: 'Shadows Into Light', cursive;
+    --alt-font2: 'Lato', sans-serif;
+    --heading-font: 'Roboto', serif;
+    --shadow-color: rgba(0, 0, 0, 0.25);
+    --common-padding: 0.625em;
+}
+
+body {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Font CSS */
+h1 {
+    font-family: var(--heading-font);
+}
+p {
+    font-family: var(--alt-font2);
+    font-size: 1.250em;
+    line-height: 1.5;
+}
+/* Navigational CSS 9/30/2022 */
+.nav {
+    display: flex;
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--main-color);
+    margin: 0 auto;
+}
+
+.nav-title {
+    display: none;
+    font-family: var(--main-font);
+    font-size: 1.2em;
+    color: var(--light-color);
+    padding-left: var(--common-padding);
+}
+
+.name-website {
+    display: block;
+}
+
+.name-website .webtitle {
+    font-family: var(--alt-font);
+    font-size: 1.8em;
+    color: var(--main-color);
+}
+
+.nav > .nav-btn {
+    display: none;
+}
+
+.nav > .nav-btn > label {
+    display: inline-block;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    color: var(--main-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.5s ease-in-out;
+}
+
+.nav > .nav-btn:hover > label {
+    transform: scale(1.1);
+}
+
+.nav > .nav-btn > label > span {
+    display: block;
+    width: 35px;
+    height: 5px;
+    background-color: var(--main-color);
+    margin: 6px 0;
+}
+
+.nav > .nav-btn > label::after {
+    content: 'Menu';
+    font-size: 14px;
+    position: absolute;
+    top: 60px;
+    right: -10px;
+}
+
+.nav > .nav-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.nav > .nav-links > a {
+    line-height: 1.875em;
+    text-decoration: none;
+    text-transform: capitalize;
+    color: var(--main-color);
+    padding: var(--common-padding);
+}
+
+.nav > .nav-links > a:hover {
+    color: var(--dark-color);
+}
+
+.nav > #nav-check {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .nav {
+        padding-bottom: 0;
+    }
+
+    .name-website {
+        display: none;
+    }
+
+    .nav > .nav-btn {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 10000;
+    }
+
+    .nav > .nav-links {
+        position: absolute;
+        display: none;
+        width: 100%;
+        z-index: 30000;
+        background-color: var(--gray-color);
+        top: 50px;
+        left: 0;
+    }
+
+    .nav > .nav-links > a {
+        display: block;
+        width: 100%;
+        color: var(--white-color);
+    }
+
+    .nav .nav-btn:checked ~ .nav-links {
+        display: block;
+    }
+}
+
+/* Vertical Navigation CSS */
+.admin-navigation {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white-color);
+    color: var(--main-color);
+    font-family: var(--main-font);
+    padding: 1em;
+}
+
+.admin-navigation a {
+    color: var(--main-color);
+    text-decoration: none;
+    padding: var(--common-padding);
+    margin-bottom: 0.5em;
+    font-size: 1.2em;
+}
+
+.admin-navigation a:hover {
+    color: var(--white-color);
+    background-color: var(--main-color);
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
+}
+
+.main_container {
+    padding: 1.250em;
+}
+.main_container .image-header {
+    width: 60%;
+    border-radius: 10px;
+    overflow: hidden; /* This will ensure the image also takes on the border radius */
+    box-shadow: 0 5px 15px var(--shadow-color);
+    transition: transform 0.3s ease;
+}
+
+.main_container .image-header:hover {
+    transform: scale(1.05);
+}
+
+.main_container .image-header img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.main_container h1 {
+    color: var(--gray-color);
+    font-size: 1.4em;
+}
+.main_container p{
+    color: var(--gray-color);
+    font-size: 1.0em;
+}
+
+.colophon p {
+    color: var(--main-color);
+    text-align: center;
+}
+/* Approximately the size of an iPad 768px */
+@supports (grid-area: auto) {
+    @media screen and (min-width: 48em) {
+
+    }
+}
+
+/* Approximately the size of a 1248px large display monitor */
+@supports (grid-area: auto) {
+    @media screen and (min-width: 78em) {
+
+        .site {
+            display: grid;
+            grid-template-columns: 20em 1fr;
+            grid-template-areas:
+				"nav nav"
+				"sidebar main"
+                "sidebar main"
+				"footer footer";
+            column-gap: 1.250em;
+            row-gap: 1.250em;
+            justify-content: center;
+        }
+
+        .nav {
+            grid-area: nav;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+            margin: 1.250em;
+        }
+
+        .main_container {
+            grid-area: main;
+        }
+        .main_container h1 {
+            font-size: 2.4em;
+        }
+        .main_container p{
+            font-size: 1.250em;
+        }
+
+        .colophon {
+            grid-area: footer;
+        }
+
+    }
+}
