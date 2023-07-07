@@ -4,10 +4,10 @@ require_once "vendor/autoload.php";
 
 // dashhboard.php
 /*
- * The Photo Tech Guru
+ * Brain Wave Blitz
  * Created by John R. Pepp
  * Date Created: July, 12, 2021
- * Last Revision: September 6, 2022 @ 8:00 AM
+ * Last Revision: July 7, 2023 @ 8:00 AM
  * Version: 3.50 ßeta
  *
  */
