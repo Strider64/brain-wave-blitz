@@ -3,6 +3,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
 
+/* CSS Reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
 
 :root {
     --main-color: #4b81f8;
@@ -194,6 +238,7 @@ p {
     overflow: hidden; /* This will ensure the image also takes on the border radius */
     box-shadow: 0 5px 15px var(--shadow-color);
     transition: transform 0.3s ease;
+    margin-bottom: 1.250em;
 }
 
 .main_container .image-header:hover {
@@ -208,11 +253,105 @@ p {
 .main_container h1 {
     color: var(--gray-color);
     font-size: 1.4em;
+    margin-bottom: 0.625em;
 }
-.main_container p{
+.main_container p {
     color: var(--gray-color);
     font-size: 1.0em;
+    line-height: 1.5;
 }
+
+:root {
+    --shadow-color: rgba(0, 0, 0, 0.25);
+    --primary-color: #4b81f8;
+    --input-bg-color: #f2f2f2;
+    --input-focus-color: #ddd;
+}
+
+#data_entry_form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    border-radius: 10px;
+    background: #fff;
+}
+
+#data_entry_form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#data_entry_form input[type="text"], #data_entry_form textarea, .select-css {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--shadow-color);
+    border-radius: 5px;
+    background: var(--input-bg-color);
+    transition: background 0.3s ease;
+}
+
+#data_entry_form input[type="text"], #data_entry_form textarea {
+    width: 96%;
+}
+
+#data_entry_form textarea {
+    height: 18.75em; /* equivalent to 300px */
+    resize: none;
+}
+
+
+#data_entry_form input[type="text"]:focus, #data_entry_form textarea:focus, .select-css:focus {
+    background: var(--input-focus-color);
+    outline: none;
+}
+
+.form-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: var(--primary-color);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form-button:hover {
+    background: #3366cc;
+}
+
+.file-input-style {
+    display: none;
+}
+
+.file-input-style + label {
+    padding: 10px 20px;
+    background: var(--primary-color);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.file-input-style + label:hover {
+    background: #3366cc;
+}
+
+.progress-bar-container {
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    height: 20px;
+    background: var(--input-bg-color);
+}
+
+.progress-bar-title {
+    margin-bottom: 5px;
+}
+
 
 .colophon p {
     color: var(--main-color);

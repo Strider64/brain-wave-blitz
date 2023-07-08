@@ -50,7 +50,7 @@ trait NavigationMenuTrait
             'Edit Game' => '/brainwaveblitz/canyousolve/edit_question.php',
             'New Quest' => '/brainwaveblitz/new_questions.php',
             'Edit Quest' => '/brainwaveblitz/edit_questions.php',
-            'Register' => '/brainwaveblitz/register.php',
+            'Create Entry' => '/brainwaveblitz/create_cms.php'
         ];
 
         echo '<div class="admin-navigation">';

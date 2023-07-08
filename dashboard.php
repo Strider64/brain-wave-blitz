@@ -12,12 +12,15 @@ require_once "vendor/autoload.php";
  *
  */
 
-use brainwave\ErrorHandler;
-use brainwave\Database;
+use brainwave\{
+    ErrorHandler,
+    Database,
+    Links,
+    ImageContentManager,
+    LoginRepository as Login
+};
 
-use brainwave\ImageContentManager;
-use brainwave\Links;
-use brainwave\LoginRepository as Login;
+
 
 $errorHandler = new ErrorHandler();
 
@@ -27,14 +30,62 @@ set_exception_handler([$errorHandler, 'handleException']);
 $database = new Database();
 $pdo = $database->createPDO();
 
-
-
 $login = new Login($pdo);
 // Check to see if user is Logged In
 if (!$login->check_login_token()) {
     header('location: index.php');
     exit();
 }
+
+$cms = new ImageContentManager($pdo);
+
+$displayFormat = ["gallery-container w-2 h-2", 'gallery-container w-2 h-2', 'gallery-container w-2 h-2', 'gallery-container h-2', 'gallery-container h-2', 'gallery-container w-2 h-2"', 'gallery-container h-2', 'gallery-container h-2', 'gallery-container w-2 h-2', 'gallery-container h-2', 'gallery-container h-2', 'gallery-container w-2 h-2'];
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (isset($_GET['category'])) {
+        $category = $_GET['category'];
+    } else {
+        error_log('Category is not set in the GET data');
+        $category = 'general';
+    }
+    $total_count = $cms->countAllPage($category);
+} else {
+    try {
+        $category = 'general';
+        $total_count = $cms->countAllPage($category);
+    } catch (Exception $e) {
+        error_log('Error while counting all pages: ' . $e->getMessage());
+    }
+}
+
+/*
+ * Using pagination in order to have a nice looking
+ * website page.
+ */
+
+// Grab the current page the user is on
+if (isset($_GET['page']) && !empty($_GET['page'])) {
+    $current_page = urldecode($_GET['page']);
+} else {
+    $current_page = 1;
+}
+
+$per_page = 2; // Total number of records to be displayed:
+
+
+// Grab Total Pages
+$total_pages = $cms->total_pages($total_count, $per_page);
+
+
+/* Grab the offset (page) location from using the offset method */
+/* $per_page * ($current_page - 1) */
+$offset = $cms->offset($per_page, $current_page);
+
+// Figure out the Links that you want the display to look like
+$links = new Links($current_page, $per_page, $total_count, $category);
+
+// Finally grab the records that are actually going to be displayed on the page
+$records = $cms->page($per_page, $offset, 'cms', $category);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -172,40 +223,26 @@ if (!$login->check_login_token()) {
 </header>
 
 <main class="main_container">
-    <div class="image-header">
-        <img src="assets/images/img-brainwave-header.jpg" alt="Brain Wave Blitz">
-    </div>
-    <h1>Lorem ipsum dolor sit amet.</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium cupiditate debitis dicta id in laudantium
-        maxime numquam sint tenetur veritatis. Aliquam aliquid commodi facilis illo nulla provident quo ratione sed
-        sequi veniam? Ab accusamus ad architecto autem distinctio dolore error eum eveniet id illo illum ipsa iure
-        labore libero maxime minima nisi nostrum obcaecati officia praesentium quia quibusdam quis quod, soluta
-        temporibus vel, vitae! Aliquid blanditiis commodi delectus ea enim ex, harum, laboriosam maiores natus nisi
-        optio quam quasi quidem, quisquam recusandae repudiandae saepe sed velit voluptate voluptatem? Atque aut,
-        cupiditate deserunt dolor eaque earum enim error excepturi explicabo fugit impedit incidunt ipsum iure nihil
-        nulla optio perferendis sit veritatis voluptatem voluptatibus! Alias aut dolore doloribus earum eius est fugit
-        hic ipsa iure iusto laborum minus necessitatibus, non obcaecati, odit omnis optio porro quidem reiciendis rerum
-        sapiente totam unde velit. Culpa dicta laborum magni nemo quis ut, vitae. Accusamus animi deserunt esse est et
-        expedita, explicabo harum maiores modi mollitia nesciunt nisi quaerat, repellat velit voluptatem. Architecto at
-        consequatur hic ipsa natus quaerat quidem repudiandae sunt vitae. Consequuntur debitis ea eos et expedita iste
-        itaque libero magni neque nobis odio pariatur perspiciatis placeat rerum, unde. Eos nemo, totam. Alias amet,
-        aspernatur atque deserunt ea eius eum incidunt ipsam ipsum maiores mollitia nisi nobis nostrum praesentium
-        quibusdam, reiciendis repellendus soluta vero. Aut cum dolorem eligendi iste perferendis. Accusamus aliquam
-        commodi consequatur consequuntur cum cumque dolor eaque excepturi expedita facilis impedit molestiae natus, odit
-        officiis quisquam sint suscipit voluptatibus. Esse impedit magnam magni molestiae veniam. Accusantium dicta
-        facere maxime sequi voluptatum? Asperiores autem enim ipsam quasi? At fugit labore nisi tempora. Ab adipisci at
-        autem cumque deleniti dignissimos dolor impedit ipsa nihil ullam. Aperiam culpa cumque eius ex exercitationem,
-        id incidunt minima mollitia quod rem rerum sit tenetur totam unde voluptate voluptates.</p>
+
+    <?php
+    foreach ($records as $record) {
+        echo '<a id="myButton" href="delete.php?id=' . $record['id'] . '" class="delete-link">Delete</a>';
+        //echo '<meta itemprop="datePublished" content="' . $record['date_added'] . '">';
+        //echo '<meta itemprop="dateModified" content="' . $record['date_updated'] . '">';
+        echo '<div class="image-header">';
+        echo '<img src="' . $record['image_path'] . '" title="' . $record['heading'] . '" alt="' . $record['heading'] . '">';
+        echo '</div>';
+        echo '<h1>' . $record['heading'] . '</h1>';
+        echo '<p>' . nl2br($record['content']) . '</p>';
+        echo '<br><hr><br>';
+    }
+    ?>
+
 </main>
 
 <aside class="sidebar">
-    <div class="admin-navigation">
-        <a href="/brainwaveblitz/canyousolve/add_question.php">Add Game</a>
-        <a href="/brainwaveblitz/canyousolve/edit_question.php">Edit Game</a>
-        <a href="/brainwaveblitz/new_questions.php">New Quest</a>
-        <a href="/brainwaveblitz/edit_questions.php">Edit Quest</a>
-        <a href="/brainwaveblitz/register.php">Register</a>
-    </div>
+    <?php $database->showAdminNavigation(); ?>
+    <?php echo $links->display_links(); ?>
 </aside>
 <footer class="colophon">
     <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz</p>

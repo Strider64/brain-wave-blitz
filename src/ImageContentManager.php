@@ -10,7 +10,7 @@ use DateTimeZone;
 
 class ImageContentManager implements ImageContentManagerInterface
 {
-    protected string $table = "gallery"; // Table Name:
+    protected string $table = "cms"; // Table Name:
     protected $db_columns = ['id', 'category', 'user_id', 'thumb_path', 'image_path', 'Model', 'ExposureTime', 'Aperture', 'ISO', 'FocalLength', 'author', 'heading', 'content', 'data_updated', 'date_added'];
     public $id;
     public $user_id;
@@ -65,7 +65,7 @@ class ImageContentManager implements ImageContentManagerInterface
     // Total Record/Pages in gallery database table
     public function totalCount()
     {
-        $sql = "SELECT count(id) FROM gallery";
+        $sql = "SELECT count(id) FROM cms";
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute();
@@ -97,9 +97,9 @@ class ImageContentManager implements ImageContentManagerInterface
 
 
     // Total Record/Pages in category in gallery database table
-    public function countAllPage($category = 'wildlife')
+    public function countAllPage($category = 'general')
     {
-        $sql = "SELECT count(id) FROM gallery WHERE category=:category";
+        $sql = "SELECT count(id) FROM cms WHERE category=:category";
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute(['category' => $category]);
@@ -108,13 +108,13 @@ class ImageContentManager implements ImageContentManagerInterface
     }
     // Fetch Headings
     public function headings() {
-         return $this->pdo->query('SELECT id, heading FROM gallery')->fetchAlL(PDO::FETCH_ASSOC);
+         return $this->pdo->query('SELECT id, heading FROM cms')->fetchAlL(PDO::FETCH_ASSOC);
     }
 
     // Display Record(s) by Pagination
-    public function page($perPage, $offset, $page = "index", $category = "wildlife"): array
+    public function page($perPage, $offset, $page = "index", $category = "general"): array
     {
-        $sql = 'SELECT * FROM gallery WHERE page =:page AND category =:category ORDER BY id DESC, date_added DESC LIMIT :perPage OFFSET :blogOffset';
+        $sql = 'SELECT * FROM cms WHERE page =:page AND category =:category ORDER BY id DESC, date_added DESC LIMIT :perPage OFFSET :blogOffset';
         $stmt = $this->pdo->prepare($sql); // Prepare the query:
         $stmt->execute(['page' => $page, 'perPage' => $perPage, 'category' => $category, 'blogOffset' => $offset]); // Execute the query with the supplied data:
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -129,7 +129,7 @@ class ImageContentManager implements ImageContentManagerInterface
         /*
          * Set up the query using prepared statements with named placeholders.
          */
-        $sql = 'INSERT INTO gallery (' . implode(", ", array_keys($this->params)) . ')';
+        $sql = 'INSERT INTO cms (' . implode(", ", array_keys($this->params)) . ')';
         $sql .= ' VALUES ( :' . implode(', :', array_keys($this->params)) . ')';
 
         /*
@@ -154,7 +154,7 @@ class ImageContentManager implements ImageContentManagerInterface
     }
 
     public function fetch_by_heading() {
-        $sql = "SELECT heading FROM gallery WHERE category= :category LIMIT 1";
+        $sql = "SELECT heading FROM cms WHERE category= :category LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['category' => $this->category]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -164,7 +164,7 @@ class ImageContentManager implements ImageContentManagerInterface
     // Grab Record by id
     public function fetch_by_id()
     {
-        $sql = "SELECT * FROM gallery WHERE id=:id LIMIT 1";
+        $sql = "SELECT * FROM cms WHERE id=:id LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $this->id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -173,7 +173,7 @@ class ImageContentManager implements ImageContentManagerInterface
     // Delete Record by id
     public function delete(): bool
     {
-        $sql = 'DELETE FROM gallery WHERE id=:id';
+        $sql = 'DELETE FROM cms WHERE id=:id';
         return $this->pdo->prepare($sql)->execute([':id' => $this->id]);
     }
 
