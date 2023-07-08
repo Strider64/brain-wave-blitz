@@ -6,6 +6,8 @@ require_once "vendor/autoload.php";
 // Import the ErrorHandler and Database classes from the PhotoTech namespace.
 use brainwave\Database;
 use brainwave\ErrorHandler;
+use brainwave\LoginRepository as Login;
+
 
 
 /*
@@ -26,6 +28,12 @@ set_exception_handler([$errorHandler, 'handleException']);
 $database = new Database();
 // Create a PDO instance using the Database class's method
 $pdo = $database->createPDO();
+
+$login = new Login($pdo);
+if ($login->check_login_token()) {
+    header('location: dashboard.php');
+    exit();
+}
 ?>
 <!doctype html>
 <html lang="en">

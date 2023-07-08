@@ -22,10 +22,12 @@ trait NavigationMenuTrait
 
         if ($isLoggedIn) {
             unset($navItems['Home']); // Remove 'Home' from the navigation menu
-            $navItems['Dashboard'] = 'dashboard.php'; // Add 'Dashboard' to the navigation menu
+            // Add 'Dashboard' to the start of the navigation menu
+            $navItems = array('Dashboard' => 'dashboard.php') + $navItems;
         } else {
             $navItems['Login'] = 'login.php'; // Add 'Login' to the navigation menu
         }
+
 
         $navLinks = [];
 
