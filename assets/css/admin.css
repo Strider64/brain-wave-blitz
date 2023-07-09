@@ -50,6 +50,9 @@ table {
 
 :root {
     --main-color: #4b81f8;
+    --primary-color: #4b81f8;
+    --main-bg-color: #f0f0f0;
+    --main-font-color: #333;
     --light-color: #efefef;
     --dark-color: #4d4d4d;
     --hover-color: #333;
@@ -62,6 +65,7 @@ table {
     --shadow-color: rgba(0, 0, 0, 0.25);
     --common-padding: 0.625em;
 }
+
 
 body {
     width: 100%;
@@ -229,6 +233,53 @@ p {
     border-radius: 4px;
 }
 
+
+
+#searchForm {
+    background-color: var(--main-bg-color);
+    width: 21.875em; /* Change to suit your needs */
+    padding: 20px;
+    box-shadow: 0px 10px 20px var(--box-shadow-color);
+    border-radius: 5px;
+}
+
+#searchForm .input-group {
+    margin-bottom: 20px;
+}
+
+#searchForm .input-group label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#searchForm .input-group .input-field,
+#searchForm .input-group .select-css {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--main-font-color);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+#searchForm .search_button {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#searchForm .search_button:hover {
+    background-color: #3a6fc7;
+}
+
+
 .main_container {
     padding: 1.250em;
 }
@@ -351,6 +402,70 @@ p {
 .progress-bar-title {
     margin-bottom: 5px;
 }
+
+/* Add Questions/Answers to CanYouSolve Game CSS */
+#add_to_db_table {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+#add_to_db_table .file_grid_area,
+#add_to_db_table .question_grid_area,
+#add_to_db_table .answer_grid_area,
+#add_to_db_table .submit_grid_area {
+    margin-bottom: 20px;
+}
+
+#add_to_db_table .file-input-style {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f9f9f9;
+    transition: border .3s;
+}
+
+#add_to_db_table .file-input-style:hover {
+    border-color: #007BFF;
+}
+
+#add_to_db_table #question_style,
+#add_to_db_table #answer_style {
+    width: 95%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    transition: border .3s;
+}
+
+#add_to_db_table #question_style:focus,
+#add_to_db_table #answer_style:focus {
+    border-color: #007BFF;
+}
+
+#add_to_db_table #question_style {
+    height: 18.75em; /* equivalent to 300px */
+    resize: none;
+}
+
+#add_to_db_table .button_style {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background .3s;
+}
+
+#add_to_db_table .button_style:hover {
+    background-color: #0056b3;
+}
+/* End CSS for Can You Solve Game */
 
 
 .colophon p {

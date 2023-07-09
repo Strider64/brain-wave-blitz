@@ -1,10 +1,11 @@
 <?php
-require_once '../assets/config/config.php';
+require_once __DIR__ . '/../../config/config.php';
 require_once "../vendor/autoload.php";
 
-use PhotoTech\ErrorHandler;
-use PhotoTech\Database;
-use PhotoTech\LoginRepository as Login;
+use brainwave\ErrorHandler;
+use brainwave\Database;
+use brainwave\LoginRepository as Login;
+use Intervention\Image\ImageManagerStatic as Image;
 
 $errorHandler = new ErrorHandler();
 
@@ -51,30 +52,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (move_uploaded_file($uploadedFile['tmp_name'], $destinationPath)) {
             // Load the image
-            $image = imagecreatefromjpeg($destinationPath);
+            $image = Image::make($destinationPath);
 
-            // Get the original dimensions
-            $original_width = imagesx($image);
-            $original_height = imagesy($image);
+            // Resize the image to a width of 1200 and constrain aspect ratio (auto height)
+            $image->resize(1200, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
 
-            // Calculate the new dimensions
-            $new_width = 1200;
-            $new_height = 800;
-            $scale = min($new_width / $original_width, $new_height / $original_height);
-            $width = intval($original_width * $scale);
-            $height = intval($original_height * $scale);
-
-            // Create a new image with the new dimensions
-            $new_image = imagecreatetruecolor($width, $height);
-
-            // Copy and resize the original image to the new image
-            imagecopyresampled($new_image, $image, 0, 0, 0, 0, $width, $height, $original_width, $original_height);
-            // Save the new image
-            imagejpeg($new_image, $destinationPath, 100);
+            // Save the resized image
+            $image->save($destinationPath);
 
             $savePath = $saveDirectory . $destinationFilename;
+
             // Prepare the SQL INSERT statement
-            $sql = "INSERT INTO bird_trivia (points, question, answer, canvas_images) VALUES (:points, :question, :answer, :canvas_images)";
+            $sql = "INSERT INTO canyousolve (points, question, answer, canvas_images) VALUES (:points, :question, :answer, :canvas_images)";
             $stmt = $pdo->prepare($sql);
 
             // Bind the values to the placeholders
@@ -96,5 +87,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo json_encode(['error' => 'Invalid request method.']);
 }
-
-

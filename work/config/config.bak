@@ -1,0 +1,40 @@
+<?php
+// Set error reporting level
+error_reporting(E_ALL);
+
+// Disable display of errors
+ini_set('display_errors', '0');
+
+// Enable error logging
+ini_set('log_errors', '1');
+
+// Set the path for the error log file
+ini_set('error_log', __DIR__ . '/error_log/error_log_file.log');
+
+session_set_cookie_params([
+    'lifetime' => strtotime('+6 months'),
+    'path' => '/',
+    'domain' => 'localhost',
+    'secure' => false, // Since it's not HTTPS, set this to false
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
+
+session_start();
+ob_start(); // turn on output buffering
+if (empty($_SESSION['token'])) {
+    try {
+        $_SESSION['token'] = bin2hex(random_bytes(32));
+    } catch (Exception $e) {
+    }
+}
+
+ini_set('memory_limit', '512M'); // Increase to 512MB
+
+const DOMAIN = "localhost";
+const DATABASE_HOST = 'localhost';
+const DATABASE_NAME = 'general';
+const DATABASE_USERNAME = 'root';
+const DATABASE_PASSWORD = 'Dpsimfm1964!';
+
+

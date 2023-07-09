@@ -1,10 +1,10 @@
 <?php
-require_once '../assets/config/config.php';
+require_once __DIR__ . '/../../config/config.php';
 require_once "../vendor/autoload.php";
 
-use PhotoTech\ErrorHandler;
-use PhotoTech\Database;
-use PhotoTech\LoginRepository as Login;
+use brainwave\ErrorHandler;
+use brainwave\Database;
+use brainwave\LoginRepository as Login;
 
 $errorHandler = new ErrorHandler();
 
@@ -27,7 +27,7 @@ if (!$login->check_login_token()) {
     <meta name="viewport"
           content="width=device-width, user-scalable=yes, initial-scale=1.0">
     <title>Edit Questions</title>
-    <link rel="stylesheet" media="all" href="../assets/css/stylesheet.css">
+    <link rel="stylesheet" media="all" href="../assets/css/admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body class="site">
@@ -108,7 +108,7 @@ if (!$login->check_login_token()) {
 
 </aside>
 <footer class="colophon">
-    <p>&copy; <?php echo date("Y") ?> The Photo Tech Guru</p>
+    <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz</p>
 </footer>
 <script src="update_record.js"></script>
 </body>

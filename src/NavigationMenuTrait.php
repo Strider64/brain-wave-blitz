@@ -47,12 +47,21 @@ trait NavigationMenuTrait
 
     public function showAdminNavigation(): void
     {
+        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https://' : 'http://';
+        $host = $_SERVER['HTTP_HOST'];
+
+        // Define your base path here
+        $base_path = ($host === 'localhost:8888') ? '/brainwaveblitz' : '';
+
+        $base_url = $protocol . $host . $base_path;
+
         $adminItems = [
-            'Add Game' => '/brainwaveblitz/canyousolve/add_question.php',
-            'Edit Game' => '/brainwaveblitz/canyousolve/edit_question.php',
-            'New Quest' => '/brainwaveblitz/new_questions.php',
-            'Edit Quest' => '/brainwaveblitz/edit_questions.php',
-            'Create Entry' => '/brainwaveblitz/create_cms.php'
+            'Add Game' => $base_url . '/canyousolve/add_question.php',
+            'Edit Game' => $base_url . '/canyousolve/edit_question.php',
+            'New Quest' => $base_url . '/new_questions.php',
+            'Edit Quest' => $base_url . '/edit_questions.php',
+            'Create Entry' => $base_url . '/create_cms.php',
+            'Edit Entry' => $base_url . '/edit_blog.php'
         ];
 
         echo '<div class="admin-navigation">';
@@ -62,6 +71,7 @@ trait NavigationMenuTrait
         }
         echo '</div>';
     }
+
 
     private function generateHref(string $path): string
     {

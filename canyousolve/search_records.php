@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once '../assets/config/config.php';
+require_once __DIR__ . '/../../config/config.php';
 require_once "../vendor/autoload.php";
 
 use PhotoTech\ErrorHandler;

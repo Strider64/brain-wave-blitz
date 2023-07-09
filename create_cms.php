@@ -1,5 +1,5 @@
 <?php
-require_once "assets/config/config.php";
+require_once __DIR__ . '/../config/config.php';
 require_once "vendor/autoload.php";
 
 use Intervention\Image\ImageManagerStatic as Image;
@@ -142,8 +142,8 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
         $timezone = new DateTimeZone('America/Detroit'); // Use your timezone here
         $today = new DateTime('now', $timezone);
         $data['date_updated'] = $data['date_added'] = $today->format("Y-m-d H:i:s");
-        $gallery = new ImageContentManager($pdo, $data);
-        $result = $gallery->create();
+        $cms = new ImageContentManager($pdo, $data);
+        $result = $cms->create();
 
         if ($result) {
             header('Content-Type: application/json');

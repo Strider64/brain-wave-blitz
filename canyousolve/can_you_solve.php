@@ -1,5 +1,5 @@
 <?php
-require_once '../assets/config/config.php';
+require_once __DIR__ . '/../../config/config.php';
 require_once "../vendor/autoload.php";
 
 use brainwave\ErrorHandler;
@@ -13,6 +13,9 @@ set_exception_handler([$errorHandler, 'handleException']);
 
 $database = new Database();
 $pdo = $database->createPDO();
+$sql = "UPDATE score SET score=:score WHERE id=:id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(['score' => 0, 'id' => 1]);
 $login = new Login($pdo);
 ?>
 
@@ -78,17 +81,12 @@ $login = new Login($pdo);
         </div>
     </div>
     <div class="home_sidebar">
-        <?php
-        if ($login->check_login_token()) {
-            $database->showAdminNavigation();
-        }
-        ?>
+
 
     </div>
 
 </main>
 <aside class="sidebar">
-
 </aside>
 <footer class="colophon">
     <p>&copy;<?php echo date("Y") ?> Brain Wave Blitz</p>

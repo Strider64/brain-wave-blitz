@@ -1,6 +1,6 @@
 <?php
 // delete.php
-require_once 'assets/config/config.php';
+require_once __DIR__ . '/../config/config.php';
 require_once "vendor/autoload.php";
 
 use brainwave\ErrorHandler;

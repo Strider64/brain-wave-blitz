@@ -1,12 +1,16 @@
 <?php
 // Include the configuration file and autoload file from the composer.
-require_once 'assets/config/config.php';
+require_once __DIR__ . '/../config/config.php';
 require_once "vendor/autoload.php";
 
 // Import the ErrorHandler and Database classes from the PhotoTech namespace.
-use brainwave\Database;
-use brainwave\ErrorHandler;
-use brainwave\LoginRepository as Login;
+use brainwave\{
+    ErrorHandler,
+    Database,
+    Links,
+    ImageContentManager,
+    LoginRepository as Login
+};
 
 
 
@@ -15,7 +19,7 @@ use brainwave\LoginRepository as Login;
  * Created by John Pepp
  * on June 30, 2023
  * Updated by John Pepp
- * on July 2, 2023
+ * on July 8, 2023
  */
 
 // Instantiate the ErrorHandler class
@@ -34,6 +38,56 @@ if ($login->check_login_token()) {
     header('location: dashboard.php');
     exit();
 }
+
+$cms = new ImageContentManager($pdo);
+
+$displayFormat = ["gallery-container w-2 h-2", 'gallery-container w-2 h-2', 'gallery-container w-2 h-2', 'gallery-container h-2', 'gallery-container h-2', 'gallery-container w-2 h-2"', 'gallery-container h-2', 'gallery-container h-2', 'gallery-container w-2 h-2', 'gallery-container h-2', 'gallery-container h-2', 'gallery-container w-2 h-2'];
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (isset($_GET['category'])) {
+        $category = $_GET['category'];
+    } else {
+        error_log('Category is not set in the GET data');
+        $category = 'general';
+    }
+    $total_count = $cms->countAllPage($category);
+} else {
+    try {
+        $category = 'general';
+        $total_count = $cms->countAllPage($category);
+    } catch (Exception $e) {
+        error_log('Error while counting all pages: ' . $e->getMessage());
+    }
+}
+
+/*
+ * Using pagination in order to have a nice looking
+ * website page.
+ */
+
+// Grab the current page the user is on
+if (isset($_GET['page']) && !empty($_GET['page'])) {
+    $current_page = urldecode($_GET['page']);
+} else {
+    $current_page = 1;
+}
+
+$per_page = 2; // Total number of records to be displayed:
+
+
+// Grab Total Pages
+$total_pages = $cms->total_pages($total_count, $per_page);
+
+
+/* Grab the offset (page) location from using the offset method */
+/* $per_page * ($current_page - 1) */
+$offset = $cms->offset($per_page, $current_page);
+
+// Figure out the Links that you want the display to look like
+$links = new Links($current_page, $per_page, $total_count, $category);
+
+// Finally grab the records that are actually going to be displayed on the page
+$records = $cms->page($per_page, $offset, 'cms', $category);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -43,11 +97,112 @@ if ($login->check_login_token()) {
     <meta name="viewport"
           content="width=device-width, user-scalable=yes, initial-scale=1.0">
     <!-- Title of the web page -->
-    <title>Brainwave Blitz</title>
+    <title>Home Page</title>
     <!-- Link to the external CSS file -->
-    <link rel="stylesheet" media="all" href="assets/css/brainwaveblitz.css">
+    <link rel="stylesheet" media="all" href="assets/css/admin.css">
+    <style>
+
+        #myButton {
+            outline: none;
+            color: #fff;
+            border: none;
+            background-color: #f12929;
+            box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
+            width: 6.25em;
+            font-family: "Rubik", sans-serif;
+            font-size: 1.2em;
+            text-transform: capitalize;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 0.313em;
+            margin: 0.625em;
+            transition: background-color 0.5s;
+            float: right;
+            text-align: center;
+        }
+
+        #myButton:hover {
+            background-color: #009578;
+        }
+
+        .pagination {
+            display: inline-block;
+            padding-left: 0;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .pagination > li {
+            display: inline;
+        }
+
+        .pagination > li > a,
+        .pagination > li > span {
+            position: relative;
+            float: left;
+            font-size: 1.0em;
+            padding: 6px 12px;
+            margin-left: -1px;
+            line-height: 1.42857143;
+            color: #337ab7;
+            text-decoration: none;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .pagination > li:first-child > a,
+        .pagination > li:first-child > span {
+            margin-left: 0;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .pagination > li:last-child > a,
+        .pagination > li:last-child > span {
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .pagination > li > a:hover,
+        .pagination > li > a:focus {
+            color: #23527c;
+            background-color: #eee;
+            border-color: #ddd;
+        }
+
+        .pagination > .active > a,
+        .pagination > .active > span,
+        .pagination > .active > a:hover,
+        .pagination > .active > span:hover,
+        .pagination > .active > a:focus,
+        .pagination > .active > span:focus {
+            z-index: 2;
+            color: #fff;
+            cursor: default;
+            background-color: #337ab7;
+            border-color: #337ab7;
+        }
+
+        .pagination > li > span {
+            display: inline-block;
+            padding: 6px 12px;
+            color: #999;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            height: 2.313em;
+        }
+
+        .pagination > li > span::before {
+            content: '...';
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+
+    </style>
 </head>
-<body>
+<body class="site">
 <header class="nav">
     <!-- Input and label for the mobile navigation bar -->
     <input type="checkbox" class="nav-btn" id="nav-btn">
@@ -68,52 +223,28 @@ if ($login->check_login_token()) {
         <h1 class="webtitle">Brain Wave Blitz</h1>
     </div>
 </header>
-<main id="content" class="main">
-    <div class="image-header">
-        <img src="assets/images/img-brainwave-header.jpg" alt="Brain Wave Blitz">
-    </div>
-    <div id="quiz" class="displayMessage">
-        <!-- Main game section, initially hidden -->
-        <div id="mainGame" style="display: none;">
-            <!-- Section for displaying the question and answers -->
-            <div id="triviaSection">
-                <div id="questionBox">
-                    <!-- Current question and score information -->
-                    <div id="current" class="info-bar">
-                        <p>Current question is <span id="currentQuestion" data-record=""></span></p>
-                        <p>Your score: <span id="score">0</span></p>
-                    </div>
-                    <h2 id="question"></h2>
-                    <div id="answers">
-                        <button class="buttonStyle" id="ans1"></button>
-                        <button class="buttonStyle" id="ans2"></button>
-                        <button class="buttonStyle" id="ans3"></button>
-                        <button class="buttonStyle" id="ans4"></button>
-                    </div>
-                    <!-- Area for showing whether the answer was correct or not -->
-                    <p id="result"></p>
-                </div>
-                <!-- Next button for moving to the next question -->
-                <button id="next" class="nextBtn">Next</button>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Selector for choosing the category of questions -->
-    <div id="categorySelector">
-        <label for="category">Choose a category:</label>
-        <select id="category" name="category">
-            <option value="">--Please choose a category--</option>
-            <option value="lego">LEGO</option>
-            <option value="photography">Photography</option>
-            <option value="space">Space</option>
-            <option value="movie">Movies</option>
-            <option value="sport">Sports</option>
-        </select>
-    </div>
+<main class="main_container">
+    <?php
+    foreach ($records as $record) {
+        //echo '<meta itemprop="datePublished" content="' . $record['date_added'] . '">';
+        //echo '<meta itemprop="dateModified" content="' . $record['date_updated'] . '">';
+        echo '<div class="image-header">';
+        echo '<img src="' . $record['image_path'] . '" title="' . $record['heading'] . '" alt="' . $record['heading'] . '">';
+        echo '</div>';
+        echo '<h1>' . $record['heading'] . '</h1>';
+        echo '<p>' . nl2br(htmlspecialchars($record['content'])) . '</p>';
+        echo '<br><hr><br>';
+    }
+    ?>
 </main>
-<!-- Link to the external JavaScript file -->
-<script src="assets/js/brainwaveblitz.js"></script>
+
+<aside class="sidebar">
+    <?php echo $links->display_links(); ?>
+</aside>
+
+<footer class="colophon">
+    <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz</p>
+</footer>
+
 </body>
 </html>
