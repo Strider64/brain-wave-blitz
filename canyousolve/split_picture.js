@@ -1,11 +1,11 @@
 // Declare the canvas and context variables
 let canvas, ctx;
-
+let numParts = 6;
 // Variable to keep track of the current part being displayed
-export let currentPart = -1;
+export let currentPart = 6;
 
 export function resetCurrentPart() {
-    currentPart = -1;
+    currentPart = 6;
 }
 
 // Function to reset the canvas and redraw the initial parts of the image
@@ -74,7 +74,7 @@ export function changeImageSource(newImagePath) {
 // Function to handle the button click event
 export const revealPartOfImage = () => {
     // Increment the current part & ensure it doesn't exceed the total # of parts
-    currentPart = Math.min(currentPart + 1, 5);
+    currentPart = Math.max(currentPart - 1, 0)
     drawParts()
 };
 
@@ -94,29 +94,33 @@ export function fullImage() {
 }
 
 // Function to draw the parts of the image based on the current part
+// Function to draw the parts of the image based on the current part
 function drawParts() {
-    // Set the total number of parts to draw, the gap between parts, and the width of each part
-    const numParts = 6;                         // total number of parts
+    // Set the gap between parts, and the width of each part
     const gap = 5;                              // gap between parts
     const partWidth = (canvas.width - (numParts - 1) * gap) / numParts;   // width of each part
 
-    // Loop through the parts to be drawn and draw each one on the canvas
-    for (let i = 0; i <= currentPart; i++) {    // loop through each part up to the current part
-        let sx = (i * imgObj.naturalWidth) / numParts; // calculate the X position of the source image for this part
-        let dx = i * (partWidth + gap);         // calculate the X position of the destination canvas for this part
+    newCanvas(); // clear the canvas and fill it with white color
 
-        // Draw the current part on the canvas using the drawImage method
-        ctx.drawImage(
-            imgObj,                             // the image object to draw from
-            sx,                                 // the X position on the source image to start drawing from
-            0,                                  // the Y position on the source image to start drawing from
-            imgObj.naturalWidth / numParts,     // the width of the part on the source image
-            imgObj.naturalHeight,               // the height of the part on the source image
-            dx,                                 // the X position on the destination canvas to start drawing to
-            0,                                  // the Y position on the destination canvas to start drawing to
-            partWidth,                          // the width of the part on the destination canvas
-            canvas.height                       // the height of the part on the destination canvas (in this case, the full height of the canvas)
-        );
+    // Loop through the parts to be drawn and draw each one on the canvas
+    for (let i = 0; i < numParts; i++) {    // loop through all parts
+        if (i < currentPart) {              // only draw part if it's less than the current part
+            let sx = (i * imgObj.naturalWidth) / numParts; // calculate the X position of the source image for this part
+            let dx = i * (partWidth + gap);         // calculate the X position of the destination canvas for this part
+
+            // Draw the current part on the canvas using the drawImage method
+            ctx.drawImage(
+                imgObj,                             // the image object to draw from
+                sx,                                 // the X position on the source image to start drawing from
+                0,                                  // the Y position on the source image to start drawing from
+                imgObj.naturalWidth / numParts,     // the width of the part on the source image
+                imgObj.naturalHeight,               // the height of the part on the source image
+                dx,                                 // the X position on the destination canvas to start drawing to
+                0,                                  // the Y position on the destination canvas to start drawing to
+                partWidth,                          // the width of the part on the destination canvas
+                canvas.height                       // the height of the part on the destination canvas (in this case, the full height of the canvas)
+            );
+        }
     }
 }
 
