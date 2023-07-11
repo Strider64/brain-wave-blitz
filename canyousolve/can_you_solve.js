@@ -1,5 +1,5 @@
 'use strict';
-import  {changeImageSource, revealPartOfImage, resetCanvas, fullImage} from "./split_picture.js";
+import {updateImageSource, revealPartOfImage, resetCanvas, fullImage, resetCurrentPart} from "./split_picture.js";
 import { changeImage } from "./load_image_onto_canvas.js";
 const QUESTION_URL = `get-question.php`;
 const WORD_URL = 'get-word-letters.php';
@@ -16,6 +16,10 @@ document.getElementById("myButton");
 //button.addEventListener('click', onButtonClick, false);
 scoreDisplay.style.display = 'none';
 nextBtn.style.display = 'none';
+
+let imageObj = null;
+let secondImage = true;
+
 if (sessionStorage.getItem('isRefresh') === null) {
     sessionStorage.setItem('isRefresh', 'true');
 } else {
@@ -41,6 +45,39 @@ const startingScreen = () => {
     buttons(); // Display the buttons in order for player to use
 }
 changeImage("../assets/canvas_images/img-game-start.jpg");
+
+// Create a new Image object
+let imgObj = new Image();
+
+// Declare imageArray at the top of the script
+let imageArray = [];
+
+fetch('fetch_game_image_paths.php')
+    .then(response => response.json())
+    .then(data => {
+        imageArray = data.map(imgPath => {
+            let img = new Image();
+            // Add the missing part to the URL * Note take out /path/ at the end when on a remote server
+            let baseUrl = window.location.protocol + "//" + window.location.host + "/brainwaveblitz";
+            img.src = baseUrl + imgPath;
+            return img;
+        });
+        console.log('Image Array:', imageArray.map(img => img.src));  // Log image paths
+    })
+    .catch(error => console.error('Error:', error));
+
+
+
+
+
+// Function to change the image source
+function changeImageSource() {
+    if (imageArray.length > 0) {
+        imgObj = imageArray.shift();
+        updateImageSource('..' + imgObj.src);  // call the function from split_image.js
+    }
+}
+
 startButton.addEventListener('click', startingScreen, false);
 // Define a function to handle button clicks
 const handleButtonClick = (event) => {
@@ -170,7 +207,7 @@ const fetchWord = async () => {
         const data = await response.json();
         scoreDisplay.style.display = 'block';
         scoreDisplay.textContent = `Your score is ${data.score}`;
-        console.log('data.score', data.score);
+        //console.log('data.score', data.score);
         //console.log('is it solved', data.is_it_solved, 'is end of table', data.is_end_of_table);
 
 
@@ -225,10 +262,25 @@ const fetchNextId = async (currentId) => {
         const data = await response.json();
         if (!data.end_of_table) {
             id = data.next_id;
-            //console.log(id);
-            await changeImageSource(".." + data.image);
-            await fetchWord();
+            // * Note take out /path/ at the end when on a remote server
+            let baseUrl = window.location.protocol + "//" + window.location.host + "/brainwaveblitz";
+            let imagePath = baseUrl + data.image;
+            console.log('data.image', data.image);
+            console.log('image path', imagePath);
+            console.log('imageArray src', imageArray.map(img => img.src));
+
+            let imageIndex = imageArray.findIndex(img => img.src === imagePath);
+            //console.log('imageArray', imageArray);
+            console.log('imageIndex', imageIndex);
+            if (imageIndex !== -1) {
+                console.log(imageArray.length)
+                imageObj = imageArray.splice(imageIndex, 1)[0];
+                console.log(imageArray.length)
+                await updateImageSource(imageObj);
+            }
             await fetchQuestion();
+            await fetchWord();
+
             //await fetchImage();
         } else {
             // End of Game
@@ -247,6 +299,7 @@ const fetchNextId = async (currentId) => {
 
 // Fetch the First ID
 const fetchFirstId = async () => {
+
     try {
         // fetch the data from the server
         const response = await fetch('get-first-id.php', {
@@ -259,30 +312,33 @@ const fetchFirstId = async () => {
 
         // parse the response as JSON
         const data = await response.json();
-        id = data.first_id; // Grab the First ID the DB Table
-        //console.log(id);
-        await changeImageSource(".." + data.image);
-        console.log(".."  + data.image);
-        await fetchQuestion();
+        id = data.first_id;
+
+
+        // * Note take out /path/ at the end when on a remote server
+        let baseUrl = window.location.protocol + "//" + window.location.host + "/brainwaveblitz";
+        let imagePath = baseUrl + data.image;
+
+
+        console.log('data.image', data.image);
+        console.log('image path', imagePath);
+        console.log('imageArray src', imageArray.map(img => img.src));
+
+        let imageIndex = imageArray.findIndex(img => img.src === imagePath);
+        console.log('imageIndex', imageIndex);
+        if (imageIndex !== -1) {
+            console.log(imageArray.length)
+
+            imageObj = imageArray.splice(imageIndex, 1)[0];
+            console.log(imageArray.length)
+             updateImageSource(imageObj);
+        }
+
         await fetchWord(); // fetch the answers
-        //await fetchImage();
+        await fetchQuestion();
+
     } catch (error) {
         console.error(error);
     }
 };
 
-
-// Generate buttons for numbers 0 to 9 (ASCII codes 48 to 57)
-/*        for (let i = 48; i <= 57; i++) {
-            const button = document.createElement("button");
-            button.textContent = String.fromCharCode(i);
-            buttonsEl.appendChild(button);
-        }*/
-
-// Generate buttons for common symbols
-/*        const symbols = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "+", "=", "{", "}", "[", "]", "|", "\\", ":", ";", "\"", "'", "<", ">", ",", ".", "?", "/", "~"];
-        for (let i = 0; i < symbols.length; i++) {
-            const button = document.createElement("button");
-            button.textContent = symbols[i];
-            buttonsEl.appendChild(button);
-        }*/

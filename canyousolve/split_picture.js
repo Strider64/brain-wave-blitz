@@ -2,10 +2,10 @@
 let canvas, ctx;
 let numParts = 6;
 // Variable to keep track of the current part being displayed
-export let currentPart = 6;
+export let currentPart = 7;
 
 export function resetCurrentPart() {
-    currentPart = 6;
+    currentPart = 7;
 }
 
 // Function to reset the canvas and redraw the initial parts of the image
@@ -65,16 +65,20 @@ imgObj.onload = function () {
     drawParts();
 };
 
-// Set the image source
-export function changeImageSource(newImagePath) {
-    imgObj.src = newImagePath;
+// In split_picture.js
+export function updateImageSource(newImageObj) {
+    imgObj = newImageObj;
+    resetCanvas();
+    revealPartOfImage();
 }
+
 
 
 // Function to handle the button click event
 export const revealPartOfImage = () => {
+    console.log('current part', currentPart);
     // Increment the current part & ensure it doesn't exceed the total # of parts
-    currentPart = Math.max(currentPart - 1, 0)
+    currentPart = Math.max(currentPart-1, 0)
     drawParts()
 };
 
