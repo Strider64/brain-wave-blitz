@@ -85,7 +85,6 @@ export function fullImage() {
 }
 
 // Function to draw the parts of the image based on the current part
-// Function to draw the parts of the image based on the current part
 function drawParts() {
     // Set the gap between parts, and the width of each part
     const gap = 5;                              // gap between parts
