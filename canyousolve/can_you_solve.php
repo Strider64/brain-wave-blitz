@@ -2,6 +2,13 @@
 require_once __DIR__ . '/../../config/config.php';
 require_once "../vendor/autoload.php";
 
+/*
+ * Can You Solve Version 2.0 Beta
+ * Created by John Pepp on Jan 1, 2023
+ * Revised July 10, 2023
+ *
+ */
+
 use brainwave\ErrorHandler;
 use brainwave\Database;
 use brainwave\LoginRepository as Login;

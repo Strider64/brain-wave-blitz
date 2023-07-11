@@ -1,5 +1,5 @@
 'use strict';
-import {updateImageSource, revealPartOfImage, resetCanvas, fullImage, resetCurrentPart} from "./split_picture.js";
+import {updateImageSource, revealPartOfImage, resetCanvas, fullImage} from "./split_picture.js";
 import { changeImage } from "./load_image_onto_canvas.js";
 const QUESTION_URL = `get-question.php`;
 const WORD_URL = 'get-word-letters.php';
@@ -18,8 +18,6 @@ scoreDisplay.style.display = 'none';
 nextBtn.style.display = 'none';
 
 let imageObj = null;
-let secondImage = true;
-
 if (sessionStorage.getItem('isRefresh') === null) {
     sessionStorage.setItem('isRefresh', 'true');
 } else {
@@ -62,23 +60,12 @@ fetch('fetch_game_image_paths.php')
             img.src = baseUrl + imgPath;
             return img;
         });
-        console.log('Image Array:', imageArray.map(img => img.src));  // Log image paths
+        //console.log('Image Array:', imageArray.map(img => img.src));  // Log image paths
     })
     .catch(error => console.error('Error:', error));
 
-
-
-
-
-// Function to change the image source
-function changeImageSource() {
-    if (imageArray.length > 0) {
-        imgObj = imageArray.shift();
-        updateImageSource('..' + imgObj.src);  // call the function from split_image.js
-    }
-}
-
 startButton.addEventListener('click', startingScreen, false);
+
 // Define a function to handle button clicks
 const handleButtonClick = (event) => {
     const button = event.target;
@@ -89,7 +76,6 @@ const handleButtonClick = (event) => {
         button.classList.add("guessedButton"); // Highlight and Disable Character
         // console.log('Guessed Letter', guessedLetters);
     }
-    //console.log('Sending guessedLetters', guessedLetters);
     fetchWord();
     button.removeEventListener("click", handleButtonClick);
 };
@@ -103,7 +89,6 @@ const handleInput = (event) => {
 
     // Focus on the input element to bring up the virtual keyboard
     input.focus();
-
 
     if (letter.length !== 1 || !letter.match(/[a-z]/i)) {
         console.log("Please enter a single letter.");
@@ -121,8 +106,9 @@ const handleInput = (event) => {
 };
 
 const buttonsEl = document.querySelector(".hangman__buttons");
+
 const buttons = () => {
-// Generate buttons for letters A to Z (ASCII codes 65 to 90)
+    /* Generate buttons for letters A to Z (ASCII codes 65 to 90) */
     for (let i = 65; i <= 90; i++) {
         const button = document.createElement("button");
         button.textContent = String.fromCharCode(i);
@@ -133,6 +119,7 @@ const buttons = () => {
 
 // Add an event listener to the input element to listen for input events
 document.getElementById("guess").addEventListener("input", handleInput);
+
 // Remove Current Word, so that it can be redrawn on screen correctly
 const removeWord = () => {
     let element = document.querySelector('.hangman__word');
@@ -207,9 +194,6 @@ const fetchWord = async () => {
         const data = await response.json();
         scoreDisplay.style.display = 'block';
         scoreDisplay.textContent = `Your score is ${data.score}`;
-        //console.log('data.score', data.score);
-        //console.log('is it solved', data.is_it_solved, 'is end of table', data.is_end_of_table);
-
 
         // Show Part of Picture if Player misses a guess
         if ( (data.remaining - check) !== 0 ) {
@@ -223,6 +207,7 @@ const fetchWord = async () => {
         }
 
         remainingGuesses.textContent = `Remaining Guess: ${data.remaining}`;
+
         // If Hangman Word is solved display question and next button
         if (data.is_it_solved === true) { // I want to disable all buttons if this is true
             buttonsEl.style.display = "none";
@@ -242,7 +227,6 @@ const fetchWord = async () => {
         console.error(error);
     }
 }
-
 
 // Fetch the Next ID
 const fetchNextId = async (currentId) => {
@@ -265,17 +249,14 @@ const fetchNextId = async (currentId) => {
             // * Note take out /path/ at the end when on a remote server
             let baseUrl = window.location.protocol + "//" + window.location.host + "/brainwaveblitz";
             let imagePath = baseUrl + data.image;
-            console.log('data.image', data.image);
-            console.log('image path', imagePath);
-            console.log('imageArray src', imageArray.map(img => img.src));
+            //console.log('data.image', data.image);
+            //console.log('image path', imagePath);
+            //console.log('imageArray src', imageArray.map(img => img.src));
 
             let imageIndex = imageArray.findIndex(img => img.src === imagePath);
-            //console.log('imageArray', imageArray);
-            console.log('imageIndex', imageIndex);
+
             if (imageIndex !== -1) {
-                console.log(imageArray.length)
                 imageObj = imageArray.splice(imageIndex, 1)[0];
-                console.log(imageArray.length)
                 await updateImageSource(imageObj);
             }
             await fetchQuestion();
@@ -314,24 +295,19 @@ const fetchFirstId = async () => {
         const data = await response.json();
         id = data.first_id;
 
-
         // * Note take out /path/ at the end when on a remote server
         let baseUrl = window.location.protocol + "//" + window.location.host + "/brainwaveblitz";
         let imagePath = baseUrl + data.image;
 
-
-        console.log('data.image', data.image);
-        console.log('image path', imagePath);
-        console.log('imageArray src', imageArray.map(img => img.src));
+        //console.log('data.image', data.image);
+        //console.log('image path', imagePath);
+        //console.log('imageArray src', imageArray.map(img => img.src));
 
         let imageIndex = imageArray.findIndex(img => img.src === imagePath);
-        console.log('imageIndex', imageIndex);
-        if (imageIndex !== -1) {
-            console.log(imageArray.length)
 
+        if (imageIndex !== -1) {
             imageObj = imageArray.splice(imageIndex, 1)[0];
-            console.log(imageArray.length)
-             updateImageSource(imageObj);
+            updateImageSource(imageObj);
         }
 
         await fetchWord(); // fetch the answers

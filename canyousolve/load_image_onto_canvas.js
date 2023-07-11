@@ -36,5 +36,4 @@
     // Set the image source
     export function changeImage(newImagePath) {
         imageObj.src = newImagePath;
-        console.log(imageObj.src);
     }

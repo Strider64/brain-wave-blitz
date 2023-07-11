@@ -1,0 +1,33 @@
+{
+  "name": "vendor_name/brainwaveblitz",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "johnrpepp",
+      "email": "jrpepp@pepster.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "brainwave\\": "src/",
+      "PHPMailer\\PHPMailer\\": "vendor/phpmailer/phpmailer/src/"
+    }
+  },
+  "require": {
+    "league/oauth2-client": "*",
+    "phpmailer/phpmailer": "^6.8",
+    "ext-pdo": "*",
+    "ext-readline": "*",
+    "ext-exif": "*",
+    "ext-gd": "*",
+    "ext-curl": "*",
+    "intervention/image": "^2.7",
+    "pragmarx/google2fa": "^8.0",
+    "guzzlehttp/promises": "^1.5",
+    "chillerlan/php-qrcode": "^4.3",
+    "firebase/php-jwt": "^6.0"
+
+  }
+}

@@ -38,16 +38,6 @@ export function newCanvas() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-// Function to start the game
-function startGame() {
-    document.querySelector('.hangman').style.display = 'flex';
-    resetCanvas();
-    canvas.removeEventListener("click", startGame);
-}
-
-// Add a click event listener to the canvas
-//canvas.addEventListener("click", startGame);
-
 // Create a new Image object
 let imgObj = new Image();
 
@@ -72,11 +62,8 @@ export function updateImageSource(newImageObj) {
     revealPartOfImage();
 }
 
-
-
 // Function to handle the button click event
 export const revealPartOfImage = () => {
-    console.log('current part', currentPart);
     // Increment the current part & ensure it doesn't exceed the total # of parts
     currentPart = Math.max(currentPart-1, 0)
     drawParts()
@@ -127,5 +114,3 @@ function drawParts() {
         }
     }
 }
-
-
