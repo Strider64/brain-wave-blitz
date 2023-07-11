@@ -19,10 +19,10 @@ $login = new Login($pdo);
 // Check if the form was submitted with POST method
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the input and textarea values
-    $points = $_POST['points'] ?? null;
+    $category = $_POST['category'] ?? null;
     $question = $_POST['question'] ?? null;
     $answer = $_POST['answer'] ?? null;
-
+    $points = $_POST['points'] ?? null;
     // Validate input and textarea values as needed
     // ...
 
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $savePath = $saveDirectory . $destinationFilename;
 
             // Prepare the SQL INSERT statement
-            $sql = "INSERT INTO canyousolve (points, question, answer, canvas_images) VALUES (:points, :question, :answer, :canvas_images)";
+            $sql = "INSERT INTO canyousolve (points, question, answer, canvas_images, category) VALUES (:points, :question, :answer, :canvas_images, :category)";
             $stmt = $pdo->prepare($sql);
 
             // Bind the values to the placeholders
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bindValue(':question', $question);
             $stmt->bindValue(':answer', $answer);
             $stmt->bindValue(':canvas_images', $savePath);
-
+            $stmt->bindParam(':category', $category);
             // Execute the prepared statement
             $insertSuccess = $stmt->execute();
 

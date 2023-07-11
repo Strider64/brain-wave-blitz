@@ -60,6 +60,14 @@ if (!$login->check_login_token()) {
             <input id="file" class="file-input-style" type="file" name="image">
             <label for="file">Select file</label>
         </div>
+        <select class="select-css" name="category">
+            <option disabled>Select a Category</option>
+            <option value="wildlife">Wildlife</option>
+            <option selected value="lego">LEGO</option>
+            <option value="space">Space</option>
+            <option value="sports">Sports</option>
+            <option value="movies">Movies</option>
+        </select>
         <div class="question_grid_area">
             <label for="question_style">Question</label>
             <textarea id="question_style" name="question" tabindex=""></textarea>

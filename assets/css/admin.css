@@ -239,7 +239,7 @@ p {
     background-color: var(--main-bg-color);
     width: 21.875em; /* Change to suit your needs */
     padding: 20px;
-    box-shadow: 0px 10px 20px var(--box-shadow-color);
+    box-shadow: 0px 10px 20px var(--shadow-color);
     border-radius: 5px;
 }
 
@@ -320,8 +320,8 @@ p {
 }
 
 #data_entry_form {
-    width: 100%;
-    max-width: 600px;
+    width: 37.5em;
+    height: 35.25em;
     margin: 0 auto;
     padding: 20px;
     box-shadow: 0 5px 15px var(--shadow-color);
@@ -361,6 +361,8 @@ p {
 }
 
 .form-button {
+    float: right;
+    text-transform: capitalize;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
