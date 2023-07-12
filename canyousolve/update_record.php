@@ -1,11 +1,14 @@
 <?php
+// edit_update_record.php
+
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/config.php';
 require_once "../vendor/autoload.php";
 
-use PhotoTech\ErrorHandler;
-use PhotoTech\Database;
-use PhotoTech\LoginRepository as Login;
+use brainwave\ErrorHandler;
+use brainwave\Database;
+use brainwave\LoginRepository as Login;
+use Intervention\Image\ImageManagerStatic as Image;
 
 $errorHandler = new ErrorHandler();
 
@@ -24,92 +27,83 @@ try {
 
     // Get form data
     $id = (int) $_POST['id'];
-    $question = $_POST['question'];
+    $category = $_POST['category'];
+    $question= $_POST['question'];
     $answer = $_POST['answer'];
+    $points = 15;
 
-// ...
-// Handle image upload
+    // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['size'] > 0) {
-        $image = $_FILES['image'];
+        $uploadedFile = $_FILES['image'];
+
+        // Validate the file (e.g., file size, type, etc.)
+        $maxFileSize = 50 * 1024 * 1024; // 50 MB
+        $allowedFileTypes = ['image/jpeg', 'image/png'];
+
+        if ($uploadedFile['size'] > $maxFileSize) {
+            echo json_encode(['error' => 'File size is too large.']);
+            exit();
+        }
+
+        if (!in_array($uploadedFile['type'], $allowedFileTypes)) {
+            echo json_encode(['error' => 'Invalid file type.']);
+            exit();
+        }
+        // Move the uploaded file to the desired destination
         $destinationDirectory = '../assets/canvas_images/';
         $saveDirectory = '/assets/canvas_images/';
-        $destinationFilename = time() . '_' . basename($image['name']);
+        $destinationFilename = time() . '_' . basename($uploadedFile['name']);
         $destinationPath = $destinationDirectory . $destinationFilename;
-        $target_file = $destinationPath;
 
-        // Get original image dimensions
-        list($original_width, $original_height) = getimagesize($image['tmp_name']);
 
-        // Calculate the new dimensions
-        $new_width = 1200;
-        $new_height = 800;
-        $scale = min($new_width / $original_width, $new_height / $original_height);
-        $width = intval($original_width * $scale);
-        $height = intval($original_height * $scale);
 
-        // Create a new image with the new dimensions
-        $resized_image = imagecreatetruecolor($width, $height);
 
-        // Detect image type and create image from uploaded file
-        $image_type = exif_imagetype($image['tmp_name']);
-        $source_image = match ($image_type) {
-            IMAGETYPE_JPEG => imagecreatefromjpeg($image['tmp_name']),
-            IMAGETYPE_PNG => imagecreatefrompng($image['tmp_name']),
-            IMAGETYPE_GIF => imagecreatefromgif($image['tmp_name']),
-            default => throw new Exception('Unsupported image type.'),
-        };
+        // Load the image
+        $loadedImage = Image::make($uploadedFile['tmp_name']);
+
+        // Resize the image
+        $loadedImage->resize(2048, 1365, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
+
+        // Save the new image
+        $loadedImage->save($destinationPath, 100);
+
         // Retrieve the current image file path from the database
-        $current_image_query = "SELECT canvas_images FROM bird_trivia WHERE id = :id";
-        $current_image_stmt = $pdo->prepare($current_image_query);
-        $current_image_stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $current_image_stmt->execute();
-        $current_image_row = $current_image_stmt->fetch(PDO::FETCH_ASSOC);
-        $current_image_path = $current_image_row['canvas_images'];
+        $sql1 = "SELECT canvas_images FROM canyousolve WHERE id = :id";
+        $stmt1 = $pdo->prepare($sql1);
+        $stmt1->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt1->execute();
+        $row = $stmt1->fetch(PDO::FETCH_ASSOC);
+        $current_image_path = $row['canvas_images'];
 
         // Delete the old image if it exists
         $current_image_abs_path = $_SERVER['DOCUMENT_ROOT'] . $current_image_path;
         if (file_exists($current_image_abs_path)) {
             unlink($current_image_abs_path);
         }
-        // Resize the image
-        imagecopyresampled($resized_image, $source_image, 0, 0, 0, 0, $width, $height, $original_width, $original_height);
-
-        // Save the resized image to the target file
-        switch ($image_type) {
-            case IMAGETYPE_JPEG:
-                imagejpeg($resized_image, $target_file);
-                break;
-            case IMAGETYPE_PNG:
-                imagepng($resized_image, $target_file);
-                break;
-            case IMAGETYPE_GIF:
-                imagegif($resized_image, $target_file);
-                break;
-        }
-
-        // Free up memory
-        imagedestroy($source_image);
-        imagedestroy($resized_image);
-
-        move_uploaded_file($image['tmp_name'], $target_file);
 
         // Prepare the SQL query with placeholders
-        $sql = "UPDATE bird_trivia SET question = :question, answer = :answer, canvas_images = :canvas_images WHERE id = :id";
+        $sql = "UPDATE canyousolve SET category = :category, question = :question, answer = :answer, canvas_images = :canvas_images, points = :points WHERE id = :id";
         $stmt = $pdo->prepare($sql);
 
         // Bind the values to the placeholders
         $savePath = $saveDirectory . $destinationFilename;
         $stmt->bindParam(':canvas_images', $savePath);
+
     } else {
         // Prepare the SQL query with placeholders
-        $sql = "UPDATE bird_trivia SET question = :question, answer = :answer WHERE id = :id";
+        $sql = "UPDATE canyousolve SET category = :category, question = :question, answer = :answer, points = :points WHERE id = :id";
         $stmt = $pdo->prepare($sql);
     }
 
     // Bind the values to the placeholders
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->bindParam(':category', $category);
     $stmt->bindParam(':question', $question);
     $stmt->bindParam(':answer', $answer);
+    $stmt->bindParam(':points', $points);
 
     // Execute the prepared statement
     $stmt->execute();
@@ -125,3 +119,4 @@ try {
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
+

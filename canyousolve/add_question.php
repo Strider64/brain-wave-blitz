@@ -4,8 +4,7 @@ require_once "../vendor/autoload.php";
 
 use brainwave\ErrorHandler;
 use brainwave\Database;
-
-//use brainwave\LoginRepository as Login;
+use brainwave\LoginRepository as Login;
 
 $errorHandler = new ErrorHandler();
 
@@ -14,11 +13,11 @@ set_exception_handler([$errorHandler, 'handleException']);
 
 $database = new Database();
 $pdo = $database->createPDO();
-/*$login = new Login($pdo);
+$login = new Login($pdo);
 if (!$login->check_login_token()) {
     header('location: index.php');
     exit();
-}*/
+}
 ?>
 
 <!doctype html>

@@ -88,12 +88,24 @@ $login = new Login($pdo);
         </div>
     </div>
     <div class="home_sidebar">
-
+        <!-- Selector for choosing the category of questions -->
+        <div id="categorySelector">
+            <label for="category">Choose a category:</label>
+            <select id="category" name="category">
+                <option disabled>Select a Category</option>
+                <option value="wildlife">Wildlife</option>
+                <option selected value="lego">LEGO</option>
+                <option value="space">Space</option>
+                <option value="sports">Sports</option>
+                <option value="movies">Movies</option>
+            </select>
+        </div>
 
     </div>
 
 </main>
 <aside class="sidebar">
+
 </aside>
 <footer class="colophon">
     <p>&copy;<?php echo date("Y") ?> Brain Wave Blitz</p>

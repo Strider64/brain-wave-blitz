@@ -58,7 +58,7 @@ if (!$login->check_login_token()) {
 
 </div>
 <main class="main_container">
-    <form id="data_entry_form" class="checkStyle" action="edit_canyousolve.php" method="post" enctype="multipart/form-data">
+    <form id="data_entry_form" class="checkStyle" action="edit_question.php" method="post" enctype="multipart/form-data">
 
         <input id="id" type="hidden" name="id" value="">
         <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
@@ -83,12 +83,12 @@ if (!$login->check_login_token()) {
             </select>
         </label>
         <div id="heading_heading_grid_area">
-            <label class="heading_label_style" for="heading">Heading</label>
-            <input class="heading" class="enter_input_style" type="text" name="heading" value="" tabindex="1" required>
+            <label class="heading_label_style" for="heading">Question</label>
+            <input class="heading" class="enter_input_style" type="text" name="question" value="" tabindex="1" required>
         </div>
         <div id="content_style_grid_area">
-            <label class="text_label_style" for="content">Content</label>
-            <textarea class="text_input_style" id="content" name="content" tabindex="2"></textarea>
+            <label class="text_label_style" for="content">Answer</label>
+            <textarea class="text_input_style" id="content" name="answer" tabindex="2"></textarea>
         </div>
         <div id="submit_picture_grid_area">
             <button class="form-button" type="submit" name="submit" value="enter">submit</button>
@@ -118,6 +118,6 @@ if (!$login->check_login_token()) {
 <footer class="colophon">
     <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz</p>
 </footer>
-<script src="update_record.js"></script>
+<script src="edit_can_you_solve_records.js"></script>
 </body>
 </html>
