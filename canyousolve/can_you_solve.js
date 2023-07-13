@@ -73,7 +73,7 @@ fetch('fetch_game_image_paths.php')
     .then(data => {
         imageArray = data.map(imgPath => {
             let img = new Image();
-            // Add the missing part to the URL * Note take out /path/ at the end when on a remote server
+            // Add the missing part to the URL
             img.src = baseUrl + imgPath;
             return img;
         });
