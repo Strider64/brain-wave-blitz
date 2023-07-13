@@ -35,6 +35,6 @@ const DOMAIN = "localhost";
 const DATABASE_HOST = 'localhost';
 const DATABASE_NAME = 'general';
 const DATABASE_USERNAME = 'root';
-const DATABASE_PASSWORD = 'Dpsimfm1964!';
+const DATABASE_PASSWORD = '';
 
 
