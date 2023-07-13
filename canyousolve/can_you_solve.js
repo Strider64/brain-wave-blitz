@@ -42,6 +42,7 @@ category.addEventListener('change', () => {
     selected = category.value;
 })
 const startingScreen = () => {
+    document.querySelector('.notice').style.display = 'none';
     document.querySelector('.hangman').style.display = 'flex';
     startButton.style.display = "none";
     remainingGuesses.textContent = `Remaining Guess: ${remaining}`;

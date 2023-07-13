@@ -197,6 +197,15 @@ table {
 }
 
 /* Can You Solve Game CSS */
+
+.main_container p.notice {
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 1.0em;
+    font-weight: bold;
+    color: #4b81f8;
+    margin: 0.625em;
+}
+
 .hangman {
     display: flex;
     flex-direction: column;

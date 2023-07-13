@@ -3,9 +3,9 @@ require_once __DIR__ . '/../../config/config.php';
 require_once "../vendor/autoload.php";
 
 /*
- * Can You Solve Version 2.0 Beta
+ * Can You Solve Version 2.5 Beta
  * Created by John Pepp on Jan 1, 2023
- * Revised July 10, 2023
+ * Revised July 13, 2023
  *
  */
 
@@ -65,6 +65,7 @@ $login = new Login($pdo);
     </div>
 </header>
 <main class="main_container">
+        <p class="notice">Images preloading may cause game load delays.</p>
         <div id="canvasContainer">
             <canvas id="canvas" width="900" height="520">Your browser does not support Canvase</canvas>
         </div>

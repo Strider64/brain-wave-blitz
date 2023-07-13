@@ -220,7 +220,7 @@ $records = $cms->page($per_page, $offset, 'cms', $category);
 
     <!-- Website name -->
     <div class="name-website">
-        <h1 class="webtitle">Brain Wave Blitz</h1>
+        <h1 class="webtitle">Home Page</h1>
     </div>
 </header>
 <main class="main_container">
@@ -229,7 +229,7 @@ $records = $cms->page($per_page, $offset, 'cms', $category);
         //echo '<meta itemprop="datePublished" content="' . $record['date_added'] . '">';
         //echo '<meta itemprop="dateModified" content="' . $record['date_updated'] . '">';
         echo '<div class="image-header">';
-        echo '<img src="' . $record['image_path'] . '" title="' . $record['heading'] . '" alt="' . $record['heading'] . '">';
+        echo '<a href="brainwaveblitz.php"><img src="' . $record['image_path'] . '" title="' . $record['heading'] . '" alt="' . $record['heading'] . '"></a>';
         echo '</div>';
         echo '<h1>' . $record['heading'] . '</h1>';
         echo '<p>' . nl2br(htmlspecialchars($record['content'])) . '</p>';
