@@ -57,13 +57,23 @@ let imgObj = new Image();
 // Declare imageArray at the top of the script
 let imageArray = [];
 
+let baseUrl;
+
+if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    // If we're on the local machine, use the local path
+    baseUrl = window.location.protocol + "//" + window.location.host + "/brainwaveblitz";
+} else {
+    // Otherwise, use the production path
+    baseUrl = window.location.protocol + "//" + window.location.host;
+}
+
+
 fetch('fetch_game_image_paths.php')
     .then(response => response.json())
     .then(data => {
         imageArray = data.map(imgPath => {
             let img = new Image();
             // Add the missing part to the URL * Note take out /path/ at the end when on a remote server
-            let baseUrl = window.location.protocol + "//" + window.location.host + "/brainwaveblitz";
             img.src = baseUrl + imgPath;
             return img;
         });
@@ -255,7 +265,6 @@ const fetchNextId = async (currentId) => {
         if (!data.end_of_table) {
             id = data.next_id;
             // * Note take out /path/ at the end when on a remote server
-            let baseUrl = window.location.protocol + "//" + window.location.host + "/brainwaveblitz";
             let imagePath = baseUrl + data.image;
             //console.log('data.image', data.image);
             //console.log('image path', imagePath);
@@ -304,7 +313,6 @@ const fetchFirstId = async () => {
         id = data.first_id;
 
         // * Note take out /path/ at the end when on a remote server
-        let baseUrl = window.location.protocol + "//" + window.location.host + "/brainwaveblitz";
         let imagePath = baseUrl + data.image;
 
         //console.log('data.image', data.image);
