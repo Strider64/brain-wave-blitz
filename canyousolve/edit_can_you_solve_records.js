@@ -36,7 +36,7 @@
                     console.error(data.error);
                 } else {
                     const row = data[0];
-                    // console.log(row);
+                    console.log(row.category);
                     idInput.value = row.id;
                     image_for_edit_record.src = "../" + row.canvas_images;
                     image_for_edit_record.alt = row.answer;

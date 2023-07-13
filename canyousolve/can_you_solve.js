@@ -4,6 +4,7 @@ import { changeImage } from "./load_image_onto_canvas.js";
 const QUESTION_URL = `get-question.php`;
 const WORD_URL = 'get-word-letters.php';
 // set the starting offset and limit values
+const category = document.getElementById('category');
 const nextBtn = document.querySelector('.hangman__next');
 const word = document.querySelector('.hangman__word');
 const guesses = document.querySelector('.hangman__guesses');
@@ -34,7 +35,12 @@ let is_it_solved = false;
 let noReveal = true;
 let check = 6;
 let remaining = 6;
+let selected = category.value;
+console.log('category', selected);
 
+category.addEventListener('change', () => {
+    selected = category.value;
+})
 const startingScreen = () => {
     document.querySelector('.hangman').style.display = 'flex';
     startButton.style.display = "none";
@@ -238,7 +244,8 @@ const fetchNextId = async (currentId) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                current_id: currentId
+                current_id: currentId,
+                selected: selected
             })
         });
 
@@ -288,7 +295,7 @@ const fetchFirstId = async () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({resetScore: false})
+            body: JSON.stringify({resetScore: false, selected: selected})
         });
 
         // parse the response as JSON

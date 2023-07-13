@@ -65,7 +65,6 @@ $login = new Login($pdo);
     </div>
 </header>
 <main class="main_container">
-    <div class="home_article">
         <div id="canvasContainer">
             <canvas id="canvas" width="900" height="520">Your browser does not support Canvase</canvas>
         </div>
@@ -84,31 +83,21 @@ $login = new Login($pdo);
 
             <button class="hangman__next">Next Question</button>
             <div class="hangman__message"></div>
-
         </div>
-    </div>
-    <div class="home_sidebar">
-        <!-- Selector for choosing the category of questions -->
-        <div id="categorySelector">
-            <label for="category">Choose a category:</label>
-            <select id="category" name="category">
-                <option disabled>Select a Category</option>
-                <option value="wildlife">Wildlife</option>
-                <option selected value="lego">LEGO</option>
-                <option value="space">Space</option>
-                <option value="sports">Sports</option>
-                <option value="movies">Movies</option>
-            </select>
-        </div>
-
-    </div>
-
 </main>
 <aside class="sidebar">
-
+    <!-- Selector for choosing the category of questions -->
+    <div id="category_selector">
+        <label for="category">Category:</label>
+        <select id="category" name="category">>
+            <option value="wildlife">Wildlife</option>
+            <option selected value="lego">LEGO</option>
+            <option value="photography">Photography</option>
+        </select>
+    </div>
 </aside>
 <footer class="colophon">
-    <p>&copy;<?php echo date("Y") ?> Brain Wave Blitz</p>
+    <p>&copy;<?php echo date("Y") ?> Can You Solve?</p>
 </footer>
 <script type="module" src="can_you_solve.js"></script>
 <script>

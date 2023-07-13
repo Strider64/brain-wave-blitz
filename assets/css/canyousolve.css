@@ -19,28 +19,39 @@ time, mark, audio, video {
     font: inherit;
     vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
+
 body {
     line-height: 1;
 }
+
 ol, ul {
     list-style: none;
 }
+
 blockquote, q {
     quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: '';
     content: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
+}
+
+.site {
+    width: 40em;
+    margin: 0 auto;
 }
 
 /* Navigational CSS 9/30/2022 */
@@ -60,19 +71,23 @@ table {
     font-family: 'Work Sans', sans-serif;
     font-size: 1.2em;
     color: #efefef;
-    padding-left: 0.625em; }
+    padding-left: 0.625em;
+}
 
 .name-website {
     display: block;
-    /* show website name on larger screens */ }
+    /* show website name on larger screens */
+}
 
 .name-website .webtitle {
     font-family: 'Shadows Into Light', cursive;
     font-size: 1.8em;
-    color: #4b81f8; }
+    color: #4b81f8;
+}
 
 .nav > .nav-btn {
-    display: none; }
+    display: none;
+}
 
 /* Updated Hamburger Menu CSS */
 .nav > .nav-btn > label {
@@ -86,11 +101,13 @@ table {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     /* New shadow for the hamburger */
     transition: transform 0.5s ease-in-out;
-    /* Added for animation */ }
+    /* Added for animation */
+}
 
 .nav > .nav-btn:hover > label {
     transform: scale(1.1);
-    /* New hover effect for the hamburger */ }
+    /* New hover effect for the hamburger */
+}
 
 .nav > .nav-btn > label > span {
     display: block;
@@ -98,7 +115,8 @@ table {
     height: 5px;
     background-color: #4b81f8;
     /* New color for the hamburger lines */
-    margin: 6px 0; }
+    margin: 6px 0;
+}
 
 .nav > .nav-btn > label::after {
     content: 'Menu';
@@ -108,42 +126,50 @@ table {
     top: 60px;
     /* Position of the new label */
     right: -10px;
-    /* Position of the new label */ }
+    /* Position of the new label */
+}
 
 .nav > .nav-links {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px; }
+    padding: 10px;
+}
 
 .nav > .nav-links > a {
     line-height: 1.875em;
     text-decoration: none;
     text-transform: capitalize;
     color: #4b81f8;
-    padding: 0.313em 0.625em; }
+    padding: 0.313em 0.625em;
+}
 
 .nav > .nav-links > a:hover {
-    color: #4d4d4d; }
+    color: #4d4d4d;
+}
 
 .nav > #nav-check {
-    display: none; }
+    display: none;
+}
 
 /* Navigation CSS Media Query */
 @media screen and (max-width: 600px) {
     .nav {
-        padding-bottom: 0; }
+        padding-bottom: 0;
+    }
 
     .name-website {
         display: none;
-        /* hide website name on smaller screens */ }
+        /* hide website name on smaller screens */
+    }
 
     .nav > .nav-btn {
         display: block;
         position: absolute;
         right: 0;
         top: 0;
-        z-index: 10000; }
+        z-index: 10000;
+    }
 
     .nav > .nav-links {
         position: absolute;
@@ -152,15 +178,19 @@ table {
         z-index: 30000;
         background-color: #333;
         top: 50px;
-        left: 0; }
+        left: 0;
+    }
 
     .nav > .nav-links > a {
         display: block;
         width: 100%;
-        color: #fff; }
+        color: #fff;
+    }
 
     .nav .nav-btn:checked ~ .nav-links {
-        display: block; } }
+        display: block;
+    }
+}
 
 .hangman {
     display: none;
@@ -172,7 +202,8 @@ table {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin: 1.250em; }
+    margin: 1.250em;
+}
 
 .hangman__question {
     display: block;
@@ -180,27 +211,33 @@ table {
     font-size: 1.0em;
     font-weight: normal;
     padding: 0.625em;
-    margin-bottom: 0.625em; }
+    margin-bottom: 0.625em;
+}
 
 .hangman__word {
     font-size: 1.0em;
     font-weight: normal;
     margin-top: 0.300em;
-    margin-bottom: 0.300em; }
+    margin-bottom: 0.300em;
+}
 
 .hangman__word span {
-    padding-left: 0.325em; }
+    padding-left: 0.325em;
+}
 
 .hangman__guesses, .hangman__remaining {
     font-size: 0.8em;
-    margin-bottom: 1.250em; }
+    margin-bottom: 1.250em;
+}
 
 /* Display and Input for Larger Screens */
 #hangman-canvas {
-    display: none; }
+    display: none;
+}
 
 #hangman-form {
-    display: none; }
+    display: none;
+}
 
 .hangman__buttons {
     display: flex;
@@ -210,7 +247,8 @@ table {
     width: 100%;
     max-width: 20em;
     margin: 0 auto;
-    padding: 0; }
+    padding: 0;
+}
 
 .hangman__buttons button {
     width: 2.5em;
@@ -223,26 +261,32 @@ table {
     color: #000;
     justify-content: center;
     margin: 0.5em;
-    padding: 0; }
+    padding: 0;
+}
 
 .hangman__buttons button:hover:not(.guessedButton) {
-    background-color: #ddd; }
+    background-color: #ddd;
+}
 
 .hangman__buttons button.incorrectGuess {
     background-color: red;
     color: #fff;
-    cursor: default; }
+    cursor: default;
+}
 
 .hangman__buttons button.guessedButton {
     background-color: blue;
     color: #fff;
-    cursor: default; }
+    cursor: default;
+}
 
 .hangman__buttons button.guessedButton:hover {
-    background-color: blue; }
+    background-color: blue;
+}
 
 .hangman__input {
-    margin-top: 1.250em; }
+    margin-top: 1.250em;
+}
 
 .hangman__next {
     float: right;
@@ -257,15 +301,18 @@ table {
     text-transform: capitalize;
     text-decoration: none;
     padding: 0.313em;
-    transition: background-color .5s; }
+    transition: background-color .5s;
+}
 
 .hangman__score {
-    padding: 0.625em; }
+    padding: 0.625em;
+}
 
 .hangman__message {
     font-family: 'Noto Serif JP', serif;
     font-size: 1.0em;
-    padding: 1.250em; }
+    padding: 1.250em;
+}
 
 #canvasContainer {
     display: flex;
@@ -273,11 +320,6 @@ table {
     margin: 1.250em;
 }
 
-.sidebar, #hangman-canvas {
-    width: 0;
-    height: 0;
-    display: none;
-}
 
 #btnContainer {
     display: flex;
@@ -309,7 +351,123 @@ table {
     display: none;
 }
 
+.sidebar {
+    padding: 1.250em;
+}
+
+#category_selector {
+    font-family: 'Courier New', Courier, monospace; /* Game-like font */
+    color: #00FF00; /* Game-like text color */
+    background-color: #000000; /* Game-like background color */
+    border-radius: 5px; /* Rounded corners */
+    width: fit-content;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3); /* Drop shadow */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow */
+    padding: 0.625em;
+    margin: 0.625em auto;
+}
+
+#category_selector select {
+    background-color: #000000; /* Game-like background color */
+    color: #00FF00; /* Game-like text color */
+    border: none; /* Remove default border */
+    padding: 5px; /* Add some padding */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow */
+}
+
 .colophon p {
     color: #4b81f8;
     text-align: center;
+}
+
+/* Styles for smaller screens */
+@supports (grid-area: auto) {
+    @media screen and (max-width: 37.5em) {
+        .site {
+            display: grid;
+            grid-template-columns: 25.5em;
+            grid-template-areas:
+				"nav"
+				"main"
+                "sidebar"
+				"footer";
+        }
+
+        .nav {
+            grid-area: nav;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+        }
+
+        .main_container {
+            grid-area: main;
+        }
+
+        .main_container h1 {
+            font-size: 2.4em;
+        }
+
+        .main_container p {
+            font-size: 1.250em;
+        }
+
+        .colophon {
+            grid-area: footer;
+        }
+
+    }
+}
+
+
+/* Approximately the size of an iPad 768px */
+@supports (grid-area: auto) {
+    @media screen and (min-width: 48em) {
+
+    }
+}
+
+/* Approximately the size of a 1248px large display monitor */
+@supports (grid-area: auto) {
+    @media screen and (min-width: 78em) {
+
+        .site {
+            display: grid;
+            grid-template-columns: 20em 1fr;
+            grid-template-areas:
+				"nav nav"
+				"sidebar main"
+                "sidebar main"
+				"footer footer";
+            column-gap: 1.250em;
+            row-gap: 1.250em;
+            justify-content: center;
+        }
+
+        .nav {
+            grid-area: nav;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+        }
+
+        .main_container {
+            grid-area: main;
+        }
+
+        .main_container h1 {
+            font-size: 2.4em;
+        }
+
+        .main_container p {
+            font-size: 1.250em;
+        }
+
+        .colophon {
+            grid-area: footer;
+        }
+
+    }
 }

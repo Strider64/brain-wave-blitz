@@ -63,9 +63,7 @@ if (!$login->check_login_token()) {
             <option disabled>Select a Category</option>
             <option value="wildlife">Wildlife</option>
             <option selected value="lego">LEGO</option>
-            <option value="space">Space</option>
-            <option value="sports">Sports</option>
-            <option value="movies">Movies</option>
+            <option value="photography">Photography</option>
         </select>
         <div class="question_grid_area">
             <label for="question_style">Question</label>

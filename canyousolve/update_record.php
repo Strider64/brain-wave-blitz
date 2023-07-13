@@ -37,7 +37,7 @@ try {
         $uploadedFile = $_FILES['image'];
 
         // Validate the file (e.g., file size, type, etc.)
-        $maxFileSize = 50 * 1024 * 1024; // 50 MB
+        $maxFileSize = 56 * 1024 * 1024; // 50 MB
         $allowedFileTypes = ['image/jpeg', 'image/png'];
 
         if ($uploadedFile['size'] > $maxFileSize) {

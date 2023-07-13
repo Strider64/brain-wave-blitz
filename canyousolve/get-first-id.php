@@ -17,9 +17,10 @@ $pdo = $database->createPDO();
 // Parse the input data
 $data = json_decode(file_get_contents('php://input'), true);
 
+$category = $data['selected'];
 
-$stmt = $pdo->prepare('SELECT id, canvas_images FROM canyousolve ORDER BY id LIMIT 1');
-$stmt->execute();
+$stmt = $pdo->prepare('SELECT id, canvas_images FROM canyousolve WHERE category = :category ORDER BY id LIMIT 1');
+$stmt->execute([":category" => $category]);
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 header('Content-type: application/json');

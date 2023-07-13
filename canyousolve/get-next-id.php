@@ -15,6 +15,9 @@ $pdo = $database->createPDO();
 
 // Parse the input data
 $data = json_decode(file_get_contents('php://input'), true);
+
+$category = $data['selected'];
+
 if (!$data) {
     try {
         errorOutput('Invalid input data', 400);
@@ -26,8 +29,9 @@ if (!$data) {
 $current_id = (int)$data['current_id'];
 
 
-$stmt = $pdo->prepare('SELECT id, canvas_images FROM canyousolve WHERE id > :current_id ORDER BY id LIMIT 1');
+$stmt = $pdo->prepare('SELECT id, canvas_images FROM canyousolve WHERE id > :current_id AND category = :category ORDER BY id LIMIT 1');
 $stmt->bindValue(':current_id', $current_id, PDO::PARAM_INT);
+$stmt->bindParam(':category', $category);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 

@@ -75,11 +75,9 @@ if (!$login->check_login_token()) {
         <label id="select_grid_category_area">
             <select class="select-css" name="category">
                 <option id="category" value=""></option>
-                <option value="general">General</option>
-                <option value="lego">LEGO</option>
-                <option value="halloween">Halloween</option>
-                <option value="landscape">Landscape</option>
                 <option value="wildlife">Wildlife</option>
+                <option value="lego">LEGO</option>
+                <option value="photography">Photography</option>
             </select>
         </label>
         <div id="heading_heading_grid_area">
