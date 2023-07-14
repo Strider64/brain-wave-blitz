@@ -441,7 +441,7 @@ p {
 }
 
 #add_to_db_table #question_style,
-#add_to_db_table #answer_style {
+#add_to_db_table .answer_style {
     width: 95%;
     padding: 10px;
     border-radius: 5px;

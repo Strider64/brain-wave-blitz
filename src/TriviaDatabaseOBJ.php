@@ -76,7 +76,7 @@ class TriviaDatabaseOBJ
         /*
          * Set up the query using prepared statements with named placeholders.
          */
-        $sql = 'INSERT INTO ' . static::$table . ' (' . implode(", ", array_keys($this->params)) . ')';
+        $sql = 'INSERT INTO brainwaveblitz (' . implode(", ", array_keys($this->params)) . ')';
         $sql .= ' VALUES ( :' . implode(', :', array_keys($this->params)) . ')';
 
         /*
@@ -127,7 +127,7 @@ class TriviaDatabaseOBJ
 
     }
 
-    public function save_scores($data) {
+    /*public function save_scores($data) {
         $query = 'INSERT INTO hs_table( player, score, played, correct, totalQuestions, day_of_year ) VALUES ( :player, :score, NOW(), :correct, :totalQuestions, :day_of_year )';
         $stmt = $this->pdo->prepare($query);
         $result = $stmt->execute(['player' => $data['player'], 'score' => $data['score'], 'correct' => $data['correct'], 'totalQuestions' => $data['totalQuestions'], 'day_of_year' => $data['day_of_year']]);
@@ -140,11 +140,11 @@ class TriviaDatabaseOBJ
         }
 
         return ['result' => $result];
-    }
+    }*/
 
 
 
-    public function fetch_top_5_scores_for_date(string $date): array
+/*    public function fetch_top_5_scores_for_date(string $date): array
     {
         $sql = "SELECT * FROM hs_table WHERE DATE(played) = :date ORDER BY score DESC LIMIT 5";
 
@@ -189,7 +189,7 @@ class TriviaDatabaseOBJ
         }
 
         return $scores;
-    }
+    }*/
 
 
 

@@ -65,7 +65,6 @@ $login = new Login($pdo);
     </div>
 </header>
 <main class="main_container">
-        <p class="notice">Images preloading may cause game load delays.</p>
         <div id="canvasContainer">
             <canvas id="canvas" width="900" height="520">Your browser does not support Canvase</canvas>
         </div>
@@ -74,13 +73,14 @@ $login = new Login($pdo);
             <div class="hangman__question"></div>
             <div class="hangman__word"></div>
             <div class="hangman__guesses"></div>
+            <div class="hangman__buttons"></div>
             <div class="hangman__score"></div>
             <div class="hangman__remaining"></div>
             <form id="hangman-form">
                 <label for="guess">Enter a letter:</label>
                 <input type="text" id="guess" maxlength="1" autofocus>
             </form>
-            <div class="hangman__buttons"></div>
+
 
             <button class="hangman__next">Next Question</button>
             <div class="hangman__message"></div>

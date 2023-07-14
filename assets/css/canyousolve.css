@@ -210,8 +210,7 @@ table {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    margin: 1.250em;
+    width: 81%;
 }
 
 .hangman__question {
@@ -249,15 +248,20 @@ table {
 }
 
 .hangman__buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-areas:
+        'q w e r t y u i o p'
+        '. a s d f g h j k l'
+        '. . z x c v b n m .';
+    grid-template-columns: repeat(10, 1fr);
+    justify-items: center;
+    gap: 0.3em;
     width: 100%;
     max-width: 20em;
     margin: 0 auto;
     padding: 0;
 }
+
 
 .hangman__buttons button {
     width: 2.5em;
@@ -268,10 +272,39 @@ table {
     font-size: 1.125em;
     font-weight: bold;
     color: #000;
-    justify-content: center;
-    margin: 0.5em;
+    text-align: center;
+    line-height: 2.5em;
+    margin: 0;
     padding: 0;
 }
+
+.hangman__buttons .letter-q { grid-area: q; }
+.hangman__buttons .letter-w { grid-area: w; }
+.hangman__buttons .letter-e { grid-area: e; }
+.hangman__buttons .letter-r { grid-area: r; }
+.hangman__buttons .letter-t { grid-area: t; }
+.hangman__buttons .letter-y { grid-area: y; }
+.hangman__buttons .letter-u { grid-area: u; }
+.hangman__buttons .letter-i { grid-area: i; }
+.hangman__buttons .letter-o { grid-area: o; }
+.hangman__buttons .letter-p { grid-area: p; }
+.hangman__buttons .letter-a { grid-area: a; }
+.hangman__buttons .letter-s { grid-area: s; }
+.hangman__buttons .letter-d { grid-area: d; }
+.hangman__buttons .letter-f { grid-area: f; }
+.hangman__buttons .letter-g { grid-area: g; }
+.hangman__buttons .letter-h { grid-area: h; }
+.hangman__buttons .letter-j { grid-area: j; }
+.hangman__buttons .letter-k { grid-area: k; }
+.hangman__buttons .letter-l { grid-area: l; }
+.hangman__buttons .letter-z { grid-area: z; }
+.hangman__buttons .letter-x { grid-area: x; }
+.hangman__buttons .letter-c { grid-area: c; }
+.hangman__buttons .letter-v { grid-area: v; }
+.hangman__buttons .letter-b { grid-area: b; }
+.hangman__buttons .letter-n { grid-area: n; }
+.hangman__buttons .letter-m { grid-area: m; }
+
 
 .hangman__buttons button:hover:not(.guessedButton) {
     background-color: #ddd;
@@ -292,7 +325,20 @@ table {
 .hangman__buttons button.guessedButton:hover {
     background-color: blue;
 }
+.hangman__buttons .empty-button {
+    visibility: hidden;
+}
 
+
+/* Reduce button size on small screens */
+@media (max-width: 37.5em) {
+    .hangman__buttons button {
+        width: 2em;
+        height: 2em;
+        font-size: 1em;
+        line-height: 2em;
+    }
+}
 .hangman__input {
     margin-top: 1.250em;
 }
@@ -324,9 +370,8 @@ table {
 }
 
 #canvasContainer {
-    display: flex;
-    justify-content: center;
-    margin: 1.250em;
+    padding: 0.325em;
+    margin: 0.625em;
 }
 
 

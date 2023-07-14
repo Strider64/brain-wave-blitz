@@ -21,7 +21,7 @@ class LoginRepository implements LoginRepositoryInterface
 
     public function verify_credentials($username, $password): bool
     {
-        $sql = "SELECT id, password FROM " . $this->table . " WHERE username =:username LIMIT 1";
+        $sql = "SELECT id, password FROM admins WHERE username =:username LIMIT 1";
         $user = $this->retrieve_credentials($sql, $username);
         if ($user && password_verify($password, $user['password'])) {
             session_regenerate_id(); // prevent session fixation attacks

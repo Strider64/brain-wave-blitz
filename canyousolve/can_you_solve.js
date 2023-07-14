@@ -17,7 +17,7 @@ document.getElementById("myButton");
 //button.addEventListener('click', onButtonClick, false);
 scoreDisplay.style.display = 'none';
 nextBtn.style.display = 'none';
-
+let image_index = 0;
 let imageObj = null;
 if (sessionStorage.getItem('isRefresh') === null) {
     sessionStorage.setItem('isRefresh', 'true');
@@ -42,7 +42,6 @@ category.addEventListener('change', () => {
     selected = category.value;
 })
 const startingScreen = () => {
-    document.querySelector('.notice').style.display = 'none';
     document.querySelector('.hangman').style.display = 'flex';
     startButton.style.display = "none";
     remainingGuesses.textContent = `Remaining Guess: ${remaining}`;
@@ -68,18 +67,7 @@ if (window.location.hostname === "localhost" || window.location.hostname === "12
 }
 
 
-fetch('fetch_game_image_paths.php')
-    .then(response => response.json())
-    .then(data => {
-        imageArray = data.map(imgPath => {
-            let img = new Image();
-            // Add the missing part to the URL
-            img.src = baseUrl + imgPath;
-            return img;
-        });
-        //console.log('Image Array:', imageArray.map(img => img.src));  // Log image paths
-    })
-    .catch(error => console.error('Error:', error));
+
 
 startButton.addEventListener('click', startingScreen, false);
 
@@ -125,14 +113,29 @@ const handleInput = (event) => {
 const buttonsEl = document.querySelector(".hangman__buttons");
 
 const buttons = () => {
+    /* Generate empty buttons for offsets */
+    for (let i = 0; i < 2; i++) {
+        const button = document.createElement("button");
+        button.className = "empty-button";
+        buttonsEl.appendChild(button);
+    }
+
     /* Generate buttons for letters A to Z (ASCII codes 65 to 90) */
     for (let i = 65; i <= 90; i++) {
         const button = document.createElement("button");
         button.textContent = String.fromCharCode(i);
+        button.className = "letter-" + String.fromCharCode(i).toLowerCase();
         buttonsEl.appendChild(button);
         button.addEventListener("click", handleButtonClick);
     }
+
+    /* Generate another empty button */
+    const button = document.createElement("button");
+    button.className = "empty-button";
+    buttonsEl.appendChild(button);
 };
+
+
 
 // Add an event listener to the input element to listen for input events
 document.getElementById("guess").addEventListener("input", handleInput);
@@ -245,6 +248,19 @@ const fetchWord = async () => {
     }
 }
 
+// Function to fetch and load image
+const fetchAndLoadImage = async (imagePath) => {
+    try {
+        let response = await fetch(imagePath);
+        let blob = await response.blob();
+        let img = new Image();
+        img.src = URL.createObjectURL(blob);
+        return img;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 // Fetch the Next ID
 const fetchNextId = async (currentId) => {
     try {
@@ -264,22 +280,12 @@ const fetchNextId = async (currentId) => {
         const data = await response.json();
         if (!data.end_of_table) {
             id = data.next_id;
-            // * Note take out /path/ at the end when on a remote server
             let imagePath = baseUrl + data.image;
-            //console.log('data.image', data.image);
-            //console.log('image path', imagePath);
-            //console.log('imageArray src', imageArray.map(img => img.src));
 
-            let imageIndex = imageArray.findIndex(img => img.src === imagePath);
-
-            if (imageIndex !== -1) {
-                imageObj = imageArray.splice(imageIndex, 1)[0];
-                await updateImageSource(imageObj);
-            }
+            imageObj = await fetchAndLoadImage(imagePath);
+            await updateImageSource(imageObj);
             await fetchQuestion();
             await fetchWord();
-
-            //await fetchImage();
         } else {
             // End of Game
             let element = document.querySelector('.hangman');
@@ -297,7 +303,6 @@ const fetchNextId = async (currentId) => {
 
 // Fetch the First ID
 const fetchFirstId = async () => {
-
     try {
         // fetch the data from the server
         const response = await fetch('get-first-id.php', {
@@ -310,24 +315,14 @@ const fetchFirstId = async () => {
 
         // parse the response as JSON
         const data = await response.json();
+
         id = data.first_id;
-
-        // * Note take out /path/ at the end when on a remote server
         let imagePath = baseUrl + data.image;
-
-        //console.log('data.image', data.image);
-        //console.log('image path', imagePath);
-        //console.log('imageArray src', imageArray.map(img => img.src));
-
-        let imageIndex = imageArray.findIndex(img => img.src === imagePath);
-
-        if (imageIndex !== -1) {
-            imageObj = imageArray.splice(imageIndex, 1)[0];
-            updateImageSource(imageObj);
-        }
-
+        imageObj = await fetchAndLoadImage(imagePath);
+        await updateImageSource(imageObj);
         await fetchWord(); // fetch the answers
         await fetchQuestion();
+
 
     } catch (error) {
         console.error(error);

@@ -48,7 +48,7 @@ if (!$login->check_login_token()) {
     </div>
 
     <div class="name-website">
-        <h1 class="webtitle">The Photo Tech Guru</h1>
+        <h1 class="webtitle">Can You Solve?</h1>
     </div>
 
 </header>
@@ -70,8 +70,8 @@ if (!$login->check_login_token()) {
             <textarea id="question_style" name="question" tabindex=""></textarea>
         </div>
         <div class="answer_grid_area">
-            <label for="answer_style">Answer</label>
-            <input id="answer_style" type="text" name="answer" value="">
+            <label>Answer</label>
+            <input class="answer_style" type="text" name="answer" value="">
         </div>
         <div class="submit_grid_area">
             <button class="button_style" type="submit" name="submit" value="enter">Submit</button>
@@ -82,7 +82,7 @@ if (!$login->check_login_token()) {
     <?php $database->showAdminNavigation(); ?>
 </aside>
 <footer class="colophon">
-    <p>&copy; <?php echo date("Y") ?> The Photo Tech Guru</p>
+    <p>&copy; <?php echo date("Y") ?> Can You Solve?</p>
 </footer>
 <script src="save_new_questions.js"></script>
 </body>
