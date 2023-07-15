@@ -97,7 +97,7 @@ $records = $cms->headings();
         </div>
         <div id="content_style_grid_area">
             <label class="text_label_style" for="content">Content</label>
-            <textarea class="text_input_style" id="content" name="content" tabindex="2"></textarea>
+            <textarea class="text_input_style table_height" id="content" name="content" tabindex="2"></textarea>
         </div>
         <div id="submit_picture_grid_area">
             <button class="form-button" type="submit" name="submit" value="enter">submit</button>

@@ -16,6 +16,13 @@ $database = new Database();
 $pdo = $database->createPDO();
 $login = new Login($pdo);
 
+if (!$login->check_login_token()) {
+    // Send a 401 Unauthorized status code and a JSON error message
+    http_response_code(401);
+    echo json_encode(['error' => 'Unauthorized']);
+    exit();
+}
+
 // Check if the form was submitted with POST method
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the input and textarea values

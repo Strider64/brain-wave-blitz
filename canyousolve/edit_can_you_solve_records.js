@@ -14,12 +14,10 @@
         const select_id = document.querySelector('select[name="id"]');
 
         async function displayRecord(searchTerm = null, selected_id = null) {
-           ;
+
             const requestData = {};
             if(searchTerm !== null) requestData.searchTerm = searchTerm;
             if(selected_id !== null) requestData.id = selected_id;
-
-            console.log(requestData);
             // console.log('searchTerm', searchTerm);
             try {
                 const response = await fetch("search_records.php", {
@@ -39,7 +37,7 @@
                     console.error(data.error);
                 } else {
                     const row = data[0];
-                    console.log(row.category);
+                    //console.log(row.category);
                     idInput.value = row.id;
                     image_for_edit_record.src = "../" + row.canvas_images;
                     image_for_edit_record.alt = row.answer;
@@ -75,6 +73,42 @@
             displayRecord(null, selectedHeading);
         });
 
+        async function fetchUpdatedData() {
+            // replace this URL with the URL to fetch updated data
+            const response = await fetch("fetch_updated_data.php");
+
+            if (response.ok) {
+                const data = await response.json();
+
+                // Get the select element
+                const selectBox = document.querySelector('select[name="id"]');
+
+                // Clear current options
+                // Clear the dropdown
+                selectBox.textContent = '';
+
+                // Create a new option element
+                let opt = document.createElement('option');
+                opt.value = "";
+                opt.disabled = true;
+                opt.selected = true;
+                opt.textContent = 'Select Heading';
+
+                // Append the option to the select dropdown
+                selectBox.appendChild(opt);
+
+
+                // Populate the select element with new options
+                data.forEach(record => {
+                    const option = document.createElement('option');
+                    option.value = record.id;
+                    option.text = record.question;
+                    selectBox.appendChild(option);
+                });
+            } else {
+                console.error("Error fetching data:", response.status, response.statusText);
+            }
+        }
         // Add an event listener to the edit form's submit event
         editForm.addEventListener("submit", async function (event) {
             // Prevent the default form submit behavior
@@ -82,9 +116,9 @@
 
             // Create a FormData object from the edit form
             const formData = new FormData(editForm);
-             for (var pair of formData.entries()) {
-               console.log(pair[0]+ ', '+ pair[1]);
-             }
+             // for (var pair of formData.entries()) {
+             //   console.log(pair[0]+ ', '+ pair[1]);
+             // }
 
             // Send a POST request to the edit_update_blog.php endpoint with the form data
             const response = await fetch("update_record.php", {
@@ -108,6 +142,7 @@
                     // Reset select box to default (first) option
                     const selectBox = document.querySelector('select[name="id"]');
                     selectBox.selectedIndex = 0;
+                    fetchUpdatedData();
                 }
 
             } else {

@@ -15,7 +15,7 @@ $database = new Database();
 $pdo = $database->createPDO();
 $login = new Login($pdo);
 if (!$login->check_login_token()) {
-    header('location: index.php');
+    header('location: ../index.php');
     exit();
 }
 

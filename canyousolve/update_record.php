@@ -18,7 +18,12 @@ set_exception_handler([$errorHandler, 'handleException']);
 $database = new Database();
 $pdo = $database->createPDO();
 $login = new Login($pdo);
-
+if (!$login->check_login_token()) {
+    // Send a 401 Unauthorized status code and a JSON error message
+    http_response_code(401);
+    echo json_encode(['error' => 'Unauthorized']);
+    exit();
+}
 try {
     // Check if the required form data is provided
     if (!isset($_POST['id']) || !isset($_POST['question']) || !isset($_POST['answer'])) {
