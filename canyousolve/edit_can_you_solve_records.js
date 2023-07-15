@@ -11,12 +11,15 @@
         const answer = document.getElementById("content");
         const resultInput = document.getElementById("searchTerm");
 
-        const headingDropdown = document.querySelector('select[name="heading"]');
+        const select_id = document.querySelector('select[name="id"]');
 
-        async function displayRecord(searchTerm = null, selectedHeading = null) {
+        async function displayRecord(searchTerm = null, selected_id = null) {
+           ;
             const requestData = {};
             if(searchTerm !== null) requestData.searchTerm = searchTerm;
-            if(selectedHeading !== null) requestData.heading = selectedHeading;
+            if(selected_id !== null) requestData.id = selected_id;
+
+            console.log(requestData);
             // console.log('searchTerm', searchTerm);
             try {
                 const response = await fetch("search_records.php", {
@@ -56,20 +59,19 @@
 
             // Get the value of the search term input field and the select box
             const searchTermInput = document.getElementById("searchTerm").value;
-            const selectedHeading = document.querySelector('select[name="heading"]').value;
+            const selected_id = document.querySelector('select[name="id"]').value;
             // console.log(searchTermInput, selectedHeading);
             // Use the input value if it's not empty, otherwise use the select value
             const searchTerm = searchTermInput !== "" ? searchTermInput : null;
-            const heading = selectedHeading !== "" ? selectedHeading : null;
-
+            const search_id = selected_id !== "" ? selected_id : null;
             // Call the displayRecord function with the search term and selected heading
-            displayRecord(searchTerm, heading);
+            displayRecord(searchTerm, search_id);
         });
 
 
         // New event listener for the dropdown change
-        headingDropdown.addEventListener("change", function() {
-            const selectedHeading = headingDropdown.options[headingDropdown.selectedIndex].value;
+        select_id.addEventListener("change", function() {
+            const selectedHeading = select_id.options[select_id.selectedIndex].value;
             displayRecord(null, selectedHeading);
         });
 
@@ -83,7 +85,7 @@
              for (var pair of formData.entries()) {
                console.log(pair[0]+ ', '+ pair[1]);
              }
-            ;
+
             // Send a POST request to the edit_update_blog.php endpoint with the form data
             const response = await fetch("update_record.php", {
                 method: "POST",
@@ -104,7 +106,7 @@
                     searchForm.reset(); // Resetting the search form
 
                     // Reset select box to default (first) option
-                    const selectBox = document.querySelector('select[name="heading"]');
+                    const selectBox = document.querySelector('select[name="id"]');
                     selectBox.selectedIndex = 0;
                 }
 

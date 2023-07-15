@@ -18,6 +18,12 @@ if (!$login->check_login_token()) {
     header('location: index.php');
     exit();
 }
+
+$sql = "SELECT id, question FROM canyousolve";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$records = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!doctype html>
@@ -102,10 +108,15 @@ if (!$login->check_login_token()) {
                 <input type="text" placeholder="Search Content" id="searchTerm" class="input-field" autofocus required>
             </div>
             <div class="input-group">
-                <label for="heading">Heading:</label>
-                <select class="select-css" id="heading" name="heading">
+                <label for="select_id">Question:</label>
+                <select class="select-css" id="select_id" name="id">
                     <option value="" disabled selected>Select Heading</option>
-
+                    <?php
+                    foreach ( $records as $record) {
+                            echo '<option value="' . $record['id'] . '">' . $record['question'] . '</option>';
+                        }
+                    ?>
+                    ?>
                 </select>
             </div>
             <button class="search_button" type="submit">Search</button>

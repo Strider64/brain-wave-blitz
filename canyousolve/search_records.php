@@ -34,7 +34,7 @@ try {
 
     // Extract the search term and heading from the request, if they exist.
     $searchTerm = $request['searchTerm'] ?? null;
-    $question = $request['question'] ?? null;
+    $search_id = (int) $request['id'] ?? null;
 
     // If a search term was provided, use a full-text search on the 'content' field.
     // Before this can work, you'll need to make sure your content column is indexed for full-text searching.
@@ -47,10 +47,10 @@ try {
         $stmt->bindValue(':searchTerm', $searchTerm);
 
         // If a heading was provided, search for exact matches on the 'heading' field.
-    } else if($question !== null) {
-        $sql = "SELECT * FROM canyousolve WHERE question = :question LIMIT 1";
+    } else if($search_id !== null) {
+        $sql = "SELECT * FROM canyousolve WHERE id =:id LIMIT 1";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':question', $question);
+        $stmt->bindValue(':id', $search_id);
 
         // If neither a search term nor a heading was provided, throw an exception.
     } else {
