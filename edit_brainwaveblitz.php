@@ -107,7 +107,7 @@ $database = new Database();
         </div>
 
         <div class="submit_grid_area">
-            <button class="button_style" type="submit" name="submit" value="enter" tabindex="9">submit</button>
+            <button class="form-button" type="submit" name="submit" value="enter" tabindex="9">submit</button>
         </div>
     </form>
 </main>

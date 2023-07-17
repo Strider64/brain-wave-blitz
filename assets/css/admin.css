@@ -381,6 +381,7 @@ p {
     color: #fff;
     cursor: pointer;
     transition: background 0.3s ease;
+    margin-top: 1.250em;
 }
 
 .form-button:hover {
@@ -446,8 +447,8 @@ p {
 }
 
 #add_to_db_table #question_style,
-#add_to_db_table .answer_style {
-    width: 95%;
+.answer_style {
+    width: 96%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;

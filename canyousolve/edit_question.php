@@ -92,7 +92,7 @@ $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <div id="content_style_grid_area">
             <label class="text_label_style" for="content">Answer</label>
-            <input class="text_input_style edit_answer"  id="content" name="answer" tabindex="2">
+            <input id="content" class="answer_style" name="answer" tabindex="2">
         </div>
         <div id="submit_picture_grid_area">
             <button class="form-button" type="submit" name="submit" value="enter">submit</button>
