@@ -48,7 +48,7 @@ if (!$login->check_login_token()) {
     </div>
 
     <div class="name-website">
-        <h1 class="webtitle">Can You Solve?</h1>
+        <h1 class="webtitle">Can You Solve? Add Page</h1>
     </div>
 
 </header>
@@ -66,8 +66,8 @@ if (!$login->check_login_token()) {
             <option value="photography">Photography</option>
         </select>
         <div class="question_grid_area">
-            <label for="question_style">Question</label>
-            <textarea id="question_style" name="question" tabindex=""></textarea>
+            <label>Question</label>
+            <input class="answer_style" type="text" name="question" value="">
         </div>
         <div class="answer_grid_area">
             <label>Answer</label>

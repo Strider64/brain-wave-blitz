@@ -61,12 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Website name -->
     <div class="name-website">
-        <h1 class="webtitle">Brain Wave Blitz</h1>
+        <h1 class="webtitle">Brain Wave Blitz Add</h1>
     </div>
 </header>
 
 <section class="main_container">
-        <form id="add_to_db_table" class="checkStyle" action="new_questions.php" method="post">
+        <form id="add_to_db_table" class="checkStyle" action="new_brainwaveblitz.php" method="post">
             <input type="hidden" name="quiz[user_id]" value="<?= $_SESSION['user_id'] ?>">
             <div class="question_hidden">
                 <select class="select-css" name="quiz[hidden]" tabindex="1">
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="question_grid_area">
                 <label for="question_style" for="content">Question</label>
-                <textarea id="question_style" id="content" name="quiz[question]" tabindex="3"
+                <textarea id="question_style" name="quiz[question]" tabindex="3"
                           placeholder="Add question here..."
                           autofocus></textarea>
             </div>
@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php $database->showAdminNavigation(); ?>
 </aside>
 <footer class="colophon">
-    <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz</p>
+    <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz Add</p>
 </footer>
 ?>
 </body>

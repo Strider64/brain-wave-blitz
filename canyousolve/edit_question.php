@@ -32,7 +32,7 @@ $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=yes, initial-scale=1.0">
-    <title>Edit Questions</title>
+    <title>Edit - Can You See</title>
     <link rel="stylesheet" media="all" href="../assets/css/admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -59,7 +59,7 @@ $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div class="name-website">
-        <h1 class="webtitle">Can You Solve Edit Page</h1>
+        <h1 class="webtitle">Can You Solve? Edit Page</h1>
     </div>
 
 </div>
@@ -88,11 +88,11 @@ $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </label>
         <div id="heading_heading_grid_area">
             <label class="heading_label_style" for="heading">Question</label>
-            <input class="heading" class="enter_input_style" type="text" name="question" value="" tabindex="1" required>
+            <input class="heading answer_style" type="text" name="question" value="" tabindex="1" required>
         </div>
         <div id="content_style_grid_area">
             <label class="text_label_style" for="content">Answer</label>
-            <textarea class="text_input_style" id="content" name="answer" tabindex="2"></textarea>
+            <input class="text_input_style edit_answer"  id="content" name="answer" tabindex="2">
         </div>
         <div id="submit_picture_grid_area">
             <button class="form-button" type="submit" name="submit" value="enter">submit</button>
@@ -110,7 +110,7 @@ $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="input-group">
                 <label for="select_id">Question:</label>
                 <select class="select-css" id="select_id" name="id">
-                    <option value="" disabled selected>Select Heading</option>
+                    <option value="" disabled selected>Select Question</option>
                     <?php
                     foreach ( $records as $record) {
                             echo '<option value="' . $record['id'] . '">' . $record['question'] . '</option>';

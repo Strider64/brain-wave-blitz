@@ -56,10 +56,10 @@ trait NavigationMenuTrait
         $base_url = $protocol . $host . $base_path;
 
         $adminItems = [
-            'Add Game' => $base_url . '/canyousolve/add_question.php',
-            'Edit Game' => $base_url . '/canyousolve/edit_question.php',
-            'New Quest' => $base_url . '/new_questions.php',
-            'Edit Quest' => $base_url . '/edit_questions.php',
+            'Add CYS' => $base_url . '/canyousolve/add_question.php',
+            'Edit CYS' => $base_url . '/canyousolve/edit_question.php',
+            'New Trivia' => $base_url . '/new_brainwaveblitz.php',
+            'Edit Trivia' => $base_url . '/edit_brainwaveblitz.php',
             'Create Entry' => $base_url . '/create_cms.php',
             'Edit Entry' => $base_url . '/edit_blog.php'
         ];

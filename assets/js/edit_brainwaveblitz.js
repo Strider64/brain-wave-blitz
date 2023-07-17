@@ -1,26 +1,31 @@
 'use strict';
-// edit_can_you_solve_records.js
+//edit_blog.js
 (function () {
     document.addEventListener("DOMContentLoaded", function () {
         const searchForm = document.getElementById("searchForm");
         const editForm = document.getElementById("data_entry_form");
-        const idInput = document.getElementById("id");
+        const select_hidden = document.querySelector('.select_db');
+        const current_id = document.getElementById("current_id");
         const image_for_edit_record = document.getElementById("image_for_edited_record");
-        const category = document.getElementById("category");
-        const question = document.querySelector('.heading');
-        const answer = document.getElementById("content");
+        const category = document.getElementById("category_selector");
+        const question = document.querySelector('#question_style');
+        const ans1 = document.getElementById("addAnswer1");
+        const ans2 = document.getElementById("addAnswer2");
+        const ans3 = document.getElementById("addAnswer3");
+        const ans4 = document.getElementById("addAnswer4");
+        const correct = document.getElementById('addCorrect');
+
         const resultInput = document.getElementById("searchTerm");
 
-        const select_id = document.querySelector('select[name="id"]');
+        const headingDropdown = document.querySelector('select[name="id"]');
 
-        async function displayRecord(searchTerm = null, selected_id = null) {
-
+        async function displayRecord(searchTerm = null, selectedId = null) {
             const requestData = {};
             if(searchTerm !== null) requestData.searchTerm = searchTerm;
-            if(selected_id !== null) requestData.id = selected_id;
-            // console.log('searchTerm', searchTerm);
+            if(selectedId !== null) requestData.id = selectedId;
+
             try {
-                const response = await fetch("search_records.php", {
+                const response = await fetch("search_brainwaveblitz_records.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -29,7 +34,7 @@
                 });
 
                 const data = await response.json();
-                // console.log(data); // Add this line
+                console.log('data: ', data); // Add this line
                 if (data.message) {
                     resultInput.value = '';
                     resultInput.placeholder = data.message;
@@ -37,14 +42,18 @@
                     console.error(data.error);
                 } else {
                     const row = data[0];
-                    //console.log(row.category);
-                    idInput.value = row.id;
-                    image_for_edit_record.src = "../" + row.canvas_images;
-                    image_for_edit_record.alt = row.answer;
+                    console.log('row', row);
+                    current_id.value = row.id;
+                    select_hidden.value = row.hidden;
+                    select_hidden.textContent = `${row.hidden.charAt(0).toUpperCase()}${row.hidden.slice(1)}`;
                     category.value = row.category;
                     category.textContent = `${row.category.charAt(0).toUpperCase()}${row.category.slice(1)}`;
-                    question.value = row.question;
-                    answer.value = row.answer;
+                    question.textContent = row.question;
+                    ans1.value = row.ans1;
+                    ans2.value = row.ans2;
+                    ans3.value = row.ans3;
+                    ans4.value = row.ans4;
+                    correct.value = row.correct;
                 }
             } catch (error) {
                 console.error("Error:", error);
@@ -57,25 +66,19 @@
 
             // Get the value of the search term input field and the select box
             const searchTermInput = document.getElementById("searchTerm").value;
-            const selected_id = document.querySelector('select[name="id"]').value;
-            // console.log(searchTermInput, selectedHeading);
+            const selectedId = document.querySelector('select[name="id"]').value;
+            console.log(searchTermInput, selectedId);
             // Use the input value if it's not empty, otherwise use the select value
             const searchTerm = searchTermInput !== "" ? searchTermInput : null;
-            const search_id = selected_id !== "" ? selected_id : null;
+            const heading = selectedId !== "" ? selectedId : null;
+
             // Call the displayRecord function with the search term and selected heading
-            displayRecord(searchTerm, search_id);
+            displayRecord(searchTerm, selectedId);
         });
 
-
-        // New event listener for the dropdown change
-        select_id.addEventListener("change", function() {
-            const selectedHeading = select_id.options[select_id.selectedIndex].value;
-            displayRecord(null, selectedHeading);
-        });
-
-        async function fetchUpdatedData() {
+        async function fetchBrainWaveBlitzData() {
             // replace this URL with the URL to fetch updated data
-            const response = await fetch("fetch_updated_data.php");
+            const response = await fetch("fetch_brainwaveblitz.php");
 
             if (response.ok) {
                 const data = await response.json();
@@ -109,6 +112,15 @@
                 console.error("Error fetching data:", response.status, response.statusText);
             }
         }
+
+        fetchBrainWaveBlitzData();
+
+        // New event listener for the dropdown change
+        headingDropdown.addEventListener("change", function() {
+            const selectedHeading = headingDropdown.options[headingDropdown.selectedIndex].value;
+            displayRecord(null, selectedHeading);
+        });
+
         // Add an event listener to the edit form's submit event
         editForm.addEventListener("submit", async function (event) {
             // Prevent the default form submit behavior
@@ -116,12 +128,9 @@
 
             // Create a FormData object from the edit form
             const formData = new FormData(editForm);
-             // for (var pair of formData.entries()) {
-             //   console.log(pair[0]+ ', '+ pair[1]);
-             // }
-
+            console.log("form data", formData);
             // Send a POST request to the edit_update_blog.php endpoint with the form data
-            const response = await fetch("update_record.php", {
+            const response = await fetch("edit_brainwaveblitz_update_record.php", {
                 method: "POST",
                 body: formData,
             });
@@ -129,20 +138,18 @@
             // Check if the request was successful
             if (response.ok) {
                 const result = await response.json();
-                // console.log('result', result);
+                console.log(result);
                 // If the response has a "success" property and its value is true, clear the form
                 if (result.success) {
                     resultInput.value = '';          // Clear the current value of the search input field
                     resultInput.placeholder = "New Search"; // Set the placeholder to `New Search`
-                    image_for_edit_record.src = "";
-                    image_for_edit_record.alt = "";
                     editForm.reset(); // Resetting the edit form
                     searchForm.reset(); // Resetting the search form
 
                     // Reset select box to default (first) option
                     const selectBox = document.querySelector('select[name="id"]');
                     selectBox.selectedIndex = 0;
-                    fetchUpdatedData();
+                    fetchBrainWaveBlitzData();
                 }
 
             } else {
