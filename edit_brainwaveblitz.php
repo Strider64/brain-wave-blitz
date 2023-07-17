@@ -13,7 +13,6 @@ $errorHandler = new ErrorHandler();
 set_exception_handler([$errorHandler, 'handleException']);
 
 $database = new Database();
-$pdo = $database->createPDO();
 ?>
 
 <!doctype html>

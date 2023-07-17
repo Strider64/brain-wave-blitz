@@ -166,7 +166,7 @@ table {
     .nav > .nav-btn {
         display: block;
         position: absolute;
-        right: 0.9375em;
+        right: 0;
         top: 0;
         z-index: 10000;
     }
@@ -507,21 +507,6 @@ table {
             grid-area: sidebar;
         }
 
-        .main_container {
-            grid-area: main;
-        }
-
-        .main_container h1 {
-            font-size: 2.4em;
-        }
-
-        .main_container p {
-            font-size: 1.250em;
-        }
-
-        .colophon {
-            grid-area: footer;
-        }
 
     }
 }

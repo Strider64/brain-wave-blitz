@@ -6,7 +6,6 @@
         const editForm = document.getElementById("data_entry_form");
         const select_hidden = document.querySelector('.select_db');
         const current_id = document.getElementById("current_id");
-        const image_for_edit_record = document.getElementById("image_for_edited_record");
         const category = document.getElementById("category_selector");
         const question = document.querySelector('#question_style');
         const ans1 = document.getElementById("addAnswer1");
@@ -34,7 +33,6 @@
                 });
 
                 const data = await response.json();
-                console.log('data: ', data); // Add this line
                 if (data.message) {
                     resultInput.value = '';
                     resultInput.placeholder = data.message;
@@ -42,7 +40,6 @@
                     console.error(data.error);
                 } else {
                     const row = data[0];
-                    console.log('row', row);
                     current_id.value = row.id;
                     select_hidden.value = row.hidden;
                     select_hidden.textContent = `${row.hidden.charAt(0).toUpperCase()}${row.hidden.slice(1)}`;
@@ -67,7 +64,6 @@
             // Get the value of the search term input field and the select box
             const searchTermInput = document.getElementById("searchTerm").value;
             const selectedId = document.querySelector('select[name="id"]').value;
-            console.log(searchTermInput, selectedId);
             // Use the input value if it's not empty, otherwise use the select value
             const searchTerm = searchTermInput !== "" ? searchTermInput : null;
             const heading = selectedId !== "" ? selectedId : null;
@@ -128,7 +124,6 @@
 
             // Create a FormData object from the edit form
             const formData = new FormData(editForm);
-            console.log("form data", formData);
             // Send a POST request to the edit_update_blog.php endpoint with the form data
             const response = await fetch("edit_brainwaveblitz_update_record.php", {
                 method: "POST",
@@ -138,11 +133,11 @@
             // Check if the request was successful
             if (response.ok) {
                 const result = await response.json();
-                console.log(result);
                 // If the response has a "success" property and its value is true, clear the form
                 if (result.success) {
                     resultInput.value = '';          // Clear the current value of the search input field
                     resultInput.placeholder = "New Search"; // Set the placeholder to `New Search`
+                    question.textContent = '';  // Clear the question field
                     editForm.reset(); // Resetting the edit form
                     searchForm.reset(); // Resetting the search form
 
