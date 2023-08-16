@@ -54,6 +54,26 @@ table {
     margin: 0 auto;
 }
 
+#logout {
+    display: none;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); /* Drop shadow */
+    transition: background-color 0.5s ease; /* Color transition */
+    padding: 15px 32px;
+    margin: auto;
+}
+
+#logout:hover {
+    background-color: #45a049; /* Darker green */
+}
+
 /* Navigational CSS 9/30/2022 */
 .nav {
     position: relative;

@@ -126,7 +126,7 @@ header("Content-Security-Policy: default-src 'self' 'nonce-{$nonce}'; font-src '
                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <div class="screenName">
                     <label class="text_username" for="username">Username</label>
-                    <input id="username" class="io_username" type="text" name="username" value="" required>
+                    <input id="username" class="io_username" type="text" name="username" value="" autocomplete="username" required>
                 </div>
 
                 <label class="text_password" for="password">Password</label>

@@ -197,7 +197,7 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
 </div>
 <div class="main_container">
     <div class="home_article">
-        <form id="data_entry_form" class="checkStyle" action="create_cms.php" method="post"
+        <form id="data_entry_form" class="checkStyle" method="post"
               enctype="multipart/form-data">
             <input type="hidden" name="cms[user_id]" value="<?= $_SESSION['user_id'] ?>">
             <input type="hidden" name="cms[author]" value="John Pepp>">

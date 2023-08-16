@@ -12,6 +12,7 @@ trait NavigationMenuTrait
     {
         $navItems = [
             'Home' => 'index.php',
+            'Jigsaw Puzzle' => 'puzzle.php',
             'Brain Wave Blitz' => 'brainwaveblitz.php',
             'Can You Solve?' => 'canyousolve/can_you_solve.php',
             'Contact' => '#',
@@ -39,7 +40,7 @@ trait NavigationMenuTrait
 
         // Check if the user is logged in
         if ($isLoggedIn) {
-            $navLinks[] = '<a href="http://localhost:8888/brainwaveblitz/logout.php">Logout</a>'; // Add 'Logout' to the end of the navigation menu
+            $navLinks[] = '<a href="https://www.brainwaveblitz.com/logout.php">Logout</a>'; // Add 'Logout' to the end of the navigation menu
         }
 
         echo implode('', $navLinks);

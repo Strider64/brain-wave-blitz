@@ -40,6 +40,7 @@ $pdo = $database->createPDO();
     <link rel="stylesheet" media="all" href="assets/css/brainwaveblitz.css">
 </head>
 <body>
+
 <header class="nav">
     <!-- Input and label for the mobile navigation bar -->
     <input type="checkbox" class="nav-btn" id="nav-btn">
@@ -89,7 +90,6 @@ $pdo = $database->createPDO();
                 <button id="next" class="nextBtn">Next</button>
             </div>
         </div>
-
     </div>
 
     <!-- Selector for choosing the category of questions -->
@@ -105,6 +105,7 @@ $pdo = $database->createPDO();
         </select>
     </div>
 </main>
+
 <!-- Link to the external JavaScript file -->
 <script src="assets/js/brainwaveblitz.js"></script>
 </body>

@@ -46,8 +46,8 @@ $login = new Login($pdo);
     <script type="module" src="load_image_onto_canvas.js"></script>
 </head>
 <body class="site">
-
-
+<!--<script src="../assets/js/facebook_sdk.js"></script>-->
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v17.0&appId=your-app-id&autoLogAppEvents=1" nonce="XYZ"></script>
 <header class="nav">
     <input type="checkbox" class="nav-btn" id="nav-btn">
     <label for="nav-btn">
@@ -96,6 +96,10 @@ $login = new Login($pdo);
             <option value="photography">Photography</option>
         </select>
     </div>
+<!--    <div style="text-align:center;">-->
+<!--        <div id="fb-login-btn" class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="true"></div>-->
+<!--    </div>-->
+<!--    <button id="logout">Logout</button>-->
 </aside>
 <footer class="colophon">
     <p>&copy;<?php echo date("Y") ?> Can You Solve?</p>

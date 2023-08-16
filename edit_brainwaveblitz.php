@@ -26,7 +26,66 @@ $database = new Database();
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body class="site">
+<script>
+    window.onload = function() {
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '289822840119835',
+                cookie: true,
+                xfbml: true,
+                version: 'v17.0'
+            });
+            FB.getLoginStatus(function (response) {
+                checkLoginStatus(response);
+            });
+            FB.Event.subscribe('auth.login', function(response) {
+                // Reload page after login
+                window.location.reload();
+            });
 
+            FB.Event.subscribe('auth.logout', function(response) {
+                // Reload page after logout
+                window.location.reload();
+            });
+
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function checkLoginStatus(response) {
+            var fbLoginBtn = document.getElementById('fb-login-btn');
+            var logoutBtn = document.getElementById('logout');
+
+            if (response.status === 'connected') {
+                // The user is logged in and connected to your app
+                fbLoginBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                FB.api('/me', function(response) {
+                    console.log(response);
+                    console.log('Logged in, Username: ' + response.name);
+                });
+            } else {
+                // The user is not logged in to your app or we are unable to tell
+                fbLoginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+            }
+        }
+
+        document.getElementById('logout').addEventListener('click', function () {
+            FB.logout(function (response) {
+                // The person is logged out
+                checkLoginStatus(response);
+            });
+        });
+    }
+</script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v17.0&appId=your-app-id&autoLogAppEvents=1" nonce="XYZ"></script>
 <header class="headerStyle">
 
 
@@ -129,6 +188,10 @@ $database = new Database();
         </form>
     </div>
     <?php $database->showAdminNavigation(); ?>
+    <div id="fb-login-btn" class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="true"></div>
+    <button id="logout" style="display: none;">Logout</button>
+
+
 </aside>
 <footer class="colophon">
     <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz</p>

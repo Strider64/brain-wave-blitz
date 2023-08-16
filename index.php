@@ -226,8 +226,6 @@ $records = $cms->page($per_page, $offset, 'cms', $category);
 <main class="main_container">
     <?php
     foreach ($records as $record) {
-        //echo '<meta itemprop="datePublished" content="' . $record['date_added'] . '">';
-        //echo '<meta itemprop="dateModified" content="' . $record['date_updated'] . '">';
         echo '<div class="image-header">';
         echo '<a href="brainwaveblitz.php"><img src="' . $record['image_path'] . '" title="' . $record['heading'] . '" alt="' . $record['heading'] . '"></a>';
         echo '</div>';
