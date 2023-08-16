@@ -1,153 +1,141 @@
+// 1. Initialize canvas, context, and audio assets
 let canvas = document.getElementById('puzzleCanvas');
 let ctx = canvas.getContext('2d');
-
 let snapSound = new Audio('assets/audio/audio-snap-001.ogg');
 let celebrateSound = new Audio('assets/audio/audio-celebration-001.wav');
 
-
+// 2. Setup puzzle image
 let image = new Image();
-image.src = 'assets/puzzle_images/img-lego-puzzle-001.jpg';  // Update this path to your image
+image.src = 'assets/puzzle_images/img-lego-puzzle-001.jpg';
 
 let pieces = [];
-const PIECE_COUNT = 4;  // example for a 2x2 puzzle
-
+const PIECE_COUNT = 4;  // Number of puzzle pieces along one dimension
 let draggedPiece = null;
-let offsetX, offsetY;  // To manage the position of the mouse relative to the top-left of the piece
+let offsetX, offsetY;  // Offset from the top-left corner of the dragged piece
 let isSolved = false;
 
-const MAX_ATTEMPTS = 100; // or some other suitable number
+const MAX_ATTEMPTS = 100;  // Maximum attempts for finding non-overlapping positions for puzzle pieces
 
-function handleMouseDown(e) {
-    if (isSolved) return;  // If the puzzle is solved, exit early
+// 3. Event listeners for dragging puzzle pieces
+
+// On mouse down, check if any piece is clicked
+const handleMouseDown = e => {
+    if (isSolved) return;
 
     let mouseX = e.clientX - canvas.getBoundingClientRect().left;
     let mouseY = e.clientY - canvas.getBoundingClientRect().top;
 
-    // Find if a piece is under the cursor
     for (let piece of pieces) {
         if (mouseX > piece.sx && mouseX < piece.sx + piece.width &&
             mouseY > piece.sy && mouseY < piece.sy + piece.height) {
             draggedPiece = piece;
 
-            // Calculate the offset
             offsetX = mouseX - piece.sx;
             offsetY = mouseY - piece.sy;
             break;
         }
     }
-}
+};
 
-function handleMouseMove(e) {
+// On mouse move, move the dragged piece with the cursor
+const handleMouseMove = e => {
     if (draggedPiece) {
-        // Update the piece's drawn position
         draggedPiece.sx = e.clientX - canvas.getBoundingClientRect().left - offsetX;
         draggedPiece.sy = e.clientY - canvas.getBoundingClientRect().top - offsetY;
 
-        // Redraw the entire canvas (backgrounds + pieces)
         redrawCanvas();
     }
-}
+};
 
-function handleMouseUp(e) {
+// On mouse up, release the piece and snap it if close to its correct position
+const handleMouseUp = () => {
     if (draggedPiece) {
         const imageX = (canvas.width - image.width) / 2;
         const imageY = (canvas.height - image.height) / 2;
-
         let targetX = draggedPiece.x + imageX;
         let targetY = draggedPiece.y + imageY;
-        let threshold = 20;  // Snap into place if within 20 pixels
+        let threshold = 20;
 
         if (Math.abs(draggedPiece.sx - targetX) < threshold && Math.abs(draggedPiece.sy - targetY) < threshold) {
             draggedPiece.sx = targetX;
             draggedPiece.sy = targetY;
-            draggedPiece.snapped = true;  // Mark as correctly placed
-
-            snapSound.play();  // Play the snap sound
+            draggedPiece.snapped = true;  // Piece is now in its correct position
+            snapSound.play();
         }
 
         redrawCanvas();
     }
     if (checkForCompletion()) {
+        // Remove mouse events after puzzle is solved
         canvas.removeEventListener('mousedown', handleMouseDown);
         canvas.removeEventListener('mousemove', handleMouseMove);
         canvas.removeEventListener('mouseup', handleMouseUp);
+
         celebrateSound.play();
         alert('Congratulations! Puzzle completed!');
     }
+    draggedPiece = null;
+};
 
-    draggedPiece = null;  // Reset the dragged piece
-}
-
+// Add mouse event listeners
 canvas.addEventListener('mousedown', handleMouseDown);
 canvas.addEventListener('mousemove', handleMouseMove);
 canvas.addEventListener('mouseup', handleMouseUp);
 
-
+// 4. Puzzle completion check
 function checkForCompletion() {
     for (let piece of pieces) {
         if (!piece.snapped) {
-            return false;  // Not all pieces are correctly placed
+            return false;
         }
     }
-    isSolved = true;  // Set the flag here
+    isSolved = true;  // Puzzle is completed
     return true;
 }
 
+// 5. Redraws the entire canvas
 function redrawCanvas() {
-    // 1. Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // 2. Redraw the entire canvas background
-    ctx.fillStyle = "#E0E0E0";  // Light gray for demonstration
+    ctx.fillStyle = "#E0E0E0";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // 2.1 Redraw the background color for the image portion (assuming it's centrally aligned)
     const imageX = (canvas.width - image.width) / 2;
     const imageY = (canvas.height - image.height) / 2;
-    ctx.fillStyle = "#FFFFFF";  // White for demonstration
+    ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(imageX, imageY, image.width, image.height);
 
-    // 3. Redraw each piece
     for (let piece of pieces) {
         ctx.drawImage(image, piece.x, piece.y, piece.width, piece.height, piece.sx, piece.sy, piece.width, piece.height);
     }
 }
 
-let spacing = 30;  // Adjust this value based on your preference
-
+// 6. Function to check if two pieces overlap
 function doesOverlap(piece1, piece2) {
-    return piece1.sx < piece2.sx + piece2.width + spacing &&
-        piece1.sx + piece1.width + spacing > piece2.sx &&
-        piece1.sy < piece2.sy + piece2.height + spacing &&
-        piece1.sy + piece1.height + spacing > piece2.sy;
+    return piece1.sx < piece2.sx + piece2.width &&
+        piece1.sx + piece1.width > piece2.sx &&
+        piece1.sy < piece2.sy + piece2.height &&
+        piece1.sy + piece1.height > piece2.sy;
 }
 
+// 7. Image loading and piece setup
 image.onload = function() {
     let pieceWidth = image.width / PIECE_COUNT;
     let pieceHeight = image.height / PIECE_COUNT;
 
-    // 1. Clear the entire canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // 2. Set the background color for the entire canvas
-    ctx.fillStyle = "#E0E0E0";  // Light gray for demonstration
+    ctx.fillStyle = "#E0E0E0";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // 2.1 Set the background color for the image portion (assuming it's centrally aligned)
     const imageX = (canvas.width - image.width) / 2;
     const imageY = (canvas.height - image.height) / 2;
-    ctx.fillStyle = "#FFFFFF";  // White for demonstration
+    ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(imageX, imageY, image.width, image.height);
 
     for (let x = 0; x < PIECE_COUNT; x++) {
         for (let y = 0; y < PIECE_COUNT; y++) {
             let piece;
             let isOverlapping;
-
             let attempts = 0;
             do {
                 isOverlapping = false;
-
                 piece = {
                     x: x * pieceWidth,
                     y: y * pieceHeight,
@@ -156,35 +144,25 @@ image.onload = function() {
                     width: pieceWidth,
                     height: pieceHeight
                 };
-
-                // Check if the piece is within the white space (intended image area)
                 if (piece.sx > imageX && piece.sx + piece.width < imageX + image.width &&
                     piece.sy > imageY && piece.sy + piece.height < imageY + image.height) {
-                    isOverlapping = true;  // Mark as overlapping so a new position is calculated
+                    isOverlapping = true;
                 }
-
                 for (let placedPiece of pieces) {
                     if (doesOverlap(piece, placedPiece)) {
                         isOverlapping = true;
                         break;
                     }
                 }
-
                 attempts++;
-
                 if (attempts > MAX_ATTEMPTS) {
-                    console.warn("Could not find a non-overlapping position outside the intended image area after maximum attempts.");
+                    console.warn("Could not find a non-overlapping position after maximum attempts.");
                     break;
                 }
             } while (isOverlapping);
-
 
             pieces.push(piece);
             ctx.drawImage(image, piece.x, piece.y, piece.width, piece.height, piece.sx, piece.sy, pieceWidth, pieceHeight);
         }
     }
 };
-
-
-
-
