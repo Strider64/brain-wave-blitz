@@ -3,7 +3,7 @@
  * Created by John Pepp
  * on August 16, 2023
  * Updated by John Pepp
- * on August 16, 2023
+ * on August 17, 2023
  */
 
 // 1. Initialize canvas, context, and audio assets
@@ -46,7 +46,7 @@ const handleMouseDown = e => {
     let mouseY = e.clientY - canvas.getBoundingClientRect().top;
 
     for (let piece of pieces) {
-        if (mouseX > piece.sx && mouseX < piece.sx + piece.width &&
+        if (!piece.snapped && mouseX > piece.sx && mouseX < piece.sx + piece.width &&
             mouseY > piece.sy && mouseY < piece.sy + piece.height) {
             draggedPiece = piece;
 
@@ -56,6 +56,7 @@ const handleMouseDown = e => {
         }
     }
 };
+
 
 // On mouse move, move the dragged piece with the cursor
 const handleMouseMove = e => {
@@ -171,6 +172,25 @@ function doesOverlap(piece1, piece2) {
         piece1.sy < piece2.sy + piece2.height &&
         piece1.sy + piece1.height > piece2.sy;
 }
+fetch('path_to_your_php_script/fetch_image.php')
+    .then(response => response.text())
+    .then(imagePath => {
+        let image = new Image();
+        image.src = imagePath;
+
+        // Ensure the image is loaded before proceeding
+        image.onload = function() {
+            // Now, the rest of your code that depends on the image being loaded
+            // e.g., drawing the image, breaking it into pieces, etc.
+        };
+
+        image.onerror = function() {
+            console.error("Error loading the image.");
+        };
+    })
+    .catch(error => {
+        console.error("Error fetching the image path:", error);
+    });
 
 // 7. Image loading and piece setup
 image.onload = function() {
@@ -192,8 +212,10 @@ image.onload = function() {
                     sx: Math.random() * (canvas.width - pieceWidth),
                     sy: Math.random() * (canvas.height - pieceHeight),
                     width: pieceWidth,
-                    height: pieceHeight
+                    height: pieceHeight,
+                    snapped: false
                 };
+
                 if (piece.sx > imageX && piece.sx + piece.width < imageX + image.width &&
                     piece.sy > imageY && piece.sy + piece.height < imageY + image.height) {
                     isOverlapping = true;

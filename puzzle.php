@@ -8,7 +8,7 @@ require_once "vendor/autoload.php";
  * Created by John Pepp
  * on August 16, 2023
  * Updated by John Pepp
- * on August 16, 2023
+ * on August 17, 2023
  */
 
 // Import the ErrorHandler and Database classes from the PhotoTech namespace.
