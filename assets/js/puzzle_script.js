@@ -1,8 +1,18 @@
+/*
+ * Jigsaw Puzzle 1.0 βeta
+ * Created by John Pepp
+ * on August 16, 2023
+ * Updated by John Pepp
+ * on August 16, 2023
+ */
+
 // 1. Initialize canvas, context, and audio assets
 let canvas = document.getElementById('puzzleCanvas');
 let ctx = canvas.getContext('2d');
+
+// Sound Effects
 let snapSound = new Audio('assets/audio/audio-snap-001.ogg');
-let celebrateSound = new Audio('assets/audio/audio-celebration-001.wav');
+let celebrateSound = new Audio('assets/audio/audio-celebration-001.wav'); // Change Path to the Correct One
 
 // 2. Setup puzzle image
 let image = new Image();
@@ -16,8 +26,18 @@ let isSolved = false;
 
 const MAX_ATTEMPTS = 100;  // Maximum attempts for finding non-overlapping positions for puzzle pieces
 
-// 3. Event listeners for dragging puzzle pieces
+const isMouseOverPiece = (mouseX, mouseY) => {
+    for (let piece of pieces) {
+        if (mouseX > piece.sx && mouseX < piece.sx + piece.width &&
+            mouseY > piece.sy && mouseY < piece.sy + piece.height) {
+            return true;
+        }
+    }
+    return false;
+};
 
+
+// 3. Event listeners for dragging puzzle pieces
 // On mouse down, check if any piece is clicked
 const handleMouseDown = e => {
     if (isSolved) return;
@@ -39,16 +59,28 @@ const handleMouseDown = e => {
 
 // On mouse move, move the dragged piece with the cursor
 const handleMouseMove = e => {
+    let mouseX = e.clientX - canvas.getBoundingClientRect().left;
+    let mouseY = e.clientY - canvas.getBoundingClientRect().top;
+
+    if (!draggedPiece) {
+        if (isMouseOverPiece(mouseX, mouseY)) {
+            canvas.style.cursor = 'pointer';  // Change cursor to hand
+        } else {
+            canvas.style.cursor = 'default';  // Change cursor back to arrow
+        }
+    }
+
     if (draggedPiece) {
-        draggedPiece.sx = e.clientX - canvas.getBoundingClientRect().left - offsetX;
-        draggedPiece.sy = e.clientY - canvas.getBoundingClientRect().top - offsetY;
+        draggedPiece.sx = mouseX - offsetX;
+        draggedPiece.sy = mouseY - offsetY;
 
         redrawCanvas();
     }
 };
 
+
 // On mouse up, release the piece and snap it if close to its correct position
-const handleMouseUp = () => {
+const handleMouseUp = e => {
     if (draggedPiece) {
         const imageX = (canvas.width - image.width) / 2;
         const imageY = (canvas.height - image.height) / 2;
@@ -64,18 +96,30 @@ const handleMouseUp = () => {
         }
 
         redrawCanvas();
+        draggedPiece = null;
     }
+
     if (checkForCompletion()) {
         // Remove mouse events after puzzle is solved
         canvas.removeEventListener('mousedown', handleMouseDown);
         canvas.removeEventListener('mousemove', handleMouseMove);
         canvas.removeEventListener('mouseup', handleMouseUp);
-
+        canvas.style.cursor = 'default';  // Change cursor back to arrow
         celebrateSound.play();
         alert('Congratulations! Puzzle completed!');
+    } else {
+        // Check for cursor change
+        let mouseX = e.clientX - canvas.getBoundingClientRect().left;
+        let mouseY = e.clientY - canvas.getBoundingClientRect().top;
+
+        if (isMouseOverPiece(mouseX, mouseY)) {
+            canvas.style.cursor = 'pointer';  // Change cursor to hand
+        } else {
+            canvas.style.cursor = 'default';  // Change cursor back to arrow
+        }
     }
-    draggedPiece = null;
 };
+
 
 // Add mouse event listeners
 canvas.addEventListener('mousedown', handleMouseDown);
@@ -93,15 +137,27 @@ function checkForCompletion() {
     return true;
 }
 
-// 5. Redraws the entire canvas
-function redrawCanvas() {
+function setupCanvasBackground() {
+    // Clear the entire canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Set the background color for the entire canvas
     ctx.fillStyle = "#E0E0E0";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Calculate image coordinates and set the background color for the image portion
     const imageX = (canvas.width - image.width) / 2;
     const imageY = (canvas.height - image.height) / 2;
     ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(imageX, imageY, image.width, image.height);
+
+    return { imageX, imageY };  // Return these values since they're used in both places.
+}
+
+
+// 5. Redraws the entire canvas
+function redrawCanvas() {
+    const { imageX, imageY } = setupCanvasBackground();
 
     for (let piece of pieces) {
         ctx.drawImage(image, piece.x, piece.y, piece.width, piece.height, piece.sx, piece.sy, piece.width, piece.height);
@@ -121,13 +177,7 @@ image.onload = function() {
     let pieceWidth = image.width / PIECE_COUNT;
     let pieceHeight = image.height / PIECE_COUNT;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#E0E0E0";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    const imageX = (canvas.width - image.width) / 2;
-    const imageY = (canvas.height - image.height) / 2;
-    ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(imageX, imageY, image.width, image.height);
+    const { imageX, imageY } = setupCanvasBackground();
 
     for (let x = 0; x < PIECE_COUNT; x++) {
         for (let y = 0; y < PIECE_COUNT; y++) {

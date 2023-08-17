@@ -38,7 +38,7 @@ $pdo = $database->createPDO();
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=yes, initial-scale=1.0">
-    <title>Jigsaw Puzzle</title>
+    <title>Connect a Piece</title>
     <link rel="stylesheet" media="all" href="assets/css/puzzle_styling.css">
 </head>
 <body class="site">
@@ -59,7 +59,7 @@ $pdo = $database->createPDO();
 
     <!-- Website name -->
     <div class="name-website">
-        <h1 class="webtitle">Jigsaw Puzzle</h1>
+        <h1 class="webtitle">Connect a Piece</h1>
     </div>
 </header>
 <main class="main_container">
@@ -70,7 +70,7 @@ $pdo = $database->createPDO();
 </aside>
 
 <footer class="colophon">
-    <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz</p>
+    <p>&copy; <?php echo date("Y") ?> Connect a Piece</p>
 </footer>
 <script src="assets/js/puzzle_script.js"></script>
 </body>

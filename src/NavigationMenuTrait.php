@@ -12,7 +12,7 @@ trait NavigationMenuTrait
     {
         $navItems = [
             'Home' => 'index.php',
-            'Jigsaw Puzzle' => 'puzzle.php',
+            'Jigsaw' => 'puzzle.php',
             'Brain Wave Blitz' => 'brainwaveblitz.php',
             'Can You Solve?' => 'canyousolve/can_you_solve.php',
             'Contact' => '#',
