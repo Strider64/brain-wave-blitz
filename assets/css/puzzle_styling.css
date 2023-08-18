@@ -108,6 +108,9 @@ p {
     line-height: 1.5;
 }
 
+
+
+
 /* Navigational CSS 9/30/2022 */
 .nav {
     display: flex;
@@ -298,8 +301,68 @@ p {
 
         .sidebar {
             grid-area: sidebar;
+            position: relative;
             margin: 1.250em;
         }
+
+        .sidebar .custom-alert-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9998;
+            display: none; /* initially hidden */
+        }
+
+        .sidebar .custom-alert {
+            display: none; /* initially hidden */
+            position: absolute;
+            left: 50%;
+            top: 20%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            background-color: #f44336;
+            color: #2e2e2e;
+            width: 80%;  /* Set width of the outer box */
+            padding: 10px;  /* Reduce or adjust padding for the outer box */
+            box-sizing: border-box;  /* Ensure padding and border are included in total width */
+            font-size: 0.9em;  /* Reduce font size */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* smooth transitions */
+        }
+
+        .sidebar .custom-alert-content:hover {
+            transform: scale(1.05); /* slightly enlarge on hover */
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.5); /* add a shadow on hover */
+            cursor: pointer; /* show a pointer cursor on hover */
+        }
+
+        .sidebar .custom-alert-content {
+            background-color: #fefefe;
+            border: 1px solid #888;
+            width: 100%;  /* Set width of the inner content box to fill its parent */
+            padding: 10px;  /* Adjust padding as necessary */
+            box-sizing: border-box;  /* Ensure padding and border are included in total width */
+        }
+
+        #alertText {
+            font-size: 0.9em;  /* Adjust this to your preferred font size */
+        }
+
+        .sidebar .close-btn {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .sidebar .close-btn:hover,
+        .sidebar .close-btn:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
 
         .main_container {
             grid-area: main;

@@ -66,7 +66,13 @@ $pdo = $database->createPDO();
     <canvas id="puzzleCanvas" width="900" height="700"></canvas>
 </main>
 <aside class="sidebar">
-
+    <div id="customAlertOverlay" class="custom-alert-overlay">
+        <div id="customAlert" class="custom-alert">
+            <div id="customAlertContent" class="custom-alert-content">
+                <p id="alertText">Your custom alert text will appear here.</p>
+            </div>
+        </div>
+    </div>
 </aside>
 
 <footer class="colophon">
