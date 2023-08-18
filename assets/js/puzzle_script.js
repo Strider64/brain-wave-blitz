@@ -3,7 +3,7 @@
  * Created by John Pepp
  * on August 16, 2023
  * Updated by John Pepp
- * on August 17, 2023
+ * on August 18, 2023
  */
 
 // 1. Initialize canvas, context, and audio assets
@@ -14,31 +14,40 @@ let ctx = canvas.getContext('2d');
 let snapSound = new Audio('assets/audio/audio-snap-001.ogg');
 let celebrateSound = new Audio('assets/audio/audio-celebration-001.wav'); // Change Path to the Correct One
 
-let image;
-
-
-let pieces = [];
-const PIECE_COUNT = 4;  // Number of puzzle pieces along one dimension
+let image; // Make image global
+let pieces = []; // Array for the pieces of the puzzle
 let draggedPiece = null;
 let offsetX, offsetY;  // Offset from the top-left corner of the dragged piece
-let isSolved = false;
+let isSolved = false; // Puzzle set to false which means it isn't solved
+let puzzleContainer = document.querySelector('.puzzleImage');
+puzzleContainer.style.display = 'none';
+let puzzleImage = document.getElementById('puzzleImage');
+let imageDescription = document.querySelector('.imageDescription');
 
+const PIECE_COUNT = 4;  // Number of puzzle pieces along one dimension
 function loadNextPuzzle() {
     fetch('fetch_image.php')
-        .then(response => response.text())
-        .then(image_path => {
+        .then(response => response.json())
+        .then(data => {
 
-            if (image_path === 'NO_MORE_IMAGES') {
-                // Handle the 'no more images' situation
-                //alert("You've completed all the puzzles! Game is resetting...");
+            console.log(data);
+            // Extract the image path and description from the JSON response
+            const image_path = data.image_path;
+            const description = data.description;
+
+            if (data.image_path === 'NO_MORE_IMAGES') {
                 showAlert("You've completed all the puzzles! Click to Continue...");
-                //loadNextPuzzle(); // to start over with the available images.
+                puzzleContainer.style.display = 'none';
                 return;
             }
 
             image = new Image();
             image.src = image_path;
             console.log('image.src', image.src);
+            imageDescription.textContent = description;
+            puzzleContainer.style.display = 'block';
+            // Set the src for the img element to display the image on the page
+            puzzleImage.src = image_path;
             // Ensure the image is loaded before proceeding
             image.onload = function () {
                 // Reset pieces and isSolved flag
@@ -118,6 +127,25 @@ const isMouseOverPiece = (mouseX, mouseY) => {
     return false;
 };
 
+function showAlert(message) {
+    let alertOverlay = document.getElementById('customAlertOverlay');
+    let alertBox = document.getElementById('customAlert');
+    let alertText = document.getElementById('alertText');
+    document.getElementById('customAlertContent').addEventListener('click', closeAlert);
+    alertText.textContent = message;
+    alertOverlay.style.display = "block";
+    alertBox.style.display = "block";
+}
+
+function closeAlert() {
+    loadNextPuzzle();
+    let alertOverlay = document.getElementById('customAlertOverlay');
+    let alertBox = document.getElementById('customAlert');
+
+
+    alertOverlay.style.display = "none";
+    alertBox.style.display = "none";
+}
 
 // 3. Event listeners for dragging puzzle pieces
 // On mouse down, check if any piece is clicked
@@ -160,28 +188,6 @@ const handleMouseMove = e => {
         redrawCanvas();
     }
 };
-
-function showAlert(message) {
-    let alertOverlay = document.getElementById('customAlertOverlay');
-    let alertBox = document.getElementById('customAlert');
-    let alertText = document.getElementById('alertText');
-    document.getElementById('customAlertContent').addEventListener('click', closeAlert);
-    alertText.textContent = message;
-    alertOverlay.style.display = "block";
-    alertBox.style.display = "block";
-}
-
-function closeAlert() {
-    loadNextPuzzle();
-    let alertOverlay = document.getElementById('customAlertOverlay');
-    let alertBox = document.getElementById('customAlert');
-
-
-    alertOverlay.style.display = "none";
-    alertBox.style.display = "none";
-}
-
-
 
 // On mouse up, release the piece and snap it if close to its correct position
 const handleMouseUp = e => {

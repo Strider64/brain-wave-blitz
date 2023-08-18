@@ -40,7 +40,7 @@ trait NavigationMenuTrait
 
         // Check if the user is logged in
         if ($isLoggedIn) {
-            $navLinks[] = '<a href="https://www.brainwaveblitz.com/logout.php">Logout</a>'; // Add 'Logout' to the end of the navigation menu
+            $navLinks[] = '<a href="logout.php">Logout</a>'; // Add 'Logout' to the end of the navigation menu
         }
 
         echo implode('', $navLinks);
@@ -62,7 +62,8 @@ trait NavigationMenuTrait
             'New Trivia' => $base_url . '/new_brainwaveblitz.php',
             'Edit Trivia' => $base_url . '/edit_brainwaveblitz.php',
             'Create Entry' => $base_url . '/create_cms.php',
-            'Edit Entry' => $base_url . '/edit_blog.php'
+            'Edit Entry' => $base_url . '/edit_blog.php',
+            'Add Jigsaw' => $base_url . '/add_to_puzzle.php'
         ];
 
         echo '<div class="admin-navigation">';
