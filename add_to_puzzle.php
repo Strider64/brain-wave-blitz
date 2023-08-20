@@ -28,10 +28,10 @@ function is_ajax_request(): bool
     return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
 }
 
-$save_result = false;
 
+$data = $_POST['data'];
 if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
-    $data = $_POST['data'];
+
     $errors = array();
     $exif_data = [];
     $file_name = $_FILES['image']['name']; // Temporary file:

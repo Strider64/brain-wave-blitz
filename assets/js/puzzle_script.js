@@ -3,7 +3,7 @@
  * Created by John Pepp
  * on August 16, 2023
  * Updated by John Pepp
- * on August 18, 2023
+ * on August 20, 2023
  */
 
 // 1. Initialize canvas, context, and audio assets
@@ -25,7 +25,7 @@ let puzzleImage = document.getElementById('puzzleImage');
 let imageDescription = document.querySelector('.imageDescription');
 
 const PIECE_COUNT = 4;  // Number of puzzle pieces along one dimension
-function loadNextPuzzle() {
+const loadNextPuzzle = () => {
     fetch('fetch_image.php')
         .then(response => response.json())
         .then(data => {
@@ -111,7 +111,7 @@ function loadNextPuzzle() {
         .catch(error => {
             console.error("Error fetching the image path:", error);
         });
-}
+};
 
 loadNextPuzzle(); // Start the Game
 

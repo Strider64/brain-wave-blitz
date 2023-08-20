@@ -298,7 +298,50 @@ p {
     margin-bottom: 5px;
 }
 
+/* Search Form Styling */
 
+#searchForm {
+    width: 21.875em; /* Change to suit your needs */
+    padding: 20px;
+    box-shadow: 0px 10px 20px var(--shadow-color);
+    border-radius: 5px;
+}
+
+#searchForm .input-group {
+    margin-bottom: 20px;
+}
+
+#searchForm .input-group label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#searchForm .input-group .input-field,
+#searchForm .input-group .select-css {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--main-font-color);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+#searchForm .search_button {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#searchForm .search_button:hover {
+    background-color: #3a6fc7;
+}
 
 @media screen and (max-width: 600px) {
     .nav {

@@ -8,7 +8,7 @@ require_once "vendor/autoload.php";
  * Created by John Pepp
  * on August 16, 2023
  * Updated by John Pepp
- * on August 18, 2023
+ * on August 20, 2023
  */
 
 // Import the ErrorHandler and Database classes from the PhotoTech namespace.
@@ -19,6 +19,8 @@ use brainwave\{
     ImageContentManager,
     LoginRepository as Login
 };
+
+$_SESSION['shown_images'] = [];
 
 // Instantiate the ErrorHandler class
 $errorHandler = new ErrorHandler();
