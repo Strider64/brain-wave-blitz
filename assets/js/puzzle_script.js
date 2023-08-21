@@ -30,7 +30,7 @@ const loadNextPuzzle = () => {
         .then(response => response.json())
         .then(data => {
 
-            console.log(data);
+            //console.log(data);
             // Extract the image path and description from the JSON response
             const image_path = data.image_path;
             const description = data.description;
@@ -43,7 +43,7 @@ const loadNextPuzzle = () => {
 
             image = new Image();
             image.src = image_path;
-            console.log('image.src', image.src);
+            //console.log('image.src', image.src);
             imageDescription.textContent = description;
             puzzleContainer.style.display = 'block';
             // Set the src for the img element to display the image on the page
@@ -232,9 +232,6 @@ const handleMouseUp = e => {
         }
     }
 };
-
-
-
 
 // Puzzle completion check
 function checkForCompletion() {
