@@ -53,7 +53,7 @@ if (!$login->check_login_token()) {
 
 </header>
 <main class="main_container">
-    <form id="add_to_db_table" method="post" enctype="multipart/form-data">
+    <form id="add_to_db_table" class="data-form" method="post" enctype="multipart/form-data">
         <input type="hidden" name="points" value="15">
         <div class="file_grid_area">
             <input id="file" class="file-input-style" type="file" name="image">

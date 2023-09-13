@@ -10,7 +10,7 @@ use DateTimeZone;
 
 class ImageContentManager implements ImageContentManagerInterface
 {
-    protected string $table = "cms"; // Table Name:
+
     protected $db_columns = ['id', 'category', 'user_id', 'thumb_path', 'image_path', 'Model', 'ExposureTime', 'Aperture', 'ISO', 'FocalLength', 'author', 'heading', 'content', 'data_updated', 'date_added'];
     public $id;
     public $user_id;
@@ -29,10 +29,21 @@ class ImageContentManager implements ImageContentManagerInterface
     public $date_updated;
     public $date_added;
 
+    // DVD Table (image path, date added and date updated already handled)
+    public $title;
+    public $description;
+    public $genre;
+    public $stars;
+    public $director;
+    public $rating;
+    public $review;
 
-    protected PDO $pdo;
+    public string $table; // Table Name Placeholder:
 
-    public function __construct(PDO $pdo, array $args = [])
+
+    protected PDO $pdo; // Database PDO connection:
+
+    public function __construct(PDO $pdo, array $args = [], $table = 'cms')
     {
         $this->pdo = $pdo;
 
@@ -45,6 +56,10 @@ class ImageContentManager implements ImageContentManagerInterface
                 $this->objects[] = $v;
             }
         }
+
+        $this->table = $table;
+
+
     } // End of construct method:
 
     /*
@@ -60,6 +75,14 @@ class ImageContentManager implements ImageContentManagerInterface
     {
         $this->image_path = $image_path;
 
+    }
+
+    public function totalGallery() {
+        $sql = "SELECT count(id) FROM gallery";
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
 
     // Total Record/Pages in gallery database table
@@ -96,6 +119,14 @@ class ImageContentManager implements ImageContentManagerInterface
     }
 
 
+    public function countAllGallery($category = 'wildlife') {
+        $sql = "SELECT count(id) FROM gallery WHERE category=:category";
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute(['category' => $category]);
+        return $stmt->fetchColumn();
+    }
+
     // Total Record/Pages in category in gallery database table
     public function countAllPage($category = 'general')
     {
@@ -111,10 +142,15 @@ class ImageContentManager implements ImageContentManagerInterface
          return $this->pdo->query('SELECT id, heading FROM cms')->fetchAlL(PDO::FETCH_ASSOC);
     }
 
+    // Fetch Gallery Headings
+    public function gallery_headings() {
+        return $this->pdo->query('SELECT id, heading FROM gallery')->fetchAlL(PDO::FETCH_ASSOC);
+    }
+
     // Display Record(s) by Pagination
     public function page($perPage, $offset, $page = "index", $category = "general"): array
     {
-        $sql = 'SELECT * FROM cms WHERE page =:page AND category =:category ORDER BY id DESC, date_added DESC LIMIT :perPage OFFSET :blogOffset';
+        $sql = 'SELECT * FROM '. $this->table . ' WHERE page =:page AND category =:category ORDER BY id DESC, date_added DESC LIMIT :perPage OFFSET :blogOffset';
         $stmt = $this->pdo->prepare($sql); // Prepare the query:
         $stmt->execute(['page' => $page, 'perPage' => $perPage, 'category' => $category, 'blogOffset' => $offset]); // Execute the query with the supplied data:
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -129,7 +165,7 @@ class ImageContentManager implements ImageContentManagerInterface
         /*
          * Set up the query using prepared statements with named placeholders.
          */
-        $sql = 'INSERT INTO cms (' . implode(", ", array_keys($this->params)) . ')';
+        $sql = 'INSERT INTO ' . $this->table . ' (' . implode(", ", array_keys($this->params)) . ')';
         $sql .= ' VALUES ( :' . implode(', :', array_keys($this->params)) . ')';
 
         /*

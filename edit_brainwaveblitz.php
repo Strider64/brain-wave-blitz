@@ -113,7 +113,7 @@ $database = new Database();
 
 </div>
 <main class="main_container">
-    <form id="data_entry_form" class="checkStyle" action="edit_brainwaveblitz.php" method="post">
+    <form id="data_entry_form" class="data-form checkStyle" action="edit_brainwaveblitz.php" method="post">
         <input id="current_id" type="hidden" name="id" value="">
         <div class="question_hidden">
             <select class="select-css" name="hidden" tabindex="1">
@@ -181,7 +181,6 @@ $database = new Database();
                 <label for="select_id">Question:</label>
                 <select class="select-css" id="select_id" name="id">
                     <option value="" disabled selected>Select question</option>
-
                 </select>
             </div>
             <button class="search_button" type="submit">Search</button>

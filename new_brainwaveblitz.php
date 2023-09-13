@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </header>
 
 <section class="main_container">
-        <form id="add_to_db_table" class="checkStyle" action="new_brainwaveblitz.php" method="post">
+        <form id="add_to_db_table" class="data-form checkStyle" action="new_brainwaveblitz.php" method="post">
             <input type="hidden" name="quiz[user_id]" value="<?= $_SESSION['user_id'] ?>">
             <div class="question_hidden">
                 <select class="select-css" name="quiz[hidden]" tabindex="1">

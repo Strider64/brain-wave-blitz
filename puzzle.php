@@ -20,7 +20,7 @@ use brainwave\{
     LoginRepository as Login
 };
 
-$_SESSION['shown_images'] = [];
+$_SESSION['shown_images'] = []; // Start the game over if web browser is refreshed
 
 // Instantiate the ErrorHandler class
 $errorHandler = new ErrorHandler();

@@ -1,10 +1,11 @@
 <?php
-require_once __DIR__ . '/../../config/config.php';
-require_once "../vendor/autoload.php";
-
+// Include the configuration file and autoload file from the composer.
+require_once __DIR__ . '/../config/config.php';
+require_once "vendor/autoload.php";
 use brainwave\ErrorHandler;
 use brainwave\Database;
 use brainwave\LoginRepository as Login;
+use brainwave\ImageContentManager as Gallery;
 
 $errorHandler = new ErrorHandler();
 
@@ -15,28 +16,27 @@ $database = new Database();
 $pdo = $database->createPDO();
 $login = new Login($pdo);
 if (!$login->check_login_token()) {
-    header('location: ../index.php');
+    header('location: index.php');
     exit();
 }
+$gallery = new Gallery($pdo);
 
-$sql = "SELECT id, question FROM canyousolve";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$records = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$records = $gallery->gallery_headings();
+
 
 ?>
-
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=yes, initial-scale=1.0">
-    <title>Edit - Can You See</title>
-    <link rel="stylesheet" media="all" href="../assets/css/admin.css">
+    <title>Edit Gallery</title>
+    <link rel="stylesheet" media="all" href="assets/css/admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body class="site">
+
 <header class="headerStyle">
 
 
@@ -59,13 +59,13 @@ $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div class="name-website">
-        <h1 class="webtitle">Can You Solve? Edit Page</h1>
+        <h1 class="webtitle">Edit Gallery</h1>
     </div>
 
-</div>
-<main class="main_container">
-    <form id="data_entry_form" class="data-form checkStyle" action="edit_question.php" method="post" enctype="multipart/form-data">
+</div>>
 
+<main class="main_container">
+    <form id="data_entry_form" class="data-form checkStyle" action="edit_blog.php" method="post" enctype="multipart/form-data">
         <input id="id" type="hidden" name="id" value="">
         <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
         <input type="hidden" name="author" value="John Pepp>">
@@ -81,24 +81,25 @@ $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <label id="select_grid_category_area">
             <select class="select-css" name="category">
                 <option id="category" value=""></option>
-                <option value="wildlife">Wildlife</option>
+                <option value="general">General</option>
                 <option value="lego">LEGO</option>
-                <option value="photography">Photography</option>
+                <option value="halloween">Halloween</option>
+                <option value="landscape">Landscape</option>
+                <option value="wildlife">Wildlife</option>
             </select>
         </label>
         <div id="heading_heading_grid_area">
-            <label class="heading_label_style" for="heading">Question</label>
-            <input class="heading answer_style" type="text" name="question" value="" tabindex="1" required>
+            <label class="heading_label_style" for="heading">Heading</label>
+            <input class="heading" class="enter_input_style"  type="text" name="heading" value="" tabindex="1" required >
         </div>
         <div id="content_style_grid_area">
-            <label class="text_label_style" for="content">Answer</label>
-            <input id="content" class="answer_style" name="answer" tabindex="2">
+            <label class="text_label_style" for="content">Content</label>
+            <textarea class="text_input_style" id="content" name="content" tabindex="2"></textarea>
         </div>
         <div id="submit_picture_grid_area">
             <button class="form-button" type="submit" name="submit" value="enter">submit</button>
         </div>
     </form>
-
 </main>
 <aside class="sidebar">
     <div class="search-form-container">
@@ -108,14 +109,13 @@ $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <input type="text" placeholder="Search Content" id="searchTerm" class="input-field" autofocus required>
             </div>
             <div class="input-group">
-                <label for="select_id">Question:</label>
-                <select class="select-css" id="select_id" name="id">
-                    <option value="" disabled selected>Select Question</option>
+                <label for="heading">Heading:</label>
+                <select class="select-css" id="heading" name="heading">
+                    <option value="" disabled selected>Select Heading</option>
                     <?php
-                    foreach ( $records as $record) {
-                            echo '<option value="' . $record['id'] . '">' . $record['question'] . '</option>';
-                        }
-                    ?>
+                    foreach ($records as $record) {
+                        echo '<option value="' . $record['heading'] . '">' . $record['heading'] . '</option>';
+                    }
                     ?>
                 </select>
             </div>
@@ -127,6 +127,6 @@ $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <footer class="colophon">
     <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz</p>
 </footer>
-<script src="edit_can_you_solve_records.js"></script>
+<script src="assets/js/edit_gallery.js"></script>
 </body>
 </html>

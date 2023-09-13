@@ -67,7 +67,7 @@ $records = $cms->headings();
 
 <main class="main_container">
 
-    <form id="data_entry_form" class="checkStyle" action="edit_blog.php" method="post" enctype="multipart/form-data">
+    <form id="data_entry_form" class="data-form checkStyle" action="edit_blog.php" method="post" enctype="multipart/form-data">
 
         <input id="id" type="hidden" name="id" value="">
         <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">

@@ -15,7 +15,8 @@ trait NavigationMenuTrait
             'Jigsaw' => 'puzzle.php',
             'Brain Wave Blitz' => 'brainwaveblitz.php',
             'Can You Solve?' => 'canyousolve/can_you_solve.php',
-            'Contact' => '#',
+            'Gallery' => 'gallery.php',
+            'Contact' => '#'
         ];
 
         // Check if the user is logged in
@@ -64,7 +65,9 @@ trait NavigationMenuTrait
             'Create Entry' => $base_url . '/create_cms.php',
             'Edit Entry' => $base_url . '/edit_blog.php',
             'Add Jigsaw' => $base_url . '/add_to_puzzle.php',
-            'Edit Jigsaw' => $base_url . '/edit_puzzle.php'
+            'Edit Jigsaw' => $base_url . '/edit_puzzle.php',
+            'Add Gallery' => $base_url . '/create_gallery.php',
+            'Edit Gallery' => $base_url . '/edit_gallery.php'
         ];
 
         echo '<div class="admin-navigation">';

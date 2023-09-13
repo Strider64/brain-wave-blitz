@@ -17,6 +17,8 @@ set_exception_handler([$errorHandler, 'handleException']);
 
 $database = new Database();
 $pdo = $database->createPDO();
+
+// Check to see user is login in, if not redirect them to the home or login in page:
 $login = new Login($pdo);
 if (!$login->check_login_token()) {
     header('location: index.php');

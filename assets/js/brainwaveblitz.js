@@ -129,17 +129,27 @@ const startGame = ({ ans1, ans2, ans3, ans4, id, question }) => {
         button.addEventListener("click", newPickAnswer, false);
         button.__pickAnswer__ = newPickAnswer;
 
-        // This line sets the text content of the button to the corresponding answer (ans1, ans2, ans3, ans4)
-        // with a "📷" character at the beginning.
-        button.textContent = `📷 ${[ans1, ans2, ans3, ans4][index]}` || "";
+        let answerText = [ans1, ans2, ans3, ans4][index];
+
+        if (answerText) {
+            button.textContent = `📷 ${answerText}`;
+            button.style.display = "block";  // Show the button
+            button.style.pointerEvents = "auto";  // Enable the button
+        } else {
+            button.textContent = "";
+            button.style.display = "none";  // Hide the button
+            button.style.pointerEvents = "none";  // Disable the button
+        }
+
 
         // If there's no corresponding answer, the button is disabled (its pointer events are set to "none").
         // Otherwise, the button is enabled (its pointer events are set to "auto").
-        if (![ans1, ans2, ans3, ans4][index]) {
+        if (!answerText) {
             button.style.pointerEvents = "none";
         } else {
             button.style.pointerEvents = "auto";
         }
+
     });
 };
 

@@ -1,4 +1,5 @@
 <?php
+// Include the configuration file and autoload file from the composer.
 require_once __DIR__ . '/../config/config.php';
 require_once "vendor/autoload.php";
 
@@ -32,7 +33,7 @@ function is_ajax_request(): bool
 $save_result = false;
 
 if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
-    $data = $_POST['cms'];
+    $data = $_POST['gallery'];
     $errors = array();
     $exif_data = [];
     $file_name = $_FILES['image']['name']; // Temporary file:
@@ -96,8 +97,8 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
      * Create unique name for image.
      */
     $image_random_string = bin2hex(random_bytes(16));
-    $image_path = 'assets/image_path/img-entry-' . $image_random_string . '-2048x1365' . '.' . $file_ext;
-    $thumb_path = 'assets/thumb_path/thumb-entry-' . $image_random_string . '-205x137' . '.' . $file_ext;
+    $image_path = 'assets/image_path/img-gallery-' . $image_random_string . '-2048x1365' . '.' . $file_ext;
+    $thumb_path = 'assets/thumb_path/thumb-gallery-' . $image_random_string . '-205x137' . '.' . $file_ext;
 
 
     move_uploaded_file($file_tmp, $image_path);
@@ -138,12 +139,9 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
      * database table.
      */
     if (empty($errors) === true) {
-        // Save to Database Table CMS
-        $timezone = new DateTimeZone('America/Detroit'); // Use your timezone here
-        $today = new DateTime('now', $timezone);
-        $data['date_updated'] = $data['date_added'] = $today->format("Y-m-d H:i:s");
-        $cms = new ImageContentManager($pdo, $data);
-        $result = $cms->create();
+
+        $gallery = new ImageContentManager($pdo, $data, 'gallery');
+        $result = $gallery->create();
 
         if ($result) {
             header('Content-Type: application/json');
@@ -191,16 +189,17 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
     </div>
 
     <div class="name-website">
-        <h1 class="webtitle">Create Post</h1>
+        <h1 class="webtitle">Add Gallery</h1>
     </div>
 
 </div>
 <div class="main_container">
     <div class="home_article">
-        <form id="data_entry_form" class="data-form checkStyle" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="cms[user_id]" value="<?= $_SESSION['user_id'] ?>">
-            <input type="hidden" name="cms[author]" value="John Pepp>">
-            <input type="hidden" name="cms[page]" value="cms">
+        <form id="data_entry_form" class="data-form checkStyle" action="create_gallery.php" method="post"
+              enctype="multipart/form-data">
+            <input type="hidden" name="gallery[user_id]" value="<?= $_SESSION['user_id'] ?>">
+            <input type="hidden" name="gallery[author]" value="John Pepp>">
+            <input type="hidden" name="gallery[page]" value="gallery">
             <input type="hidden" name="action" value="upload">
             <div id="progress_bar_container" class="progress-bar-container">
                 <h2 id="progress_bar_title" class="progress-bar-title">Upload Progress</h2>
@@ -211,33 +210,31 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
                 <label for="file">Select file</label>
             </div>
             <label id="select_grid_category_area">
-                <select class="select-css" name="cms[category]">
+                <select class="select-css" name="gallery[category]">
                     <option disabled>Select a Category</option>
-                    <option selected value="general">General</option>
+                    <option value="general">General</option>
                     <option value="lego">LEGO</option>
                     <option value="halloween">Halloween</option>
                     <option value="landscape">Landscape</option>
-                    <option value="wildlife">Wildlife</option>
+                    <option selected value="wildlife">Wildlife</option>
                 </select>
             </label>
             <div id="heading_heading_grid_area">
                 <label class="heading_label_style" for="heading">Heading</label>
-                <input class="enter_input_style" id="heading" type="text" name="cms[heading]" value="" tabindex="1"
+                <input class="enter_input_style" id="heading" type="text" name="gallery[heading]" value="" tabindex="1"
                        required
                        autofocus>
             </div>
             <div id="content_style_grid_area">
                 <label class="text_label_style" for="content">Content</label>
-                <textarea class="text_input_style" id="content" name="cms[content]" tabindex="2"></textarea>
+                <textarea class="text_input_style" id="content" name="gallery[content]" tabindex="2"></textarea>
             </div>
             <div id="submit_picture_grid_area">
-                <button class="form-button" type="submit" name="submit" value="enter">Submit</button>
+                <button class="form-button" type="submit" name="submit" value="enter">submit</button>
             </div>
         </form>
     </div>
-    <div class="home_sidebar">
 
-    </div>
 
 </div>
 <aside class="sidebar">
@@ -246,6 +243,6 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
 <footer class="colophon">
     <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz</p>
 </footer>
-<script src="assets/js/upload_form_with_progress_bar.js"></script>
+<script src="assets/js/upload_gallery_form_with_progress_bar.js"></script>
 </body>
 </html>
