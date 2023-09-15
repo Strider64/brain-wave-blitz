@@ -66,6 +66,148 @@ table {
     --common-padding: 0.625em;
 }
 
+/* Contact Form Styling */
+.contact {
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.3);
+    background-color: #F1F1F1;
+    width: 50em;
+    padding: 0.938em;
+    margin: 2.500em;
+}
+.contact .owner {
+    padding-bottom: 0.625em; }
+.contact .owner img {
+    width: 9.375em;
+    height: 9.375em;
+    margin-bottom: 0.625em; }
+.contact .horizontal_line {
+    border-top: 1px solid #ccc; }
+.contact label {
+    font-size: 0.8em;
+    color: #2E2E2E; }
+.contact input[type=text], .contact input[type=tel], .contact input[type=email], .contact input[type="password"], .contact select, .contact textarea {
+    width: 100%;
+    padding: 0.750em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 0.375em;
+    margin-bottom: 1em;
+    resize: vertical; }
+.contact .emailLabel .emailError {
+    display: none; }
+.contact .text_username .error {
+    display: none; }
+.contact textarea {
+    resize: none;
+    height: 12.50em;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 1.0em; }
+.contact #recaptcha {
+    padding: 1.250em 0; }
+.contact #message {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    width: 12.50em;
+    background-color: #cccccc;
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
+    padding: 1.250em;
+    margin: 1.250em; }
+.contact #message .notice {
+    width: 4em;
+    height: 4em; }
+.contact #message .pen {
+    width: 4em;
+    height: 4em; }
+.contact input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    text-transform: capitalize;
+    border: none;
+    border-radius: 0.250em;
+    cursor: pointer;
+    padding: 0.750em 1.250em;
+    margin-top: 0.625em; }
+.contact input[type=submit]:hover {
+    background-color: #45a049; }
+.contact button, .contact a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    color: #2E2E2E;
+    border: none;
+    background-color: #ccc;
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.2em;
+    text-transform: capitalize;
+    text-decoration: none;
+    padding: 0.313em;
+    margin: 0 auto;
+    transition: background-color .5s; }
+.contact button:hover, .contact button:active, .contact a:hover, .contact a:active {
+    background-color: #a6a6a6; }
+
+/* Cards Styling */
+.sidebar .cards {
+    display: grid;
+    width: 100%;
+    margin-top: 1.250em; }
+
+.sidebar .cards img,
+.sidebar .caption {
+    grid-column: 1;
+    grid-row: 1; }
+
+.sidebar .caption {
+    display: flex;
+    align-items: flex-end;
+    opacity: 0; }
+
+.sidebar a:focus .caption,
+.sidebar a:hover .caption {
+    background: rgba(52, 46, 107, 0.6);
+    opacity: 1; }
+
+/* Approximately the size of an iPad 768px */
+@supports (grid-area: auto) {
+    @media screen and (min-width: 48em) {
+        .contact {
+            display: grid;
+            grid-template-columns: 2fr;
+            grid-template-areas: "owner owner" "horizontal_line horizontal_line" "contact_name  contact_email" "contact_phone contact_website" "contact_comment contact_comment" "message message" "submit_comment submit_comment";
+            grid-column-gap: 1.250em; }
+        .contact .owner {
+            grid-area: owner;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-self: center;
+            text-align: center; }
+        .contact .horizontal_line {
+            grid-area: horizontal_line; }
+        .contact .contact_name {
+            grid-area: contact_name; }
+        .contact .contact_email {
+            grid-area: contact_email; }
+        .contact .contact_phone {
+            grid-area: contact_phone; }
+        .contact .contact_website {
+            grid-area: contact_website; }
+        .contact .contact_reason {
+            grid-area: contact_reason; }
+        .contact .contact_comment {
+            grid-area: contact_comment; }
+        .contact #recaptcha {
+            grid-area: recaptcha; }
+        .contact #message {
+            grid-area: message; }
+        .contact .submit_comment {
+            grid-area: submit_comment; } } }
+
 
 body {
     width: 100%;

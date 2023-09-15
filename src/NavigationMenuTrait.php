@@ -16,7 +16,7 @@ trait NavigationMenuTrait
             'Brain Wave Blitz' => 'brainwaveblitz.php',
             'Can You Solve?' => 'canyousolve/can_you_solve.php',
             'Gallery' => 'gallery.php',
-            'Contact' => '#'
+            'Contact' => 'contact.php'
         ];
 
         // Check if the user is logged in
