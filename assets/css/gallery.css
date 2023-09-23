@@ -607,11 +607,12 @@ label {
 .galleryExif {
     display: block;
     width: 100%;
-    font-size: 1.0em;
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 1.6em;
+    font-weight: bold;
     text-align: center;
     line-height: 3.125em;
-    background-color: #21759b;
-    color: #fff;
+    color: #337ab7;
     margin: 0; }
 
 .site {
@@ -765,7 +766,7 @@ label {
     display: block;
     font-size: 1.0em;
     background-color: #fff;
-    padding: 1.250em;
+    padding: 0 1.250em;
     margin: 0 auto; }
 
 .galleryText::before {
@@ -1032,8 +1033,11 @@ label {
         .active {
             grid-area: main;
             display: grid;
-            grid-template-columns: minmax(40em, 50em) 1fr;
-            grid-template-areas: "lightboxImage lightboxText" "lightboxExif lightboxText" "lightboxExif lightboxText";
+            grid-template-columns: minmax(40em, 80em) 1fr;
+            grid-template-areas:
+                    "lightboxImage lightboxImage"
+                    "lightboxExif lightboxExif"
+                    "lightboxText lightboxText";
             justify-content: center;
             margin-top: 1.250em;
             z-index: 2000; }

@@ -100,11 +100,17 @@
         const images = document.querySelectorAll('img')
 
         images.forEach(image => {
+
             /* Add Event Listener to Images and setting css class to active */
             image.addEventListener('click', () => {
+                document.getElementById('gallery_category').style.display = 'none';
+                document.querySelector('.sidebar_pages').style.display = 'none';
                 lightbox.classList.add('active');
                 document.querySelector('.container').style.display = 'none';
 
+                // Create the common container for galleryImage and galleryExif
+                let imageExifContainer = document.createElement('div');
+                imageExifContainer.classList.add('image-exif-container');
                 /*
                  * Create Image portion of LightBox
                  */
@@ -127,6 +133,9 @@
                     galleryExif.textContent = image.getAttribute('data-exif');
                 }
 
+                // Add both elements to the common container
+                imageExifContainer.appendChild(galleryImage);
+                imageExifContainer.appendChild(galleryExif);
 
                 /*
                  * Create Text portion of Lightbox
@@ -143,11 +152,8 @@
                     lightbox.removeChild(lightbox.firstChild)
                 }
 
-                /* Add Image to Screen */
-                lightbox.appendChild(galleryImage);
-
-                /* Add EXIF to Screen */
-                lightbox.appendChild(galleryExif);
+                // Add the container to the lightbox
+                lightbox.appendChild(imageExifContainer);
 
                 /* Add Content to Screen */
                 lightbox.appendChild(galleryText);
@@ -155,6 +161,8 @@
         })
         lightbox.addEventListener('click', () => {
             if (lightbox.hasChildNodes()) {
+                document.getElementById('gallery_category').style.display = 'block';
+                document.querySelector('.sidebar_pages').style.display = 'flex';
                 lightbox.classList.remove('active'); // Exit Lightbox by removing active css class
                 lightbox.classList.add('lightbox');
                 document.querySelector('.container').style.display = 'grid';

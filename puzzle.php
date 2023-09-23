@@ -68,6 +68,19 @@ $pdo = $database->createPDO();
     <canvas id="puzzleCanvas" width="900" height="700"></canvas>
 </main>
 <aside class="sidebar">
+    <div class="categorySelection">
+        <label for="category">Choose a category:</label>
+        <select id="category" name="category">
+            <option value="lego">LEGO</option>
+            <option value="wildlife" selected>Wildlife</option>
+        </select>
+    </div>
+    <div class="titleSelection">
+        <label for="title">Choose Puzzle</label>
+        <select id="title" name="title">
+
+        </select>
+    </div>
     <div class="puzzleImage">
         <img id="puzzleImage" alt="Puzzle Image" />
         <p class="imageDescription">Text</p>

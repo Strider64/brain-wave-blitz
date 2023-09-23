@@ -23,23 +23,94 @@ let puzzleContainer = document.querySelector('.puzzleImage');
 puzzleContainer.style.display = 'none';
 let puzzleImage = document.getElementById('puzzleImage');
 let imageDescription = document.querySelector('.imageDescription');
-
+let currentTitle = ''; // declare it outside to have it globally accessible
+let selectedCategory = '';  // A variable to hold the selected category globally.
+let titles_in_selected_category = []; // Global Variable
 const PIECE_COUNT = 4;  // Number of puzzle pieces along one dimension
-const loadNextPuzzle = () => {
-    fetch('fetch_image.php')
+
+const populateTitles = () => {
+    const selectedCategory = document.getElementById('category').value;
+
+    // Clear the session of shown images when the category is changed
+    fetch('clear_session.php')
+        .then(() => {
+            const selectElement = document.getElementById('title');
+            fetch(`fetch_titles.php?category=${selectedCategory}`)
+                .then(response => response.json())
+                .then(titles => {
+                    titles_in_selected_category = titles; //
+                    console.log('titles:', titles_in_selected_category, 'category', selectedCategory);
+                    selectElement.innerHTML = '';
+                    titles.forEach(title => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = title;
+                        optionElement.textContent = title;
+                        selectElement.appendChild(optionElement);
+                    });
+                    // If there are titles, load the first puzzle of the new category.
+                    if(titles.length > 0) {
+                        loadNextPuzzle(titles[0], selectedCategory);
+                    }
+                })
+                .catch(error => console.error('Error fetching the titles:', error));
+        })
+        .catch(error => console.error('Error clearing the session:', error));
+};
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Populate titles when the page loads
+    populateTitles();
+
+    document.getElementById('title').addEventListener('change', (e) => {
+        const selectedTitle = e.target.value;
+        const selectedCategory = document.getElementById('category').value; // Get selected category here as well
+
+        // Clear the session of shown images when the title is changed
+        fetch('clear_session.php')
+            .then(() => {
+                // Load next puzzle after session is cleared
+                loadNextPuzzle(selectedTitle, selectedCategory);
+            })
+            .catch(error => console.error('Error clearing the session:', error));
+    });
+
+
+    // Also populate titles when the selected category changes
+    document.getElementById('category').addEventListener('change', populateTitles);
+});
+
+
+const loadNextPuzzle = (title = '') => {
+    let url = 'fetch_image.php';
+
+    if (selectedCategory) url += `?category=${selectedCategory}`;
+    if (title) url += (selectedCategory ? '&' : '?') + `title=${title}`;
+
+    fetch(url)
         .then(response => response.json())
         .then(data => {
-
-            //console.log(data);
+            currentTitle = data.title || '';
+            console.log(data);
             // Extract the image path and description from the JSON response
             const image_path = data.image_path;
             const description = data.description;
 
             if (data.image_path === 'NO_MORE_IMAGES') {
-                showAlert("You've completed all the puzzles! Click to Continue...");
-                puzzleContainer.style.display = 'none';
-                return;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Set font, size, and color
+                ctx.font = '30px Arial';
+                ctx.fillStyle = 'black';
+
+                // Align the text to be centered
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText("No more puzzles!", canvas.width / 2, canvas.height / 2);
+                // ... rest of the code
             }
+
 
             image = new Image();
             image.src = image_path;
@@ -108,12 +179,16 @@ const loadNextPuzzle = () => {
                 console.error("Error loading the image.");
             };
         })
+
         .catch(error => {
             console.error("Error fetching the image path:", error);
         });
 };
 
-loadNextPuzzle(); // Start the Game
+
+
+loadNextPuzzle('Ruby-throated Hummingbird', 'wildlife');
+
 
 const MAX_ATTEMPTS = 100;  // Maximum attempts for finding non-overlapping positions for puzzle pieces
 
@@ -127,25 +202,8 @@ const isMouseOverPiece = (mouseX, mouseY) => {
     return false;
 };
 
-function showAlert(message) {
-    let alertOverlay = document.getElementById('customAlertOverlay');
-    let alertBox = document.getElementById('customAlert');
-    let alertText = document.getElementById('alertText');
-    document.getElementById('customAlertContent').addEventListener('click', closeAlert);
-    alertText.textContent = message;
-    alertOverlay.style.display = "block";
-    alertBox.style.display = "block";
-}
-
-function closeAlert() {
-    loadNextPuzzle();
-    let alertOverlay = document.getElementById('customAlertOverlay');
-    let alertBox = document.getElementById('customAlert');
 
 
-    alertOverlay.style.display = "none";
-    alertBox.style.display = "none";
-}
 
 // 3. Event listeners for dragging puzzle pieces
 // On mouse down, check if any piece is clicked
@@ -189,6 +247,46 @@ const handleMouseMove = e => {
     }
 };
 
+function showAlert(message) {
+    let alertOverlay = document.getElementById('customAlertOverlay');
+    let alertBox = document.getElementById('customAlert');
+    let alertText = document.getElementById('alertText');
+    document.getElementById('customAlertContent').addEventListener('click', closeAlert);
+    alertText.textContent = message;
+    alertOverlay.style.display = "block";
+    alertBox.style.display = "block";
+}
+
+function closeAlert() {
+
+    // Remove the solved puzzle title from the titles_in_selected_category array
+    titles_in_selected_category = titles_in_selected_category.filter(title => title !== currentTitle);
+
+    // Redraw the title select element with the remaining titles
+    const selectElement = document.getElementById('title');
+    selectElement.innerHTML = ''; // clear existing options
+    titles_in_selected_category.forEach(title => {
+        const optionElement = document.createElement('option');
+        optionElement.value = title;
+        optionElement.textContent = title;
+        selectElement.appendChild(optionElement);
+    });
+
+    // Load the next puzzle if there are remaining titles, else handle the case where there are no more titles
+    if(titles_in_selected_category.length > 0) {
+        loadNextPuzzle(titles_in_selected_category[0], selectedCategory);
+    } else {
+        // Handle the case where there are no more titles in the selected category, e.g., display a message
+    }
+
+    // Hide the alert
+    let alertOverlay = document.getElementById('customAlertOverlay');
+    let alertBox = document.getElementById('customAlert');
+    alertOverlay.style.display = "none";
+    alertBox.style.display = "none";
+}
+
+
 // On mouse up, release the piece and snap it if close to its correct position
 const handleMouseUp = e => {
     if (draggedPiece) {
@@ -217,8 +315,6 @@ const handleMouseUp = e => {
         canvas.style.cursor = 'default';  // Change cursor back to arrow
         celebrateSound.play();
         showAlert('Congratulations! Puzzle completed! Click to Continue');
-        //alert('Congratulations! Puzzle completed!');
-        // Load the next puzzle
 
     } else {
         // Check for cursor change
@@ -258,13 +354,13 @@ function setupCanvasBackground() {
     ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(imageX, imageY, image.width, image.height);
 
-    return { imageX, imageY };  // Return these values since they're used in both places.
+    return {imageX, imageY};  // Return these values since they're used in both places.
 }
 
 
 // 5. Redraws the entire canvas
 function redrawCanvas() {
-    const { imageX, imageY } = setupCanvasBackground();
+    const {imageX, imageY} = setupCanvasBackground();
 
     for (let piece of pieces) {
         ctx.drawImage(image, piece.x, piece.y, piece.width, piece.height, piece.sx, piece.sy, piece.width, piece.height);
