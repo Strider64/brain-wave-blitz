@@ -108,7 +108,6 @@ const loadNextPuzzle = (title = '') => {
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText("Please Select an Image!", canvas.width / 2, canvas.height / 2);
-                // ... rest of the code
             }
 
 
