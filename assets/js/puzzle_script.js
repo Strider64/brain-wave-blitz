@@ -1,9 +1,9 @@
 /*
- * Jigsaw Puzzle 1.0 βeta
+ * Jigsaw Puzzle 2.0 βeta
  * Created by John Pepp
  * on August 16, 2023
  * Updated by John Pepp
- * on August 20, 2023
+ * on September 23, 2023
  */
 
 // 1. Initialize canvas, context, and audio assets
