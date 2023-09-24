@@ -23,6 +23,7 @@ $id = (int) $_POST['id'];
 $description = $_POST['description'];
 $difficulty_level = $_POST['difficulty_level'];
 $category = $_POST['category'];
+$title = $_POST['title'];
 
 try {
 // Handle image upload
@@ -73,23 +74,19 @@ try {
         $image->save($image_path, 100);
 
 
-        $sql = "UPDATE puzzle_images SET image_path = :image_path = :image_path, description = :description, difficulty_level = :difficulty_level, category = :category WHERE id = :id";
+        $sql = "UPDATE puzzle_images SET image_path = :image_path, description = :description, difficulty_level = :difficulty_level, category = :category, title = :title WHERE id = :id";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':image_path', $image_path);
+        $stmt->bindValue(':image_path', $image_path);
     } else {
-        // Prepare the SQL query with placeholders
-        $sql = "UPDATE puzzle_images SET description = :description, difficulty_level = :difficulty_level, category = :category WHERE id = :id";
+        $sql = "UPDATE puzzle_images SET description = :description, difficulty_level = :difficulty_level, category = :category, title = :title WHERE id = :id";
         $stmt = $pdo->prepare($sql);
     }
 
-
-
-
-
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-    $stmt->bindParam(':description', $description);
-    $stmt->bindParam(':difficulty_level', $difficulty_level);
-    $stmt->bindParam(':category', $category);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->bindValue(':description', $description);
+    $stmt->bindValue(':difficulty_level', $difficulty_level);
+    $stmt->bindValue(':category', $category);
+    $stmt->bindValue(':title', $title);
 
     // Execute the prepared statement
     $stmt->execute();

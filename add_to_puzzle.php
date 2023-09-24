@@ -176,6 +176,10 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
             <input id="file" class="file-input-style" type="file" name="image">
             <label for="file">Select file</label>
         </div>
+        <div id="title_grid_area">
+            <label for="title" class="text_label_style">Title</label>
+            <input id="title" class="" type="text" name="data[title]" value="">
+        </div>
         <div id="description_grid_area">
             <label class="text_label_style" for="description">Description</label>
             <textarea class="text_input_style" id="description" name="data[description]"></textarea>
@@ -193,8 +197,8 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
             <select class="select-css" name="data[category]">
                 <option disabled>Select a Category</option>
                 <option value="general">General</option>
-                <option selected value="lego">LEGO</option>
-                <option value="wildlife">Wildlife</option>
+                <option value="lego">LEGO</option>
+                <option selected value="wildlife">Wildlife</option>
             </select>
         </label>
         <div id="submit_picture_grid_area">

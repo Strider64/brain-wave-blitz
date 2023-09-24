@@ -65,6 +65,10 @@ if (!$login->check_login_token()) {
             <input id="file" class="file-input-style" type="file" name="image">
             <label for="file">Select file</label>
         </div>
+        <div id="title_grid_area">
+            <label class="text_label_style" for="title">Title</label>
+            <input id="title" class="" type="text" name="title" value="">
+        </div>
         <div id="description_grid_area">
             <label class="text_label_style" for="description">Description</label>
             <textarea class="text_input_style" id="description" name="description"></textarea>

@@ -40,7 +40,7 @@ try {
     // Example:
     // ALTER TABLE puzzle_images ADD FULLTEXT(description);
     if($searchTerm !== null) {
-        $sql = "SELECT * FROM puzzle_images WHERE MATCH(description) AGAINST(:searchTerm IN NATURAL LANGUAGE MODE) LIMIT 1";
+        $sql = "SELECT * FROM puzzle_images WHERE MATCH(description, title) AGAINST(:searchTerm IN NATURAL LANGUAGE MODE) LIMIT 1";
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':searchTerm', $searchTerm);
     } else {

@@ -10,7 +10,7 @@
         const difficulty_level = document.querySelector('#difficulty_level');
         const description = document.getElementById('description');
         const resultInput = document.getElementById("searchTerm");
-
+        const title = document.getElementById('title');
 
 
         async function displayRecord(searchTerm = null) {
@@ -54,6 +54,7 @@
                             break;
                         }
                     }
+                    title.value = row.title;
                     description.textContent = row.description;
                 }
             } catch (error) {

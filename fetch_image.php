@@ -62,5 +62,5 @@ if ($data) {
     }
     echo json_encode($data);
 } else {
-    echo json_encode(['image_path' => 'NO_MORE_IMAGES', 'description' => 'No more images available.']);
+    echo json_encode(['image_path' => 'NO_MORE_IMAGES', 'description' => 'Please Select an Image!']);
 }
