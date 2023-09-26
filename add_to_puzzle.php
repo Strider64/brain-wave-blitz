@@ -69,6 +69,8 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
     // Load the image
     $image = Image::make($image_path);
 
+
+
     // Resize the image
     $image->resize(600, 400, function ($constraint) {
         $constraint->aspectRatio();

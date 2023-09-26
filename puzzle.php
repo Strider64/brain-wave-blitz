@@ -66,11 +66,19 @@ $pdo = $database->createPDO();
 </header>
 <main class="main_container">
     <canvas id="puzzleCanvas" width="900" height="700"></canvas>
+    <div id="customAlertOverlay" class="custom-alert-overlay">
+        <div id="customAlert" class="custom-alert">
+            <div id="customAlertContent" class="custom-alert-content">
+                <p id="alertText">Your custom alert text will appear here.</p>
+            </div>
+        </div>
+    </div>
 </main>
 <aside class="sidebar">
     <div class="categorySelection">
         <label for="category">Choose a category:</label>
         <select id="category" name="category">
+            <option value="general">General</option>
             <option value="lego">LEGO</option>
             <option value="wildlife" selected>Wildlife</option>
         </select>
@@ -86,13 +94,7 @@ $pdo = $database->createPDO();
         <p class="imageDescription">Text</p>
     </div>
 
-    <div id="customAlertOverlay" class="custom-alert-overlay">
-        <div id="customAlert" class="custom-alert">
-            <div id="customAlertContent" class="custom-alert-content">
-                <p id="alertText">Your custom alert text will appear here.</p>
-            </div>
-        </div>
-    </div>
+
 </aside>
 
 <footer class="colophon">

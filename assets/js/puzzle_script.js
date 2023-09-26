@@ -39,7 +39,7 @@ const populateTitles = () => {
                 .then(response => response.json())
                 .then(titles => {
                     titles_in_selected_category = titles; //
-                    console.log('titles:', titles_in_selected_category, 'category', selectedCategory);
+                    //console.log('titles:', titles_in_selected_category, 'category', selectedCategory);
                     selectElement.innerHTML = '';
                     titles.forEach(title => {
                         const optionElement = document.createElement('option');
@@ -92,7 +92,7 @@ const loadNextPuzzle = (title = '') => {
         .then(response => response.json())
         .then(data => {
             currentTitle = data.title || '';
-            console.log(data);
+            //console.log(data);
             // Extract the image path and description from the JSON response
             const image_path = data.image_path;
             const description = data.description;

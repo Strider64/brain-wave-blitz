@@ -21,7 +21,7 @@ if (!$category) {
 }
 
 // Use a prepared statement to avoid SQL Injection
-$stmt = $pdo->prepare('SELECT title FROM puzzle_images WHERE category = :category');
+$stmt = $pdo->prepare('SELECT title FROM puzzle_images WHERE category = :category ORDER BY date_added DESC');
 $stmt->bindParam(':category', $category, PDO::PARAM_STR);
 
 $stmt->execute();
