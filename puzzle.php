@@ -34,7 +34,7 @@ $database = new Database();
 $pdo = $database->createPDO();
 ?>
 <!doctype html>
-<html lang="en">
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
 <head>
     <!-- Meta tags for responsiveness -->
     <meta charset="UTF-8">
@@ -42,6 +42,19 @@ $pdo = $database->createPDO();
           content="width=device-width, user-scalable=yes, initial-scale=1.0">
     <title>Connect a Piece</title>
     <link rel="stylesheet" media="all" href="assets/css/puzzle_styling.css">
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "VideoGame",
+            "name": "Connect a Piece",
+            "description": "An interactive puzzle game where users can connect pieces to form a complete image.",
+            "image": "https://www.brainwaveblitz.com/assets/puzzle_images/img-7e4d33f5b396ec6d9fae4ba09a95197c-600x400.jpeg",
+            "url": "https://www.brainwaveblitz.com/puzzle.php",
+            "gamePlatform": ["Web"],
+            "publisher": "Brain Wave Blitz"
+        }
+    </script>
+
 </head>
 <body class="site">
 <header class="nav">
@@ -64,7 +77,7 @@ $pdo = $database->createPDO();
         <h1 class="webtitle">Connect a Piece</h1>
     </div>
 </header>
-<main class="main_container">
+<main class="main_container" itemprop="mainContentOfPage">
     <canvas id="puzzleCanvas" width="900" height="700"></canvas>
     <div id="customAlertOverlay" class="custom-alert-overlay">
         <div id="customAlert" class="custom-alert">
@@ -90,7 +103,7 @@ $pdo = $database->createPDO();
         </select>
     </div>
     <div class="puzzleImage">
-        <img id="puzzleImage" alt="Puzzle Image" />
+        <img src="assets/puzzle_images/img-7e4d33f5b396ec6d9fae4ba09a95197c-600x400.jpeg" id="puzzleImage" alt="Puzzle Image">
         <p class="imageDescription">Text</p>
     </div>
 
@@ -100,6 +113,11 @@ $pdo = $database->createPDO();
 <footer class="colophon">
     <p>&copy; <?php echo date("Y") ?> Connect a Piece</p>
 </footer>
+<script>
+    if (window.innerWidth <= 768) {
+        window.location.href = "https://www.brainwaveblitz.com/brainwaveblitz.php";
+    }
+</script>
 <script src="assets/js/puzzle_script.js"></script>
 </body>
 </html>

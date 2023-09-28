@@ -65,6 +65,7 @@
             let galleryImage = document.createElement('img')
             galleryImage.src = slide.image_path;
             galleryImage.setAttribute('alt', slide.content); // Description of what image is about:
+            galleryImage.setAttribute('loading', 'lazy'); // Add lazy loading attribute
             /* Set EXIF info to data-exif attribute */
             galleryImage.setAttribute('data-exif', slide.Model + ' ' + slide.ExposureTime + ' ' + slide.Aperture + ' '
                 + slide.ISO + ' ' + slide.FocalLength);

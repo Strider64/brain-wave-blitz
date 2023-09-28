@@ -29,7 +29,12 @@ $pdo = $database->createPDO();
 
 </head>
 <body class="site">
-<header class="nav">
+<header class="headerStyle">
+    <div class="loginStyle">
+        <h1 class="intro">Brain Wave Blitz - Web & Game Development, Design, & Photography</h1>
+    </div>
+</header>
+<div class="nav">
     <input type="checkbox" class="nav-btn" id="nav-btn">
     <label for="nav-btn">
         <span></span>
@@ -40,11 +45,7 @@ $pdo = $database->createPDO();
     <nav class="nav-links" id="nav-links">
         <?php $database->regular_navigation(); ?>
     </nav>
-
-    <div class="name-website">
-        <h1 class="webtitle">The Photo Tech Guru</h1>
-    </div>
-</header>
+</div>
 
 <main class="main_container">
     <form class="contact" name="contact" action="contact.php" method="post" autocomplete="on">
@@ -125,11 +126,11 @@ $pdo = $database->createPDO();
             </a>
         </li>
         <li class="card-item">
-            <a href="https://www.facebook.com/Pepster64">
+            <a href="https://www.facebook.com/groups/822623719581172/">
                 <figure class="cards">
                     <img src="assets/images/img-facebook-group.jpg" alt="FaceBook Group">
                     <figcaption class="caption">
-                        <h3 class="caption-title">Facebook Page</h3>
+                        <h3 class="caption-title">Facebook Group</h3>
                     </figcaption>
                 </figure>
             </a>

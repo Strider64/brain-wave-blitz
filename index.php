@@ -15,11 +15,11 @@ use brainwave\{
 
 
 /*
- * Brainwave Blitz 1.0 βeta
+ * Brainwave Blitz 2.0 βeta
  * Created by John Pepp
  * on June 30, 2023
  * Updated by John Pepp
- * on July 8, 2023
+ * on September 27, 2023
  */
 
 // Instantiate the ErrorHandler class
@@ -96,114 +96,53 @@ $records = $cms->page($per_page, $offset, 'cms', $category);
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=yes, initial-scale=1.0">
+    <meta name="description" content="Brain Wave Blitz offers expertise in web development, design, photography, and online game development. Explore our comprehensive services and innovative solutions.">
     <!-- Title of the web page -->
-    <title>Home Page</title>
+    <title>Brain Wave Blitz - Web Development, Design, Photography & Game Development</title>
+
+    <link rel="canonical" href="https://www.brainwaveblitz.com/">
+
     <!-- Link to the external CSS file -->
     <link rel="stylesheet" media="all" href="assets/css/admin.css">
-    <style>
-
-        #myButton {
-            outline: none;
-            color: #fff;
-            border: none;
-            background-color: #f12929;
-            box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
-            width: 6.25em;
-            font-family: "Rubik", sans-serif;
-            font-size: 1.2em;
-            text-transform: capitalize;
-            text-decoration: none;
-            cursor: pointer;
-            padding: 0.313em;
-            margin: 0.625em;
-            transition: background-color 0.5s;
-            float: right;
-            text-align: center;
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "ProfessionalService",
+            "additionalType": "http://www.productontology.org/id/Web_developer",
+            "name": "Brain Wave Blitz - Web & Game Development, Design, & Photography",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Livonia",
+                "addressRegion": "Michigan",
+                "postalCode": "48150",
+                "addressCountry": "United States"
+            },
+            "telephone": "+1-734-748-7661",
+            "email": "jrpepp@pepster.com",
+            "url": "https://www.brainwaveblitz.com/",
+            "openingHours": "Mo,Tu,We,Th,Fr 09:00-17:00",
+            "priceRange": "Depending on the project",
+            "description": "Providing top-notch web design and development services for small businesses.",
+            "areaServed": "Michigan",
+            "founder": {
+                "@type": "Person",
+                "name": "John Pepp"
+            },
+            "sameAs": [
+                "https://www.facebook.com/Pepster64/",
+                "https://www.linkedin.com/in/johnpepp/"
+            ]
         }
+    </script>
 
-        #myButton:hover {
-            background-color: #009578;
-        }
-
-        .pagination {
-            display: inline-block;
-            padding-left: 0;
-            margin: 20px 0;
-            border-radius: 4px;
-        }
-
-        .pagination > li {
-            display: inline;
-        }
-
-        .pagination > li > a,
-        .pagination > li > span {
-            position: relative;
-            float: left;
-            font-size: 1.0em;
-            padding: 6px 12px;
-            margin-left: -1px;
-            line-height: 1.42857143;
-            color: #337ab7;
-            text-decoration: none;
-            background-color: #fff;
-            border: 1px solid #ddd;
-        }
-
-        .pagination > li:first-child > a,
-        .pagination > li:first-child > span {
-            margin-left: 0;
-            border-top-left-radius: 4px;
-            border-bottom-left-radius: 4px;
-        }
-
-        .pagination > li:last-child > a,
-        .pagination > li:last-child > span {
-            border-top-right-radius: 4px;
-            border-bottom-right-radius: 4px;
-        }
-
-        .pagination > li > a:hover,
-        .pagination > li > a:focus {
-            color: #23527c;
-            background-color: #eee;
-            border-color: #ddd;
-        }
-
-        .pagination > .active > a,
-        .pagination > .active > span,
-        .pagination > .active > a:hover,
-        .pagination > .active > span:hover,
-        .pagination > .active > a:focus,
-        .pagination > .active > span:focus {
-            z-index: 2;
-            color: #fff;
-            cursor: default;
-            background-color: #337ab7;
-            border-color: #337ab7;
-        }
-
-        .pagination > li > span {
-            display: inline-block;
-            padding: 6px 12px;
-            color: #999;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            box-sizing: border-box;
-            height: 2.313em;
-        }
-
-        .pagination > li > span::before {
-            content: '...';
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-
-    </style>
 </head>
-<body class="site">
-<header class="nav">
+<body class="site" itemscope itemtype="http://schema.org/WebPage">
+<header class="headerStyle" itemprop="header">
+    <div class="loginStyle">
+        <h1 class="intro" itemprop="headline">Brain Wave Blitz - Web & Game Development, Design, & Photography</h1>
+    </div>
+</header>
+<div class="nav">
     <!-- Input and label for the mobile navigation bar -->
     <input type="checkbox" class="nav-btn" id="nav-btn">
     <label for="nav-btn">
@@ -213,35 +152,62 @@ $records = $cms->page($per_page, $offset, 'cms', $category);
     </label>
 
     <!-- Navigation links -->
-    <nav class="nav-links" id="nav-links">
+    <nav class="nav-links" id="nav-links" itemprop="breadcrumb">
         <!-- Generating regular navigation links with a method from the Database class -->
         <?php $database->regular_navigation(); ?>
     </nav>
-
-    <!-- Website name -->
-    <div class="name-website">
-        <h1 class="webtitle">Home Page</h1>
-    </div>
-</header>
-<main class="main_container">
+</div>
+<main class="main_container" itemprop="mainContentOfPage">
     <?php
     foreach ($records as $record) {
-        echo '<div class="image-header">';
-        echo '<a href="brainwaveblitz.php"><img src="' . $record['image_path'] . '" title="' . $record['heading'] . '" alt="' . $record['heading'] . '"></a>';
+        echo '<div class="image-header" itemscope itemtype="http://schema.org/ImageObject">';
+        echo '<a href="brainwaveblitz.php" itemprop="url"><img src="' . $record['image_path'] . '" title="' . $record['heading'] . '" alt="' . $record['heading'] . '" itemprop="image"></a>';
         echo '</div>';
-        echo '<h1>' . $record['heading'] . '</h1>';
-        echo '<p>' . nl2br(htmlspecialchars($record['content'])) . '</p>';
+        echo '<h2 itemprop="name">' . $record['heading'] . '</h2>';
+        echo '<p itemprop="description">'. str_replace('<br />', '<br>', nl2br(htmlspecialchars($record['content']))) . '</p>';
         echo '<br><hr><br>';
     }
     ?>
 </main>
 
 <aside class="sidebar">
+    <ul class="cards" itemscope itemtype="http://schema.org/ItemList">
+        <li class="card-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a href="https://flickr.com/photos/pepster/" itemprop="url">
+                <figure class="cards" itemscope itemtype="http://schema.org/ImageObject">
+                    <img src="assets/images/img_flickr_pictures.jpg" alt="Flickr" width="348" height="174" itemprop="image">
+                    <figcaption class="caption">
+                        <h3 class="caption-title" itemprop="name">Flickr Images</h3>
+                    </figcaption>
+                </figure>
+            </a>
+        </li>
+        <li class="card-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a href="https://github.com/Strider64/brain-wave-blitz" itemprop="url">
+                <figure class="cards" itemscope itemtype="http://schema.org/ImageObject">
+                    <img src="assets/images/img_github_repository.jpg" alt="GitHub Repository" itemprop="image">
+                    <figcaption class="caption">
+                        <h3 class="caption-title" itemprop="name">GitHub Repository</h3>
+                    </figcaption>
+                </figure>
+            </a>
+        </li>
+        <li class="card-item"  itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a href="https://www.facebook.com/groups/822623719581172/" itemprop="url">
+                <figure class="cards" itemscope itemtype="http://schema.org/ImageObject">
+                <img src="assets/images/img-facebook-group.jpg" alt="FaceBook Group" itemprop="image">
+                    <figcaption class="caption">
+                        <h3 class="caption-title" itemprop="name">Facebook Group</h3>
+                    </figcaption>
+                </figure>
+            </a>
+        </li>
+    </ul>
     <?php echo $links->display_links(); ?>
 </aside>
 
-<footer class="colophon">
-    <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz</p>
+<footer class="colophon"  itemprop="footer">
+    <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz - A Livonia, Michigan Developer</p>
 </footer>
 
 </body>

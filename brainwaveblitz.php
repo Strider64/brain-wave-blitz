@@ -76,7 +76,7 @@ $pdo = $database->createPDO();
                         <p>Current question is <span id="currentQuestion" data-record=""></span></p>
                         <p>Your score: <span id="score">0</span></p>
                     </div>
-                    <h2 id="question"></h2>
+                    <h2 id="question">Question Goes Here!</h2>
                     <div id="answers">
                         <button class="buttonStyle" id="ans1"></button>
                         <button class="buttonStyle" id="ans2"></button>

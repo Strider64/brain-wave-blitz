@@ -90,7 +90,7 @@ $login = new Login($pdo);
     <!-- Selector for choosing the category of questions -->
     <div id="category_selector">
         <label for="category">Category:</label>
-        <select id="category" name="category">>
+        <select id="category" name="category">
             <option value="wildlife">Wildlife</option>
             <option selected value="lego">LEGO</option>
             <option value="photography">Photography</option>

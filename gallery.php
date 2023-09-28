@@ -4,11 +4,11 @@ require_once __DIR__ . '/../config/config.php';
 require_once "vendor/autoload.php";
 
 /*
- * The Photo Tech Guru
+ * Gallery
  * Created by John R. Pepp
  * Date Created: July, 12, 2021
- * Last Revision: September 6, 2022 @ 8:00 AM
- * Version: 3.50 ßeta
+ * Last Revision: September 23, 2023
+ * Version: 4.00 ßeta
  *
  */
 
@@ -50,6 +50,26 @@ $login = new Login($pdo);
         }
     </style>
     <link rel="stylesheet" media="all" href="assets/css/gallery.css">
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "WebPage",
+            "name": "Photo Gallery",
+            "description": "A collection of various photos from different categories.",
+            "url": "https://www.brainwaveblitz.com/gallery.php",
+            "about": {
+                "@type": "ImageObject",
+                "contentUrl": "https://www.brainwaveblitz.com/assets/puzzle_images/img-7e4d33f5b396ec6d9fae4ba09a95197c-600x400.jpeg",
+                "description": "A sample image from the gallery",
+                "name": "Gallery Image"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Brain Wave Blitz Image Gallery",
+                "url": "https://www.brainwaveblitz.com"
+            }
+        }
+    </script>
 
 
 </head>

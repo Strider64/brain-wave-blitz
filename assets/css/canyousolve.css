@@ -186,7 +186,7 @@ table {
     .nav > .nav-btn {
         display: block;
         position: absolute;
-        right: 0;
+        right: 1.250em;
         top: 0;
         z-index: 10000;
     }
