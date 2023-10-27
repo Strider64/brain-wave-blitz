@@ -81,7 +81,7 @@ const checkAnswerAgainstTable = (data) => {
     const correctAnswer = data.correct;
 
     if (correctAnswer === choice) {
-        resultElement.textContent = "Correct!";
+        resultElement.textContent = "The answer was indeed number " + correctAnswer +"!";
         resultElement.style.color = "green";
         score++; // Increment the score if the answer is correct
         scoreElement.textContent = `${score}`;

@@ -73,58 +73,53 @@ $login = new Login($pdo);
 
 
 </head>
-<body class="site">
-
-<header class="nav">
-    <input type="checkbox" class="nav-btn" id="nav-btn">
-    <label for="nav-btn">
-        <span></span>
-        <span></span>
-        <span></span>
-    </label>
-
-    <nav class="nav-links" id="nav-links">
-        <?php $database->regular_navigation(); ?>
-    </nav>
-
-    <div class="name-website">
-        <h1 class="webtitle">Photo Gallery</h1>
+<body class="site" itemscope itemtype="http://schema.org/WebPage">
+<header class="headerStyle" itemprop="header">
+    <div class="loginStyle">
+        <h1 class="intro" itemprop="headline">Brain Wave Blitz - Image Gallery</h1>
     </div>
 </header>
-<main class="content" data-count="<?= $total ?>">
-    <div class="main_container">
-        <div class="home_article">
-            <div class="container">
+<div class="nav">
+    <!-- Button for mobile navigation -->
+    <button class="nav-btn" id="nav-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 
-            </div>
-        </div>
-        <div class="home_sidebar">
-            <?php
-            if ($login->check_login_token()) {
-                $database->showAdminNavigation();
-            }
-            ?>
-            <form id="gallery_category" action="gallery.php" method="post">
-                <label for="category">Category:</label>
-                <select id="category" class="select-css" name="category" tabindex="1">
+    <!-- Navigation links -->
+    <nav class="nav-links" id="nav-links" itemprop="breadcrumb">
+        <?php $database->regular_navigation(); ?>
+    </nav>
+</div>
 
-                    <option value="general">General</option>
-                    <option selected value="wildlife">Wildlife</option>
-                    <option value="landscape">Landscape</option>
-                    <option value="lego">LEGO</option>
-                    <option value="halloween">Halloween</option>
-                </select>
-            </form>
-            <div class="sidebar_pages">
+<main class="main_container">
+    <div class="container">
 
-            </div>
-
-        </div>
     </div>
-
 </main>
-<aside class="sidebar">
 
+
+<aside class="sidebar">
+    <?php
+    if ($login->check_login_token()) {
+        $database->showAdminNavigation();
+    }
+    ?>
+    <form id="gallery_category" action="gallery.php" method="post">
+        <label for="category">Category:</label>
+        <select id="category" class="select-css" name="category" tabindex="1">
+
+            <option value="general">General</option>
+            <option selected value="wildlife">Wildlife</option>
+            <option value="landscape">Landscape</option>
+            <option value="lego">LEGO</option>
+            <option value="halloween">Halloween</option>
+        </select>
+    </form>
+    <div class="sidebar_pages">
+
+    </div>
 </aside>
 <div class="lightbox">
 

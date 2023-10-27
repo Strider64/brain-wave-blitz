@@ -331,56 +331,30 @@ p {
 }
 
 
-/* Navigational CSS 9/30/2022 */
-.nav {
-    display: flex;
-    position: relative;
-    width: 100%;
-    max-width: 1200px;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--main-color);
-    margin: 0 auto;
-}
 
-.nav-title {
-    display: none;
-    font-family: var(--main-font);
-    font-size: 1.2em;
-    color: var(--light-color);
-    padding-left: var(--common-padding);
-}
 
-.name-website {
-    display: block;
-}
-
-.name-website .webtitle {
-    font-family: var(--alt-font);
-    font-size: 1.8em;
-    color: var(--main-color);
-}
-
+/* Navigational Links Styling */
 .nav > .nav-btn {
-    display: none;
-}
-
-.nav > .nav-btn > label {
-    display: inline-block;
+    background: none;
+    border: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 999;
     cursor: pointer;
-    width: 50px;
-    height: 50px;
     padding: 10px;
-    color: var(--main-color);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-    transition: transform 0.5s ease-in-out;
+    border-radius: 5px;
 }
 
-.nav > .nav-btn:hover > label {
+.nav > .nav-btn:focus {
+    outline: none;
+}
+
+.nav > .nav-btn:hover {
     transform: scale(1.1);
 }
 
-.nav > .nav-btn > label > span {
+.nav > .nav-btn > span {
     display: block;
     width: 35px;
     height: 5px;
@@ -388,19 +362,13 @@ p {
     margin: 6px 0;
 }
 
-.nav > .nav-btn > label::after {
-    content: 'Menu';
-    font-size: 14px;
-    position: absolute;
-    top: 60px;
-    right: -10px;
-}
-
 .nav > .nav-links {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    flex-direction: column; /* Stacks the links vertically */
+    position: relative; /* Adjusts the positioning to push down other content */
 }
 
 .nav > .nav-links > a {
@@ -415,45 +383,37 @@ p {
     color: var(--dark-color);
 }
 
-.nav > #nav-check {
-    display: none;
-}
-
-@media screen and (max-width: 600px) {
-    .nav {
-        padding-bottom: 0;
+@media (min-width: 601px) {
+    .nav > .nav-btn {
+        display: none;
     }
 
-    .name-website {
+    .nav > .nav-links {
+        flex-direction: row; /* This will lay out the links horizontally on larger screens */
+    }
+}
+
+@media (max-width: 600px) {
+    .nav > .nav-links:not(.active) {
         display: none;
+    }
+
+    .nav > .nav-links {
+        flex-direction: column; /* stack links vertically */
+        justify-content: flex-start;
+        width: 100%; /* full width on smaller screens */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow for depth */
+    }
+
+    .nav > .nav-links > a {
+        padding: 10px 15px; /* Adjust padding as needed */
+        text-align: left; /* Make text left-aligned */
+        width: 100%; /* full width for each link */
     }
 
     .nav > .nav-btn {
         display: block;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 10000;
-    }
-
-    .nav > .nav-links {
-        position: absolute;
-        display: none;
-        width: 100%;
-        z-index: 30000;
-        background-color: var(--gray-color);
-        top: 50px;
-        left: 0;
-    }
-
-    .nav > .nav-links > a {
-        display: block;
-        width: 100%;
-        color: var(--white-color);
-    }
-
-    .nav .nav-btn:checked ~ .nav-links {
-        display: block;
+        /* Remove the absolute positioning to allow it to be part of the normal document flow */
     }
 }
 

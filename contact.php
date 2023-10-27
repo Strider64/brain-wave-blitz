@@ -35,14 +35,15 @@ $pdo = $database->createPDO();
     </div>
 </header>
 <div class="nav">
-    <input type="checkbox" class="nav-btn" id="nav-btn">
-    <label for="nav-btn">
+    <!-- Button for mobile navigation -->
+    <button class="nav-btn" id="nav-btn">
         <span></span>
         <span></span>
         <span></span>
-    </label>
+    </button>
 
-    <nav class="nav-links" id="nav-links">
+    <!-- Navigation links -->
+    <nav class="nav-links" id="nav-links" itemprop="breadcrumb">
         <?php $database->regular_navigation(); ?>
     </nav>
 </div>
@@ -145,7 +146,12 @@ $pdo = $database->createPDO();
     </p>
 
 </footer>
-
+<script>
+    document.getElementById("nav-btn").addEventListener("click", function() {
+        const navLinks = document.getElementById("nav-links");
+        navLinks.classList.toggle("active");
+    });
+</script>
 <script src="assets/js/contact.js"></script>
 </body>
 </html>

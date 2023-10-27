@@ -57,7 +57,12 @@ $pdo = $database->createPDO();
 
 </head>
 <body class="site">
-<header class="nav">
+<header class="headerStyle" itemprop="header">
+    <div class="loginStyle">
+        <h1 class="intro" itemprop="headline">Brain Wave Blitz - Connect a Piece</h1>
+    </div>
+</header>
+<div class="nav">
     <!-- Input and label for the mobile navigation bar -->
     <input type="checkbox" class="nav-btn" id="nav-btn">
     <label for="nav-btn">
@@ -67,16 +72,11 @@ $pdo = $database->createPDO();
     </label>
 
     <!-- Navigation links -->
-    <nav class="nav-links" id="nav-links">
+    <nav class="nav-links" id="nav-links" itemprop="breadcrumb">
         <!-- Generating regular navigation links with a method from the Database class -->
         <?php $database->regular_navigation(); ?>
     </nav>
-
-    <!-- Website name -->
-    <div class="name-website">
-        <h1 class="webtitle">Connect a Piece</h1>
-    </div>
-</header>
+</div>
 <main class="main_container" itemprop="mainContentOfPage">
     <canvas id="puzzleCanvas" width="900" height="700"></canvas>
     <div id="customAlertOverlay" class="custom-alert-overlay">
@@ -92,6 +92,7 @@ $pdo = $database->createPDO();
         <label for="category">Choose a category:</label>
         <select id="category" name="category">
             <option value="general">General</option>
+            <option value="halloween">Halloween</option>
             <option value="lego">LEGO</option>
             <option value="wildlife" selected>Wildlife</option>
         </select>

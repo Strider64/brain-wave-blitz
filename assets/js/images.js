@@ -104,8 +104,8 @@
 
             /* Add Event Listener to Images and setting css class to active */
             image.addEventListener('click', () => {
-                document.getElementById('gallery_category').style.display = 'none';
-                document.querySelector('.sidebar_pages').style.display = 'none';
+                //document.getElementById('gallery_category').style.display = 'none';
+                //document.querySelector('.sidebar_pages').style.display = 'none';
                 lightbox.classList.add('active');
                 document.querySelector('.container').style.display = 'none';
 
@@ -228,9 +228,18 @@
              */
             links.addEventListener('click', () => {
                 database_data.current_page = link_page.page;
-                createRequest('galleryPagination.php', paginationUISuccess, paginationUIError);
 
+                // Close the lightbox if it's currently active
+                if (lightbox.classList.contains('active')) {
+                    lightbox.classList.remove('active');
+                    document.getElementById('gallery_category').style.display = 'block';
+                    document.querySelector('.sidebar_pages').style.display = 'flex';
+                    document.querySelector('.container').style.display = 'grid';
+                }
+
+                createRequest('galleryPagination.php', paginationUISuccess, paginationUIError);
             });
+
             const pageText = document.createElement('p');
             pageText.className = 'linkStyle';
             pageText.id = 'page_' + link_page.page;
@@ -288,15 +297,22 @@
     /*
      * Create an event listener to allow the user to change categories
      */
-// Update category.addEventListener
+
+    // Update category.addEventListener
     category.addEventListener('change', () => {
         database_data.current_page = 1; // When changing category change current page to 1:
         database_data.category = category.value;
+
+        // Close the lightbox if it's currently active
+        if (lightbox.classList.contains('active')) {
+            lightbox.classList.remove('active');
+            document.getElementById('gallery_category').style.display = 'block';
+            document.querySelector('.sidebar_pages').style.display = 'flex';
+            document.querySelector('.container').style.display = 'grid';
+        }
+
         updateTotalCountAndPagination(); // Call the new function to update the total count and refresh the pagination links
     }, false);
-
-
-
 
     const totalCountUISuccess = async (parsedData) => {
         database_data.total_count = await parsedData.total_count; // Total Pages of Category
@@ -311,4 +327,3 @@
         createRequest('getTotalCount.php', totalCountUISuccess, totalCountUIError);
     });
 })();
-

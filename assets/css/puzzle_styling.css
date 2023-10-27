@@ -109,6 +109,69 @@ p {
     line-height: 1.5;
 }
 
+/* Base styles for mobile (small screens) */
+.headerStyle {
+    background-image: url('../images/web-deer-006-23-09-20-11-10.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 9.375em; /* Adjusted height for small screens */
+    width: 100%;
+    position: relative;
+    display: flex; /* Using flex to center the h1 vertically */
+    align-items: center; /* Centers h1 vertically */
+    justify-content: center; /* Centers h1 horizontally */
+}
+
+.headerStyle h1 {
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 1.2rem; /* Adjust font size for small screens */
+    margin: 0; /* Removing margin to ensure centering by flexbox */
+}
+
+/* Adjustments for larger screens using a media query */
+@media (min-width: 768px) {
+    /* Tablet and above */
+    .headerStyle {
+        height: 12.5em;
+        max-width: 78em;
+    }
+
+    .headerStyle h1 {
+        font-size: 1.5rem; /* Larger font size for larger screens */
+    }
+}
+
+
+.loginStyle {
+    background-color: rgba(0, 128, 0, 0.8);
+    height: 1.80em;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6em;
+    padding: 0 20px;
+}
+
+.intro {
+    text-align: left;
+    color: white;
+}
+
+.logout {
+    background-color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: green;
+}
+
+.boldStyle {
+    font-size: 1.4em;
+}
 
 /* Navigational CSS 9/30/2022 */
 .nav {
@@ -240,7 +303,7 @@ p {
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-    width: fit-content;
+    width: 88%;
     margin: 1.250em auto;
 }
 
@@ -258,6 +321,7 @@ p {
     color: #fff;
     border: 2px solid #00ff00; /* Bright green border */
     border-radius: 5px;
+    width: inherit;
     font-size: 1.2em;
     padding: 8px 12px;
     cursor: pointer;
@@ -506,15 +570,19 @@ p {
 
         .site {
             display: grid;
-            grid-template-columns: 30em 1fr;
+            grid-template-columns: 20em 1fr;
             grid-template-areas:
+                "header header"
 				"nav nav"
 				"sidebar main"
                 "sidebar main"
 				"footer footer";
             column-gap: 1.250em;
-            row-gap: 1.250em;
             justify-content: center;
+        }
+
+        .headerStyle {
+            grid-area: header;
         }
 
         .nav {
@@ -538,55 +606,80 @@ p {
             font-size: 0.8em;
         }
 
+        /* Use Flexbox */
+        .main_container {
+            grid-area: main;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;  /* Center children vertically */
+            position: relative;
+            height: 100%;  /* Take full available height */
+        }
+
+
+        #puzzleCanvas {
+
+        }
+
+        /* Adjust the alert overlay */
         .custom-alert-overlay {
             position: absolute;
-            top: 30.625em;
-            left: 46.875em;
-            width: 33%;
-            height: 100%;
-            z-index: 9998;
-            display: none;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%) translateY(50%);  /* Adjust vertically by half its height */
+            width: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .custom-alert {
-            display: none; /* initially hidden */
-            position: absolute;
+            position: absolute; /* Changed from inherit */
+            top: 50%;
             left: 50%;
-            top: 20%;
-            transform: translateX(-50%);
-            z-index: 9999;
+            transform: translate(-50%, -50%); /* Adjusted to center both vertically and horizontally */
             background-color: #f44336;
             color: #2e2e2e;
-            width: 80%; /* Set width of the outer box */
-            padding: 10px; /* Reduce or adjust padding for the outer box */
-            box-sizing: border-box; /* Ensure padding and border are included in total width */
-            font-size: 0.9em; /* Reduce font size */
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* smooth transitions */
+            width: 80%;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 0.9em;
+            border: 1px solid #888;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, scale 0.3s ease; /* added scale to the transition */
+            cursor: pointer; /* changes cursor to hand pointer on hover */
         }
 
-        .custom-alert-content:hover {
-            transform: scale(1.05); /* slightly enlarge on hover */
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* add a shadow on hover */
-            cursor: pointer; /* show a pointer cursor on hover */
+        .custom-alert:hover {
+            transform: translate(-50%, -50%) scale(1.05); /* Slightly scale up on hover */
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Adds a shadow on hover */
         }
 
         .custom-alert-content {
             background-color: #fefefe;
-            border: 1px solid #888;
-            width: 100%; /* Set width of the inner content box to fill its parent */
-            padding: 10px; /* Adjust padding as necessary */
-            box-sizing: border-box; /* Ensure padding and border are included in total width */
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 5px; /* Slight roundness to inner content for a softer look */
+            transition: background-color 0.3s ease; /* Smooth transition for color change */
+        }
+
+        .custom-alert-content:hover {
+            background-color: #f6f6f6; /* Slightly changes the background color on hover for added effect */
         }
 
         #alertText {
-            font-size: 0.9em; /* Adjust this to your preferred font size */
+            font-size: 1em;
+            font-weight: bold;
+            margin: 0; /* Remove default margin */
         }
 
         .close-btn {
             color: #aaaaaa;
-            float: right;
             font-size: 28px;
             font-weight: bold;
+            margin-left: 15px; /* Spacing to the close button */
         }
 
         .close-btn:hover,
@@ -596,10 +689,6 @@ p {
             cursor: pointer;
         }
 
-
-        .main_container {
-            grid-area: main;
-        }
 
         .main_container h1 {
             font-size: 2.4em;

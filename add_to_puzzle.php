@@ -199,8 +199,9 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST') && isset($_FILES['image'])) {
             <select class="select-css" name="data[category]">
                 <option disabled>Select a Category</option>
                 <option value="general">General</option>
+                <option selected value="halloween">Halloween</option>
                 <option value="lego">LEGO</option>
-                <option selected value="wildlife">Wildlife</option>
+                <option value="wildlife">Wildlife</option>
             </select>
         </label>
         <div id="submit_picture_grid_area">

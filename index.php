@@ -142,21 +142,20 @@ $records = $cms->page($per_page, $offset, 'cms', $category);
         <h1 class="intro" itemprop="headline">Brain Wave Blitz - Web & Game Development, Design, & Photography</h1>
     </div>
 </header>
-<div class="nav">
-    <!-- Input and label for the mobile navigation bar -->
-    <input type="checkbox" class="nav-btn" id="nav-btn">
-    <label for="nav-btn">
+<nav class="nav">
+    <!-- Button for mobile navigation -->
+    <button class="nav-btn" id="nav-btn">
         <span></span>
         <span></span>
         <span></span>
-    </label>
+    </button>
 
     <!-- Navigation links -->
     <nav class="nav-links" id="nav-links" itemprop="breadcrumb">
-        <!-- Generating regular navigation links with a method from the Database class -->
         <?php $database->regular_navigation(); ?>
     </nav>
-</div>
+</nav>
+
 <main class="main_container" itemprop="mainContentOfPage">
     <?php
     foreach ($records as $record) {
@@ -209,6 +208,12 @@ $records = $cms->page($per_page, $offset, 'cms', $category);
 <footer class="colophon"  itemprop="footer">
     <p>&copy; <?php echo date("Y") ?> Brain Wave Blitz - A Livonia, Michigan Developer</p>
 </footer>
+<script>
+    document.getElementById("nav-btn").addEventListener("click", function() {
+        const navLinks = document.getElementById("nav-links");
+        navLinks.classList.toggle("active");
+    });
+</script>
 
 </body>
 </html>

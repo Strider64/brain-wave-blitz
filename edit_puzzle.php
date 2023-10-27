@@ -84,6 +84,7 @@ if (!$login->check_login_token()) {
         <label id="select_grid_category_area">
             <select id="category" class="select-css" name="category">
                 <option value="general">General</option>
+                <option value="halloween">Halloween</option>
                 <option value="lego">LEGO</option>
                 <option value="wildlife">Wildlife</option>
             </select>

@@ -27,7 +27,11 @@ let currentTitle = ''; // declare it outside to have it globally accessible
 let selectedCategory = '';  // A variable to hold the selected category globally.
 let titles_in_selected_category = []; // Global Variable
 const PIECE_COUNT = 4;  // Number of puzzle pieces along one dimension
-
+// Hide the alert
+let alertOverlay = document.querySelector('.custom-alert-overlay');
+let alertBox = document.querySelector('.custom-alert');
+alertOverlay.style.display = "none";
+alertBox.style.display = "none";
 const populateTitles = () => {
     const selectedCategory = document.getElementById('category').value;
 
@@ -49,6 +53,8 @@ const populateTitles = () => {
                     });
                     // If there are titles, load the first puzzle of the new category.
                     if(titles.length > 0) {
+                        alertOverlay.style.display = "none";  // Hide the alert
+                        alertBox.style.display = "none";      // Hide the alert
                         loadNextPuzzle(titles[0], selectedCategory);
                     }
                 })
@@ -66,7 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('title').addEventListener('change', (e) => {
         const selectedTitle = e.target.value;
         const selectedCategory = document.getElementById('category').value; // Get selected category here as well
-
+        alertOverlay.style.display = "none";
+        alertBox.style.display = "none";
         // Clear the session of shown images when the title is changed
         fetch('clear_session.php')
             .then(() => {
@@ -186,7 +193,7 @@ const loadNextPuzzle = (title = '') => {
 
 
 
-loadNextPuzzle('Ruby-throated Hummingbird', 'wildlife');
+//loadNextPuzzle('Ruby-throated Hummingbird', 'wildlife');
 
 
 const MAX_ATTEMPTS = 100;  // Maximum attempts for finding non-overlapping positions for puzzle pieces
@@ -247,12 +254,12 @@ const handleMouseMove = e => {
 };
 
 function showAlert(message) {
-    let alertOverlay = document.getElementById('customAlertOverlay');
-    let alertBox = document.getElementById('customAlert');
+
     let alertText = document.getElementById('alertText');
+    alertBox.style.position = 'absolute'; // Ensure that the position is set to absolute
     document.getElementById('customAlertContent').addEventListener('click', closeAlert);
     alertText.textContent = message;
-    alertOverlay.style.display = "block";
+    alertOverlay.style.display = "flex";
     alertBox.style.display = "block";
 }
 
@@ -279,8 +286,6 @@ function closeAlert() {
     }
 
     // Hide the alert
-    let alertOverlay = document.getElementById('customAlertOverlay');
-    let alertBox = document.getElementById('customAlert');
     alertOverlay.style.display = "none";
     alertBox.style.display = "none";
 }

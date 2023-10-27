@@ -66,9 +66,6 @@ if (window.location.hostname === "localhost" || window.location.hostname === "12
     baseUrl = window.location.protocol + "//" + window.location.host;
 }
 
-
-
-
 startButton.addEventListener('click', startingScreen, false);
 
 // Define a function to handle button clicks
