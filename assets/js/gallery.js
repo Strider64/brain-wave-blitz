@@ -106,13 +106,13 @@ class Gallery {
     }
 
     createElementWithClass(tag, className) {
-        const element = this.createElement(tag);  // Corrected this line
+        const element = this.createElement(tag);
         element.className = className;
         return element;
     }
 
     createElementWithClassAndContent(tag, className, content) {
-        const element = this.createElementWithClass(tag, className); // Corrected this line
+        const element = this.createElementWithClass(tag, className);
         element.textContent = content;
         return element;
     }
@@ -127,8 +127,6 @@ class Gallery {
 
     // Handle the click event when an image is clicked
     handleImageClick(image) {
-        // Your logic when an image is clicked,
-        // e.g., showing the lightbox, adding the image and text, etc.
         this.lightbox.classList.add('active');
         this.container.style.display = 'none';
 
@@ -171,7 +169,7 @@ class Gallery {
         galleryText.classList.add('galleryText');
 
         galleryText.textContent = nextSibling.textContent;
-        //console.log('galleryText', galleryText);
+
         /* Remove large Image For Screen (cleanup) */
         while (this.lightbox.firstChild) {
             this.lightbox.removeChild(this.lightbox.firstChild)
@@ -212,7 +210,6 @@ class Gallery {
 
     // Send a request to the server to fetch images
     async createImageRequest(url, succeed, fail) {
-        // ... The logic of the createImageRequest function
         try {
             const response = await fetch(url, {
                 method: 'POST', // or 'PUT'
@@ -231,7 +228,6 @@ class Gallery {
     // Clear all pagination links
     restLinks() {
         /* Remove Links For Screen (cleanup) */
-
         while (this.sidebar.firstChild) {
             this.sidebar.removeChild(this.sidebar.firstChild)
         }
@@ -240,8 +236,7 @@ class Gallery {
     // Update the UI with the received pagination data
     async paginationUISuccess(parsedData) {
         this.restLinks();
-       // console.log('parsed data', parsedData);
-       // console.log('total_count - Parsed Data', this.database_data.total_count);
+
         this.database_data.offset = await parsedData.offset;
         this.total_pages = Math.ceil(this.database_data.total_count / this.database_data.per_page);
 
@@ -296,7 +291,6 @@ class Gallery {
 
     // Send a request to the server
     async createRequest(url, succeed, fail) {
-        // ... The logic of the createRequest function
         try {
             const response = await fetch(url, {
                 method: 'POST', // or 'PUT'
