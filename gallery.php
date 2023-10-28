@@ -128,7 +128,7 @@ $login = new Login($pdo);
     <p>&copy; <?php echo date("Y") ?> Photo Gallery</p>
 </footer>
 
-<script src="assets/js/images.js"></script>
+<script src="assets/js/gallery.js"></script>
 <script>
     function toggleNavMenu() {
         let navLinks = document.getElementById('nav-links');
